@@ -21,11 +21,12 @@
 
 namespace ModbusCpp
 {
-static constexpr uint8_t SlaveMin         = 1;
-static constexpr uint8_t SlaveMax         = 247;
-static constexpr uint8_t SlaveReservedMin = 248;
-static constexpr uint8_t SlaveReservedMax = 255;
-static constexpr uint8_t Broadcast        = 0;
+static constexpr uint8_t SlaveMin            = 1;
+static constexpr uint8_t SlaveMax            = 247;
+static constexpr uint8_t SlaveReservedMin    = 248;
+static constexpr uint8_t SlaveReservedMax    = 255;
+static constexpr uint8_t Broadcast           = 0;
+static constexpr uint8_t ExceptionCodeAddend = 0x80;
 
 enum class ModbusProtocol
 {
@@ -39,6 +40,19 @@ enum class AddressType
     TCP,
     UDP,
     SerialPort
+};
+
+enum class ExceptionCode
+{
+    IllegalFunction                    = 0x01,
+    IllegalDataAddress                 = 0x02,
+    IllegalDataValue                   = 0x03,
+    ServerDeviceFailure                = 0x04,
+    Acknowledge                        = 0x05,
+    ServerDeviceBusy                   = 0x06,
+    MemoryParityError                  = 0x08,
+    GatewayPathUnavailable             = 0x0A,
+    GatewayTargetDeviceFailedToRespond = 0x0B
 };
 
 } // namespace ModbusCpp

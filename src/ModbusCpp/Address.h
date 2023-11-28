@@ -20,6 +20,8 @@
 
 #include "Standard.h"
 
+#include <string>
+
 namespace ModbusCpp
 {
 template<AddressType addr>
@@ -43,7 +45,7 @@ class Address<AddressType::TCP> : public AddressBase
 {
 public:
     inline Address(std::string_view ip, uint16_t port, ModbusProtocol proto = ModbusProtocol::ModbusTCP)
-        : AddressBase(), m_ip(ip), m_port(port)
+        : AddressBase(proto), m_ip(ip), m_port(port)
     {
     }
     inline const std::string& ip() const { return m_ip; }
@@ -59,7 +61,7 @@ class Address<AddressType::UDP> : public AddressBase
 {
 public:
     inline Address(std::string_view ip, uint16_t port, ModbusProtocol proto = ModbusProtocol::ModbusTCP)
-        : AddressBase(), m_ip(ip), m_port(port)
+        : AddressBase(proto), m_ip(ip), m_port(port)
     {
     }
     inline const std::string& ip() const { return m_ip; }
@@ -115,14 +117,15 @@ template<>
 class Address<AddressType::SerialPort> : public AddressBase
 {
 public:
-    inline Address(std::string_view port, ModbusProtocol proto = ModbusProtocol::ModbusRTU) : AddressBase(proto) {}
-    inline Address(std::string_view port,
+    inline Address(std::string_view portName,
                    uint32_t baudRate,
                    DataBits dataBits       = DataBits::Data8,
                    FlowControl flowControl = FlowControl::None,
                    Parity parity           = Parity::None,
-                   StopBits stopBits       = StopBits::One)
-        : Address(port, proto)
+                   StopBits stopBits       = StopBits::One,
+                   ModbusProtocol proto    = ModbusProtocol::ModbusRTU)
+        : AddressBase(proto)
+        , m_portName(portName)
         , m_baudRate(baudRate)
         , m_dataBits(dataBits)
         , m_flowControl(flowControl)
@@ -130,7 +133,12 @@ public:
         , m_stopBits(stopBits)
     {
     }
-    inline const std::string& port() const { return m_port; }
+    inline Address(std::string_view port, ModbusProtocol proto = ModbusProtocol::ModbusRTU)
+        : Address(port, BaudRate::_9600, DataBits::Data8, FlowControl::None, Parity::None, StopBits::One, proto)
+    {
+    }
+
+    inline const std::string& portName() const { return m_portName; }
     inline uint32_t baudRate() const { return m_baudRate; }
     inline DataBits dataBits() const { return m_dataBits; }
     inline FlowControl flowControl() const { return m_flowControl; }
@@ -138,7 +146,7 @@ public:
     inline StopBits stopBits() const { return m_stopBits; }
 
 private:
-    std::string m_port;
+    std::string m_portName;
     uint32_t m_baudRate { 9600 };
     DataBits m_dataBits { DataBits::Data8 };
     FlowControl m_flowControl { FlowControl::None };
@@ -147,8 +155,10 @@ private:
 };
 
 template<typename T>
-constexpr bool IsAddress = std::false_type {};
+constexpr bool _IsAddress = std::false_type {};
 template<AddressType T>
-constexpr bool IsAddress<Address<T>> = std::true_type {};
+constexpr bool _IsAddress<Address<T>> = std::true_type {};
+template<typename T>
+concept IsAddress = _IsAddress<T>;
 
 } // namespace ModbusCpp

@@ -16,47 +16,50 @@
 **  You should have received a copy of the GNU Lesser General Public License    **
 **  along with ModbusCpp.  If not, see <https://www.gnu.org/licenses/>.         **
 **********************************************************************************/
-#include "Master.h"
-#include "Private/MasterSerialPort.h"
+
+#include "ArithmeticView.h"
+
+#include <algorithm>
+#include <cstddef>
+#include <ranges>
+#include <span>
+#include <vector>
 
 namespace ModbusCpp
 {
-struct Master::Impl
+class Buffer
 {
-    uint8_t slave { 1 };
-    std::shared_ptr<MasterIOBase> iobase;
-    std::chrono::milliseconds timeout { 5000 };
+public:
+    inline Buffer() {}
+    template<typename... Args>
+    inline Buffer(const Args... args);
+    inline Buffer(Buffer&& other) : m_data(std::move(other.m_data)) {}
+    inline Buffer(const Buffer& other) = delete;
+    template<typename Self>
+    inline auto&& data(this Self& self)
+    {
+        return std::forward<Self>(self).m_data;
+    }
+    template<typename T>
+    requires std::is_arithmetic_v<T>
+    inline void append(const T& value);
+    inline void appendCrc(uint16_t value) { std::ranges::copy(ArithmeticView<uint16_t, false>(value), std::back_inserter(m_data)); }
+    inline size_t size() const { return m_data.size(); }
+
+private:
+    std::vector<uint8_t> m_data;
 };
 
-Master::Master() : m_impl(std::make_unique<Impl>()) {}
-
-Master::~Master() {}
-
-void Master::setTimeout(const std::chrono::milliseconds& timeout)
+template<typename... Args>
+inline Buffer::Buffer(const Args... args)
 {
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setTimeout(timeout);
-    }
+    (append(args), ...);
 }
 
-const std::chrono::milliseconds& Master::timeout() const { return m_impl->timeout; }
-
-void Master::setSlave(uint8_t slave)
+template<typename T>
+requires std::is_arithmetic_v<T>
+inline void Buffer::append(const T& value)
 {
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setSlave(slave);
-    }
+    std::ranges::copy(ArithmeticView(value), std::back_inserter(m_data));
 }
-
-uint8_t Master::slave() const { return m_impl->slave; }
-
-template<>
-MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
-                                                                        const std::chrono::milliseconds& connectTimeout)
-{
-    m_impl->iobase = std::make_shared<MasterSerialPort>(address, connectTimeout);
-}
-
 } // namespace ModbusCpp

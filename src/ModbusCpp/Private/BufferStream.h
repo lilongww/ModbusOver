@@ -16,47 +16,31 @@
 **  You should have received a copy of the GNU Lesser General Public License    **
 **  along with ModbusCpp.  If not, see <https://www.gnu.org/licenses/>.         **
 **********************************************************************************/
-#include "Master.h"
-#include "Private/MasterSerialPort.h"
+
+#pragma once
+
+#include "Buffer.h"
+
+#include <ranges>
 
 namespace ModbusCpp
 {
-struct Master::Impl
+class BufferStream
 {
-    uint8_t slave { 1 };
-    std::shared_ptr<MasterIOBase> iobase;
-    std::chrono::milliseconds timeout { 5000 };
+public:
+    inline BufferStream(const Buffer& buffer, size_t offset = 0) : m_data(buffer.data()), m_offset(offset) {}
+    inline size_t size() const { return m_data.size() - m_offset; }
+    template<typename T>
+    inline BufferStream& operator>>(T& value)
+    {
+        std::ranges::reverse_copy(m_data | std::views::drop(m_offset) | std::views::take(sizeof(T)), reinterpret_cast<uint8_t*>(value));
+        m_offset += sizeof(value);
+        return *this;
+    }
+    inline uint16_t crc() const { *reinterpret_cast<const uint16_t*>(m_data.at(m_data.size() - 2)); }
+
+private:
+    const std::vector<uint8_t>& m_data;
+    size_t m_offset;
 };
-
-Master::Master() : m_impl(std::make_unique<Impl>()) {}
-
-Master::~Master() {}
-
-void Master::setTimeout(const std::chrono::milliseconds& timeout)
-{
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setTimeout(timeout);
-    }
-}
-
-const std::chrono::milliseconds& Master::timeout() const { return m_impl->timeout; }
-
-void Master::setSlave(uint8_t slave)
-{
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setSlave(slave);
-    }
-}
-
-uint8_t Master::slave() const { return m_impl->slave; }
-
-template<>
-MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
-                                                                        const std::chrono::milliseconds& connectTimeout)
-{
-    m_impl->iobase = std::make_shared<MasterSerialPort>(address, connectTimeout);
-}
-
 } // namespace ModbusCpp

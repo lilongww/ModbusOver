@@ -16,22 +16,5 @@
 **  You should have received a copy of the GNU Lesser General Public License    **
 **  along with ModbusCpp.  If not, see <https://www.gnu.org/licenses/>.         **
 **********************************************************************************/
+
 #pragma once
-
-#include "../Standard.h"
-
-namespace ModbusCpp
-{
-class IOBase
-{
-public:
-    IOBase() {}
-    virtual ~IOBase() noexcept                  = default;
-    virtual std::string read()                  = 0;
-    virtual void write(const std::string& data) = 0;
-    virtual void close() noexcept               = 0;
-    virtual bool connected() const noexcept     = 0;
-
-private:
-};
-} // namespace ModbusCpp

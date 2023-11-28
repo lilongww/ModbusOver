@@ -16,47 +16,29 @@
 **  You should have received a copy of the GNU Lesser General Public License    **
 **  along with ModbusCpp.  If not, see <https://www.gnu.org/licenses/>.         **
 **********************************************************************************/
-#include "Master.h"
-#include "Private/MasterSerialPort.h"
+#pragma once
+
+#include "../Standard.h"
+#include "CommonData.h"
+
+#include <chrono>
+#include <string>
 
 namespace ModbusCpp
 {
-struct Master::Impl
+class MasterIOBase
 {
-    uint8_t slave { 1 };
-    std::shared_ptr<MasterIOBase> iobase;
-    std::chrono::milliseconds timeout { 5000 };
+public:
+    MasterIOBase(const MasterCommonData& data) : m_data(data) {}
+    virtual ~MasterIOBase() noexcept                                  = default;
+    virtual std::string read()                                        = 0;
+    virtual void write(const std::string& data)                       = 0;
+    virtual void close() noexcept                                     = 0;
+    virtual bool connected() const noexcept                           = 0;
+    virtual void setSlave(uint8_t slave) const noexcept               = 0;
+    virtual void setTimeout(const std::chrono::milliseconds& timeout) = 0;
+
+protected:
+    const MasterCommonData& m_data;
 };
-
-Master::Master() : m_impl(std::make_unique<Impl>()) {}
-
-Master::~Master() {}
-
-void Master::setTimeout(const std::chrono::milliseconds& timeout)
-{
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setTimeout(timeout);
-    }
-}
-
-const std::chrono::milliseconds& Master::timeout() const { return m_impl->timeout; }
-
-void Master::setSlave(uint8_t slave)
-{
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setSlave(slave);
-    }
-}
-
-uint8_t Master::slave() const { return m_impl->slave; }
-
-template<>
-MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
-                                                                        const std::chrono::milliseconds& connectTimeout)
-{
-    m_impl->iobase = std::make_shared<MasterSerialPort>(address, connectTimeout);
-}
-
 } // namespace ModbusCpp

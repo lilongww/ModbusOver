@@ -16,47 +16,18 @@
 **  You should have received a copy of the GNU Lesser General Public License    **
 **  along with ModbusCpp.  If not, see <https://www.gnu.org/licenses/>.         **
 **********************************************************************************/
-#include "Master.h"
-#include "Private/MasterSerialPort.h"
+#pragma once
+
+#include "AbstractProtocol.h"
 
 namespace ModbusCpp
 {
-struct Master::Impl
+class ModbusRTU : public AbstractProtocol
 {
-    uint8_t slave { 1 };
-    std::shared_ptr<MasterIOBase> iobase;
-    std::chrono::milliseconds timeout { 5000 };
+public:
+    using AbstractProtocol::AbstractProtocol;
+    Buffer toADU(Buffer pdu) const override;
+    std::optional<Buffer> toPDU(Buffer adu) const override;
+    uint16_t aduMaximum() const override;
 };
-
-Master::Master() : m_impl(std::make_unique<Impl>()) {}
-
-Master::~Master() {}
-
-void Master::setTimeout(const std::chrono::milliseconds& timeout)
-{
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setTimeout(timeout);
-    }
-}
-
-const std::chrono::milliseconds& Master::timeout() const { return m_impl->timeout; }
-
-void Master::setSlave(uint8_t slave)
-{
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setSlave(slave);
-    }
-}
-
-uint8_t Master::slave() const { return m_impl->slave; }
-
-template<>
-MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
-                                                                        const std::chrono::milliseconds& connectTimeout)
-{
-    m_impl->iobase = std::make_shared<MasterSerialPort>(address, connectTimeout);
-}
-
 } // namespace ModbusCpp

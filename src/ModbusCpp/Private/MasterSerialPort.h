@@ -16,47 +16,33 @@
 **  You should have received a copy of the GNU Lesser General Public License    **
 **  along with ModbusCpp.  If not, see <https://www.gnu.org/licenses/>.         **
 **********************************************************************************/
-#include "Master.h"
-#include "Private/MasterSerialPort.h"
+#pragma once
+
+#include "../Address.h"
+#include "MasterIOBase.h"
 
 namespace ModbusCpp
 {
-struct Master::Impl
+class MasterSerialPort : public MasterIOBase
 {
-    uint8_t slave { 1 };
-    std::shared_ptr<MasterIOBase> iobase;
-    std::chrono::milliseconds timeout { 5000 };
+public:
+    MasterSerialPort(const MasterCommonData& data);
+    ~MasterSerialPort();
+    void connect(const Address<AddressType::SerialPort>& address, const std::chrono::milliseconds& connectTimeout);
+    std::string read() override;
+    void write(const std::string& data) override;
+    void close() noexcept override;
+    bool connected() const noexcept override;
+    void setSlave(uint8_t slave) const noexcept override;
+    void setTimeout(const std::chrono::milliseconds& timeout) override;
+    void setBaudRate(uint32_t baudRate);
+    void setDataBits(DataBits bits);
+    void setFlowControl(FlowControl fc);
+    void setParity(Parity p);
+    void setStopBits(StopBits bits);
+
+private:
+    struct Impl;
+    std::unique_ptr<Impl> m_impl;
 };
-
-Master::Master() : m_impl(std::make_unique<Impl>()) {}
-
-Master::~Master() {}
-
-void Master::setTimeout(const std::chrono::milliseconds& timeout)
-{
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setTimeout(timeout);
-    }
-}
-
-const std::chrono::milliseconds& Master::timeout() const { return m_impl->timeout; }
-
-void Master::setSlave(uint8_t slave)
-{
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setSlave(slave);
-    }
-}
-
-uint8_t Master::slave() const { return m_impl->slave; }
-
-template<>
-MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
-                                                                        const std::chrono::milliseconds& connectTimeout)
-{
-    m_impl->iobase = std::make_shared<MasterSerialPort>(address, connectTimeout);
-}
-
 } // namespace ModbusCpp

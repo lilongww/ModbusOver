@@ -16,47 +16,25 @@
 **  You should have received a copy of the GNU Lesser General Public License    **
 **  along with ModbusCpp.  If not, see <https://www.gnu.org/licenses/>.         **
 **********************************************************************************/
-#include "Master.h"
-#include "Private/MasterSerialPort.h"
+#pragma once
+
+#include <iterator>
+#include <type_traits>
 
 namespace ModbusCpp
 {
-struct Master::Impl
+template<typename T, bool reverse = true>
+requires std::is_arithmetic_v<T>
+class ArithmeticView
 {
-    uint8_t slave { 1 };
-    std::shared_ptr<MasterIOBase> iobase;
-    std::chrono::milliseconds timeout { 5000 };
+public:
+    constexpr ArithmeticView(const T& value) : m_data(reinterpret_cast<const uint8_t*>(&value)) {}
+    constexpr ~ArithmeticView() {}
+    constexpr size_t size() const { return sizeof(T); }
+    constexpr auto begin() const { return reverse ? std::reverse_iterator(m_data + size()) : m_data; }
+    constexpr auto end() const { return reverse ? std::reverse_iterator(m_data) : m_data + size(); }
+
+private:
+    const uint8_t* m_data;
 };
-
-Master::Master() : m_impl(std::make_unique<Impl>()) {}
-
-Master::~Master() {}
-
-void Master::setTimeout(const std::chrono::milliseconds& timeout)
-{
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setTimeout(timeout);
-    }
-}
-
-const std::chrono::milliseconds& Master::timeout() const { return m_impl->timeout; }
-
-void Master::setSlave(uint8_t slave)
-{
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setSlave(slave);
-    }
-}
-
-uint8_t Master::slave() const { return m_impl->slave; }
-
-template<>
-MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
-                                                                        const std::chrono::milliseconds& connectTimeout)
-{
-    m_impl->iobase = std::make_shared<MasterSerialPort>(address, connectTimeout);
-}
-
 } // namespace ModbusCpp
