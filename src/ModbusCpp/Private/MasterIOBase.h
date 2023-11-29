@@ -30,13 +30,12 @@ class MasterIOBase
 {
 public:
     MasterIOBase(const MasterCommonData& data) : m_data(data) {}
-    virtual ~MasterIOBase() noexcept                                  = default;
-    virtual std::string read()                                        = 0;
-    virtual void write(const std::string& data)                       = 0;
-    virtual void close() noexcept                                     = 0;
-    virtual bool connected() const noexcept                           = 0;
-    virtual void setSlave(uint8_t slave) const noexcept               = 0;
-    virtual void setTimeout(const std::chrono::milliseconds& timeout) = 0;
+    virtual ~MasterIOBase() noexcept                                                           = default;
+    virtual std::vector<uint8_t> read()                                                        = 0;
+    virtual void write(std::vector<uint8_t>&& data)                                            = 0;
+    virtual void close() noexcept                                                              = 0;
+    virtual bool connected() const noexcept                                                    = 0;
+    virtual std::vector<uint8_t> readCoils(uint16_t startingAddress, uint16_t quantityOfCoils) = 0;
 
 protected:
     const MasterCommonData& m_data;

@@ -32,25 +32,18 @@ Master::Master() : m_impl(std::make_unique<Impl>()) {}
 
 Master::~Master() {}
 
-void Master::setTimeout(const std::chrono::milliseconds& timeout)
-{
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setTimeout(timeout);
-    }
-}
+void Master::setTimeout(const std::chrono::milliseconds& timeout) { m_impl->common.timeout = timeout; }
 
 const std::chrono::milliseconds& Master::timeout() const { return m_impl->common.timeout; }
 
-void Master::setSlave(uint8_t slave)
-{
-    if (m_impl->iobase)
-    {
-        m_impl->iobase->setSlave(slave);
-    }
-}
+void Master::setSlave(uint8_t slave) { m_impl->common.slave = slave; }
 
 uint8_t Master::slave() const { return m_impl->common.slave; }
+
+std::vector<uint8_t> Master::readCoils(uint16_t startingAddress, uint16_t quantityOfCoils)
+{
+    return m_impl->iobase->readCoils(startingAddress, quantityOfCoils);
+}
 
 template<>
 MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,

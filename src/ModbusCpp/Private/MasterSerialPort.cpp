@@ -1,4 +1,6 @@
 ﻿#include "MasterSerialPort.h"
+#include "AbstractProtocol.h"
+#include "Buffer.h"
 
 #include <boost/asio.hpp>
 
@@ -10,8 +12,9 @@ struct MasterSerialPort::Impl
     boost::asio::serial_port serialPort { io };
     boost::asio::io_context::work worker { io };
     std::jthread thread;
-    std::string writeBuffer;
+    std::vector<uint8_t> writeBuffer;
     boost::asio::streambuf readBuffer;
+    std::shared_ptr<AbstractProtocol> protocol;
 };
 
 MasterSerialPort::MasterSerialPort(const MasterCommonData& data) : MasterIOBase(data), m_impl(std::make_unique<Impl>())
@@ -38,9 +41,10 @@ void MasterSerialPort::connect(const Address<AddressType::SerialPort>& address, 
     setFlowControl(address.flowControl());
     setParity(address.parity());
     setStopBits(address.stopBits());
+    m_impl->protocol = AbstractProtocol::create(address.protocol(), m_data.slave);
 }
 
-std::string MasterSerialPort::read()
+std::vector<uint8_t> MasterSerialPort::read()
 {
     auto mutex = std::make_shared<std::timed_mutex>();
     mutex->lock();
@@ -69,11 +73,12 @@ std::string MasterSerialPort::read()
         m_impl->serialPort.close();
         boost::asio::detail::throw_error(*error, "readAllAscii");
     }
-    std::string buffer(boost::asio::buffer_cast<const char*>(m_impl->readBuffer.data()), m_impl->readBuffer.size());
+    auto data = boost::asio::buffer_cast<const uint8_t*>(m_impl->readBuffer.data());
+    std::vector<uint8_t> buffer(data, data + m_impl->readBuffer.size());
     return buffer;
 }
 
-void MasterSerialPort::write(const std::string& data)
+void MasterSerialPort::write(std::vector<uint8_t>&& data)
 {
     m_impl->writeBuffer = data;
     auto mutex          = std::make_shared<std::timed_mutex>();
@@ -110,10 +115,6 @@ void MasterSerialPort::close() noexcept
 
 bool MasterSerialPort::connected() const noexcept { return m_impl->serialPort.is_open(); }
 
-void MasterSerialPort::setSlave(uint8_t slave) const noexcept {}
-
-void MasterSerialPort::setTimeout(const std::chrono::milliseconds& timeout) {}
-
 void MasterSerialPort::setBaudRate(uint32_t baud) { m_impl->serialPort.set_option(boost::asio::serial_port::baud_rate { baud }); }
 
 void MasterSerialPort::setDataBits(DataBits bits)
@@ -134,6 +135,19 @@ void MasterSerialPort::setParity(Parity p)
 void MasterSerialPort::setStopBits(StopBits bits)
 {
     m_impl->serialPort.set_option(boost::asio::serial_port::stop_bits { static_cast<boost::asio::serial_port::stop_bits::type>(bits) });
+}
+
+std::vector<uint8_t> MasterSerialPort::readCoils(uint16_t startingAddress, uint16_t quantityOfCoils)
+{
+    write(m_impl->protocol->requestReadColis(startingAddress, quantityOfCoils).data());
+    std::vector<uint8_t> ret;
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_impl->protocol->onResponseReadColis(buffer, ret))
+            return ret;
+    }
 }
 
 } // namespace ModbusCpp

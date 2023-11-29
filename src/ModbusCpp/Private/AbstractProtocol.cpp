@@ -2,6 +2,8 @@
 #include "../ModbusException.h"
 #include "BufferStream.h"
 #include "Codec.h"
+#include "ModbusRTU.h"
+#include "ModbusTCP.h"
 
 #include <functional>
 #include <map>
@@ -30,6 +32,17 @@ bool AbstractProtocol::onResponseReadColis(Buffer& buffer, std::vector<uint8_t>&
         return false;
     status = std::move(resp).coilStatus();
     return true;
+}
+
+std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto, const uint8_t& slave)
+{
+    switch (proto)
+    {
+    case ModbusProtocol::ModbusRTU:
+        return std::make_shared<ModbusRTU>(slave);
+    default:
+        return nullptr;
+    }
 }
 
 void AbstractProtocol::checkException(FunctionCode code, uint8_t receiveCode, BufferStream& stream) const

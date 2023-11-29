@@ -36,6 +36,7 @@ public:
     const std::chrono::milliseconds& timeout() const;
     void setSlave(uint8_t slave);
     uint8_t slave() const;
+    std::vector<uint8_t> readCoils(uint16_t startingAddress, uint16_t quantityOfCoils);
 
 private:
     struct Impl;

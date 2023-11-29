@@ -29,17 +29,16 @@ public:
     MasterSerialPort(const MasterCommonData& data);
     ~MasterSerialPort();
     void connect(const Address<AddressType::SerialPort>& address, const std::chrono::milliseconds& connectTimeout);
-    std::string read() override;
-    void write(const std::string& data) override;
+    std::vector<uint8_t> read() override;
+    void write(std::vector<uint8_t>&& data) override;
     void close() noexcept override;
     bool connected() const noexcept override;
-    void setSlave(uint8_t slave) const noexcept override;
-    void setTimeout(const std::chrono::milliseconds& timeout) override;
     void setBaudRate(uint32_t baudRate);
     void setDataBits(DataBits bits);
     void setFlowControl(FlowControl fc);
     void setParity(Parity p);
     void setStopBits(StopBits bits);
+    std::vector<uint8_t> readCoils(uint16_t startingAddress, uint16_t quantityOfCoils) override;
 
 private:
     struct Impl;

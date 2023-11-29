@@ -35,9 +35,10 @@ public:
     template<typename... Args>
     inline Buffer(const Args&... args);
     inline Buffer(Buffer&& other) : m_data(std::move(other.m_data)) {}
+    inline Buffer(std::vector<uint8_t>&& data) : m_data(std::move(data)) {}
     inline Buffer(const Buffer& other) = delete;
     template<typename Self>
-    inline auto&& data(this Self& self)
+    inline auto&& data(this Self&& self)
     {
         return std::forward<Self>(self).m_data;
     }

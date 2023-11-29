@@ -20,6 +20,7 @@
 
 #include "../Standard.h"
 
+#include <memory>
 #include <optional>
 #include <string>
 #include <vector>
@@ -57,6 +58,7 @@ public:
     virtual ~AbstractProtocol();
     Buffer requestReadColis(uint16_t startingAddress, uint16_t quantityOfCoils) const;
     bool onResponseReadColis(Buffer& buffer, std::vector<uint8_t>& status) const;
+    static std::shared_ptr<AbstractProtocol> create(ModbusProtocol proto, const uint8_t& slave);
 
 protected:
     virtual Buffer toADU(Buffer pdu) const                                                           = 0;
