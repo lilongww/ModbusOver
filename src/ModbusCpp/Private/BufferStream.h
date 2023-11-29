@@ -37,7 +37,7 @@ public:
         m_offset += sizeof(value);
         return *this;
     }
-    inline uint16_t crc() const { *reinterpret_cast<const uint16_t*>(m_data.at(m_data.size() - 2)); }
+    inline uint16_t crc() const { return *reinterpret_cast<const uint16_t*>(m_data.at(m_data.size() - 2)); }
 
 private:
     const std::vector<uint8_t>& m_data;

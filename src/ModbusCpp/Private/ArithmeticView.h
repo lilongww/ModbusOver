@@ -23,16 +23,15 @@
 
 namespace ModbusCpp
 {
-template<typename T, bool reverse = true>
-requires std::is_arithmetic_v<T>
+template<typename T>
 class ArithmeticView
 {
 public:
     constexpr ArithmeticView(const T& value) : m_data(reinterpret_cast<const uint8_t*>(&value)) {}
     constexpr ~ArithmeticView() {}
     constexpr size_t size() const { return sizeof(T); }
-    constexpr auto begin() const { return reverse ? std::reverse_iterator(m_data + size()) : m_data; }
-    constexpr auto end() const { return reverse ? std::reverse_iterator(m_data) : m_data + size(); }
+    constexpr auto begin() const { return m_data; }
+    constexpr auto end() const { return m_data + size(); }
 
 private:
     const uint8_t* m_data;

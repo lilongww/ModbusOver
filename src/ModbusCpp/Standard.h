@@ -16,6 +16,7 @@
 **  You should have received a copy of the GNU Lesser General Public License    **
 **  along with ModbusCpp.  If not, see <https://www.gnu.org/licenses/>.         **
 **********************************************************************************/
+#pragma once
 
 #include <cstdint>
 
@@ -42,7 +43,7 @@ enum class AddressType
     SerialPort
 };
 
-enum class ExceptionCode
+enum class ExceptionCode : uint8_t
 {
     IllegalFunction                    = 0x01,
     IllegalDataAddress                 = 0x02,

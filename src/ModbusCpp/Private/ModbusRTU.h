@@ -27,7 +27,8 @@ class ModbusRTU : public AbstractProtocol
 public:
     using AbstractProtocol::AbstractProtocol;
     Buffer toADU(Buffer pdu) const override;
-    std::optional<Buffer> toPDU(Buffer adu) const override;
+    std::optional<BufferStream> toPDU(Buffer& adu) const override;
     uint16_t aduMaximum() const override;
+    uint16_t minimumSize() const override;
 };
 } // namespace ModbusCpp

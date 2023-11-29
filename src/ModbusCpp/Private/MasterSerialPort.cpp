@@ -49,15 +49,14 @@ std::string MasterSerialPort::read()
     m_impl->io.post(
         [=]()
         {
-            boost::asio::async_read_until(m_impl->serialPort,
-                                          m_impl->readBuffer,
-                                          m_attr.terminalChars(),
-                                          [=](const boost::system::error_code& e, std::size_t s)
-                                          {
-                                              *size  = s;
-                                              *error = e;
-                                              mutex->unlock();
-                                          });
+            boost::asio::async_read(m_impl->serialPort,
+                                    m_impl->readBuffer,
+                                    [=](const boost::system::error_code& e, std::size_t s)
+                                    {
+                                        *size  = s;
+                                        *error = e;
+                                        mutex->unlock();
+                                    });
         });
 
     if (!mutex->try_lock_for(m_data.timeout))

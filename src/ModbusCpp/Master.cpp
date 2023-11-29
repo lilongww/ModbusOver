@@ -17,15 +17,15 @@
 **  along with ModbusCpp.  If not, see <https://www.gnu.org/licenses/>.         **
 **********************************************************************************/
 #include "Master.h"
+#include "Private/CommonData.h"
 #include "Private/MasterSerialPort.h"
 
 namespace ModbusCpp
 {
 struct Master::Impl
 {
-    uint8_t slave { 1 };
     std::shared_ptr<MasterIOBase> iobase;
-    std::chrono::milliseconds timeout { 5000 };
+    MasterCommonData common;
 };
 
 Master::Master() : m_impl(std::make_unique<Impl>()) {}
@@ -40,7 +40,7 @@ void Master::setTimeout(const std::chrono::milliseconds& timeout)
     }
 }
 
-const std::chrono::milliseconds& Master::timeout() const { return m_impl->timeout; }
+const std::chrono::milliseconds& Master::timeout() const { return m_impl->common.timeout; }
 
 void Master::setSlave(uint8_t slave)
 {
@@ -50,13 +50,13 @@ void Master::setSlave(uint8_t slave)
     }
 }
 
-uint8_t Master::slave() const { return m_impl->slave; }
+uint8_t Master::slave() const { return m_impl->common.slave; }
 
 template<>
 MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
                                                                         const std::chrono::milliseconds& connectTimeout)
 {
-    m_impl->iobase = std::make_shared<MasterSerialPort>(address, connectTimeout);
+    m_impl->iobase = std::make_shared<MasterSerialPort>(m_impl->common);
 }
 
 } // namespace ModbusCpp

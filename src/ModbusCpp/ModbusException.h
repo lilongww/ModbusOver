@@ -18,49 +18,28 @@
 **********************************************************************************/
 #pragma once
 
-#include "ArithmeticView.h"
+#include "Standard.h"
+#include "modbuscpp_global.h"
 
-#include <algorithm>
-#include <cstddef>
-#include <ranges>
-#include <span>
-#include <vector>
+#include <stdexcept>
 
 namespace ModbusCpp
 {
-class Buffer
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4275)
+#endif
+class MODBUSCPP_EXPORT ModbusException : public std::runtime_error
 {
 public:
-    inline Buffer() {}
-    template<typename... Args>
-    inline Buffer(const Args&... args);
-    inline Buffer(Buffer&& other) : m_data(std::move(other.m_data)) {}
-    inline Buffer(const Buffer& other) = delete;
-    template<typename Self>
-    inline auto&& data(this Self& self)
-    {
-        return std::forward<Self>(self).m_data;
-    }
-    template<typename T>
-    requires std::is_arithmetic_v<T>
-    inline void append(const T& value);
-    inline void appendCrc(uint16_t value) { std::ranges::copy(ArithmeticView(value), std::back_inserter(m_data)); }
-    inline size_t size() const { return m_data.size(); }
+    inline ModbusException(ExceptionCode code) : runtime_error(toString(code)), m_code(code) {}
+    inline ExceptionCode code() const { return m_code; }
+    static const std::string& toString(ExceptionCode code);
 
 private:
-    std::vector<uint8_t> m_data;
+    ExceptionCode m_code;
 };
-
-template<typename... Args>
-inline Buffer::Buffer(const Args&... args)
-{
-    (append(args), ...);
-}
-
-template<typename T>
-requires std::is_arithmetic_v<T>
-inline void Buffer::append(const T& value)
-{
-    std::ranges::reverse_copy(ArithmeticView(value), std::back_inserter(m_data));
-}
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 } // namespace ModbusCpp

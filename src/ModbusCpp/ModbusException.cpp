@@ -16,51 +16,30 @@
 **  You should have received a copy of the GNU Lesser General Public License    **
 **  along with ModbusCpp.  If not, see <https://www.gnu.org/licenses/>.         **
 **********************************************************************************/
-#pragma once
+#include "ModbusException.h"
 
-#include "ArithmeticView.h"
-
-#include <algorithm>
-#include <cstddef>
-#include <ranges>
-#include <span>
-#include <vector>
+#include <map>
 
 namespace ModbusCpp
 {
-class Buffer
-{
-public:
-    inline Buffer() {}
-    template<typename... Args>
-    inline Buffer(const Args&... args);
-    inline Buffer(Buffer&& other) : m_data(std::move(other.m_data)) {}
-    inline Buffer(const Buffer& other) = delete;
-    template<typename Self>
-    inline auto&& data(this Self& self)
-    {
-        return std::forward<Self>(self).m_data;
-    }
-    template<typename T>
-    requires std::is_arithmetic_v<T>
-    inline void append(const T& value);
-    inline void appendCrc(uint16_t value) { std::ranges::copy(ArithmeticView(value), std::back_inserter(m_data)); }
-    inline size_t size() const { return m_data.size(); }
-
-private:
-    std::vector<uint8_t> m_data;
+static const std::map<ExceptionCode, std::string> ExceptionCodeTextMap {
+    { ExceptionCode::IllegalFunction, "Illegal function." },
+    { ExceptionCode::IllegalDataAddress, "Illegal data address." },
+    { ExceptionCode::IllegalDataValue, "Illegal data value." },
+    { ExceptionCode::ServerDeviceFailure, "Server device failure." },
+    { ExceptionCode::Acknowledge, "Acknowledge." },
+    { ExceptionCode::ServerDeviceBusy, "Server device busy." },
+    { ExceptionCode::MemoryParityError, "Memory parity error." },
+    { ExceptionCode::GatewayPathUnavailable, "Gateway path unavailable." },
+    { ExceptionCode::GatewayTargetDeviceFailedToRespond, "Gateway target device failed to respond." }
 };
-
-template<typename... Args>
-inline Buffer::Buffer(const Args&... args)
+static const std::string Unknown = "Unknown exception code.";
+const std::string& ModbusException::toString(ExceptionCode code)
 {
-    (append(args), ...);
-}
-
-template<typename T>
-requires std::is_arithmetic_v<T>
-inline void Buffer::append(const T& value)
-{
-    std::ranges::reverse_copy(ArithmeticView(value), std::back_inserter(m_data));
+    if (auto it = ExceptionCodeTextMap.find(code); it != ExceptionCodeTextMap.end())
+    {
+        return it->second;
+    }
+    return Unknown;
 }
 } // namespace ModbusCpp
