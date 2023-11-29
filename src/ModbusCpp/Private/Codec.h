@@ -152,4 +152,12 @@ struct Codec<AbstractProtocol::FunctionCode::ReadHoldingRegisters>
     using Request  = Codec<AbstractProtocol::FunctionCode::ReadColis>::Request<AbstractProtocol::FunctionCode::ReadHoldingRegisters>;
     using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response;
 };
+
+template<>
+struct Codec<AbstractProtocol::FunctionCode::ReadInputRegisters>
+{
+    using Request  = Codec<AbstractProtocol::FunctionCode::ReadColis>::Request<AbstractProtocol::FunctionCode::ReadInputRegisters>;
+    using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response;
+};
+
 } // namespace ModbusCpp

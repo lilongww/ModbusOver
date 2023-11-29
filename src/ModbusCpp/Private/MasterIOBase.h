@@ -38,6 +38,7 @@ public:
     virtual std::vector<uint8_t> readCoils(uint16_t startingAddress, uint16_t quantityOfCoils)                 = 0;
     virtual std::vector<uint8_t> readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils)        = 0;
     virtual std::vector<uint16_t> readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters) = 0;
+    virtual std::vector<uint16_t> readInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters)   = 0;
 
 protected:
     const MasterCommonData& m_data;

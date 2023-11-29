@@ -55,6 +55,11 @@ std::vector<uint16_t> Master::readHoldingRegisters(uint16_t startingAddress, uin
     return m_impl->iobase->readHoldingRegisters(startingAddress, quantityOfRegisters);
 }
 
+std::vector<uint16_t> Master::readInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters)
+{
+    return m_impl->iobase->readInputRegisters(startingAddress, quantityOfRegisters);
+}
+
 template<>
 MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
                                                                         const std::chrono::milliseconds& connectTimeout)

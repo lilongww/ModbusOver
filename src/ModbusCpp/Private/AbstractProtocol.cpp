@@ -75,6 +75,27 @@ bool AbstractProtocol::onResponseReadHoldingRegisters(Buffer& buffer, std::vecto
     return true;
 }
 
+Buffer AbstractProtocol::requestReadInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters) const
+{
+    return toADU(Codec<FunctionCode::ReadInputRegisters>::Request(m_slave, startingAddress, quantityOfRegisters).encode());
+}
+
+bool AbstractProtocol::onResponseReadInputRegisters(Buffer& buffer, std::vector<uint16_t>& status) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toCommon(FunctionCode::ReadInputRegisters, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::ReadInputRegisters>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    status.resize(resp.coilStatus().size() / 2);
+    std::memcpy(status.data(), resp.coilStatus().data(), resp.coilStatus().size());
+    std::ranges::transform(status, status.begin(), [](auto state) { return std::byteswap(state); });
+    return true;
+}
+
 std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto, const uint8_t& slave)
 {
     switch (proto)
