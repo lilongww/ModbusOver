@@ -42,6 +42,7 @@ public:
     std::vector<uint8_t> readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils) override;
     std::vector<uint16_t> readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters) override;
     std::vector<uint16_t> readInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters) override;
+    void writeSingleCoil(uint16_t address, bool on) override;
 
 private:
     struct Impl;

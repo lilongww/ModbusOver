@@ -189,4 +189,16 @@ std::vector<uint16_t> MasterSerialPort::readInputRegisters(uint16_t startingAddr
     }
 }
 
+void MasterSerialPort::writeSingleCoil(uint16_t address, bool on)
+{
+    write(m_impl->protocol->requestWriteSingleCoil(address, on).data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_impl->protocol->onResponseWriteSingleCoil(buffer))
+            return;
+    }
+}
+
 } // namespace ModbusCpp

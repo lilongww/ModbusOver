@@ -160,4 +160,37 @@ struct Codec<AbstractProtocol::FunctionCode::ReadInputRegisters>
     using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response;
 };
 
+template<>
+struct Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>
+{
+    class Request : public Common
+    {
+    public:
+        inline Request() {}
+        inline Request(uint8_t slave, uint16_t address, bool on)
+            : Common(slave, AbstractProtocol::FunctionCode::WriteSingleCoil), m_address(address), m_value(on ? 0xFF00 : 0x0000)
+        {
+        }
+        inline bool state() const { return static_cast<bool>(m_value); }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_address);
+            buffer.append(m_value);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 4)
+                return false;
+            stream >> m_address;
+            stream >> m_value;
+            return true;
+        }
+
+    private:
+        uint16_t m_address;
+        uint16_t m_value;
+    };
+    using Response = Request;
+};
+
 } // namespace ModbusCpp

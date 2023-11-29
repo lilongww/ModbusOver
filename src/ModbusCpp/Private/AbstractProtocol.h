@@ -64,6 +64,8 @@ public:
     bool onResponseReadHoldingRegisters(Buffer& buffer, std::vector<uint16_t>& status) const;
     Buffer requestReadInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters) const;
     bool onResponseReadInputRegisters(Buffer& buffer, std::vector<uint16_t>& status) const;
+    Buffer requestWriteSingleCoil(uint16_t address, bool state) const;
+    bool onResponseWriteSingleCoil(Buffer& buffer) const;
 
     static std::shared_ptr<AbstractProtocol> create(ModbusProtocol proto, const uint8_t& slave);
 
