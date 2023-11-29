@@ -11,9 +11,21 @@ Buffer ModbusRTU::toADU(Buffer pdu) const
     return pdu;
 }
 
-std::optional<BufferStream> ModbusRTU::toPDU(Buffer& adu) const
+std::optional<BufferStream> ModbusRTU::toCommon(FunctionCode expectFunctionCode, Buffer& adu) const
 {
-    adu.data().erase(adu.data().begin() + adu.data().size() - 2, adu.data().end());
+    if (adu.size() < minimumSize())
+        return std::nullopt;
+    BufferStream stream(adu);
+    uint8_t slave, receiveCode;
+    stream >> slave >> receiveCode;
+    if (slave != m_slave) // 非请求从机回复
+    {
+        adu.data().clear();
+        return std::nullopt;
+    }
+    checkException(expectFunctionCode, receiveCode, stream);
+    if (crc16(adu.data().data(), static_cast<uint16_t>(adu.size() - sizeof(uint16_t))) != stream.crc())
+        throw std::exception("Response data crc error.");
     return BufferStream(adu);
 }
 
@@ -21,5 +33,4 @@ uint16_t ModbusRTU::aduMaximum() const { return 256; }
 
 // RTU最小数据包 id + functionCode + crc16 = 4
 uint16_t ModbusRTU::minimumSize() const { return 4; };
-
 } // namespace ModbusCpp

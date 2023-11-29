@@ -31,7 +31,7 @@ class BufferStream;
 class AbstractProtocol
 {
 public:
-    enum class FunctionCode
+    enum class FunctionCode : uint8_t
     {
         ReadColis                      = 0x01,
         ReadDiscreteInputs             = 0x02,
@@ -56,17 +56,19 @@ public:
     inline AbstractProtocol(const uint8_t& slave) : m_slave(slave) {}
     virtual ~AbstractProtocol();
     Buffer requestReadColis(uint16_t startingAddress, uint16_t quantityOfCoils) const;
-    bool onResponseReadColis(Buffer& buffer, uint8_t& slave, std::vector<uint8_t>& status) const;
+    bool onResponseReadColis(Buffer& buffer, std::vector<uint8_t>& status) const;
 
 protected:
-    virtual Buffer toADU(Buffer pdu) const                       = 0;
-    virtual std::optional<BufferStream> toPDU(Buffer& adu) const = 0;
-    virtual uint16_t aduMaximum() const                          = 0;
-    virtual void peakSlave(uint8_t& slave) const                 = 0;
-    virtual uint16_t minimumSize() const                         = 0;
-    constexpr static uint8_t toExceptionCode(uint8_t code) { return code + ExceptionCodeAddend; }
-    constexpr static uint8_t fromExceptionCode(uint8_t exceptionCode) { return exceptionCode - ExceptionCodeAddend; }
-    void checkException(uint8_t slave, BufferStream& stream) const;
+    virtual Buffer toADU(Buffer pdu) const                                                           = 0;
+    virtual std::optional<BufferStream> toCommon(FunctionCode expectFunctionCode, Buffer& adu) const = 0;
+    virtual uint16_t aduMaximum() const                                                              = 0;
+    virtual uint16_t minimumSize() const                                                             = 0;
+    constexpr static uint8_t toExceptionCode(FunctionCode code) { return static_cast<uint8_t>(code) + ExceptionCodeAddend; }
+    constexpr static FunctionCode fromExceptionCode(uint8_t exceptionCode)
+    {
+        return static_cast<FunctionCode>(exceptionCode - ExceptionCodeAddend);
+    }
+    void checkException(FunctionCode code, uint8_t receiveCode, BufferStream& stream) const;
 
 protected:
     const uint8_t& m_slave;

@@ -42,7 +42,7 @@ public:
         return std::forward<Self>(self).m_data;
     }
     template<typename T>
-    requires std::is_arithmetic_v<T>
+    requires std::is_arithmetic_v<T> || std::is_enum_v<T>
     inline void append(const T& value);
     inline void appendCrc(uint16_t value) { std::ranges::copy(ArithmeticView(value), std::back_inserter(m_data)); }
     inline size_t size() const { return m_data.size(); }
@@ -58,7 +58,7 @@ inline Buffer::Buffer(const Args&... args)
 }
 
 template<typename T>
-requires std::is_arithmetic_v<T>
+requires std::is_arithmetic_v<T> || std::is_enum_v<T>
 inline void Buffer::append(const T& value)
 {
     std::ranges::reverse_copy(ArithmeticView(value), std::back_inserter(m_data));
