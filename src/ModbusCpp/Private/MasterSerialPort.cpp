@@ -163,4 +163,17 @@ std::vector<boost::uint8_t> MasterSerialPort::readDiscreteInputs(uint16_t starti
     }
 }
 
+std::vector<uint16_t> MasterSerialPort::readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters)
+{
+    write(m_impl->protocol->requestReadHoldingRegisters(startingAddress, quantityOfRegisters).data());
+    std::vector<uint16_t> ret;
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_impl->protocol->onResponseReadHoldingRegisters(buffer, ret))
+            return ret;
+    }
+}
+
 } // namespace ModbusCpp

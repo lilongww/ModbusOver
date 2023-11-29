@@ -45,6 +45,16 @@ std::vector<uint8_t> Master::readCoils(uint16_t startingAddress, uint16_t quanti
     return m_impl->iobase->readCoils(startingAddress, quantityOfCoils);
 }
 
+std::vector<uint8_t> Master::readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils)
+{
+    return m_impl->iobase->readDiscreteInputs(startingAddress, quantityOfCoils);
+}
+
+std::vector<uint16_t> Master::readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters)
+{
+    return m_impl->iobase->readHoldingRegisters(startingAddress, quantityOfRegisters);
+}
+
 template<>
 MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
                                                                         const std::chrono::milliseconds& connectTimeout)

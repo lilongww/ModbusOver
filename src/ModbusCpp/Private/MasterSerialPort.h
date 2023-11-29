@@ -40,6 +40,7 @@ public:
     void setStopBits(StopBits bits);
     std::vector<uint8_t> readCoils(uint16_t startingAddress, uint16_t quantityOfCoils) override;
     std::vector<uint8_t> readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils) override;
+    std::vector<uint16_t> readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters) override;
 
 private:
     struct Impl;

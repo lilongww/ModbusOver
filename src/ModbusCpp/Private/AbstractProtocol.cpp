@@ -5,6 +5,7 @@
 #include "ModbusRTU.h"
 #include "ModbusTCP.h"
 
+#include <cstring>
 #include <functional>
 #include <map>
 
@@ -50,6 +51,27 @@ bool AbstractProtocol::onResponseReadDiscreteInputs(Buffer& buffer, std::vector<
     if (!resp.decode(*stream))
         return false;
     status = std::move(resp).coilStatus();
+    return true;
+}
+
+Buffer AbstractProtocol::requestReadHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters) const
+{
+    return toADU(Codec<FunctionCode::ReadHoldingRegisters>::Request(m_slave, startingAddress, quantityOfRegisters).encode());
+}
+
+bool AbstractProtocol::onResponseReadHoldingRegisters(Buffer& buffer, std::vector<uint16_t>& status) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toCommon(FunctionCode::ReadHoldingRegisters, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::ReadHoldingRegisters>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    status.resize(resp.coilStatus().size() / 2);
+    std::memcpy(status.data(), resp.coilStatus().data(), resp.coilStatus().size());
+    std::ranges::transform(status, status.begin(), [](auto state) { return std::byteswap(state); });
     return true;
 }
 
