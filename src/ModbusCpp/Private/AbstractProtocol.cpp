@@ -34,6 +34,25 @@ bool AbstractProtocol::onResponseReadColis(Buffer& buffer, std::vector<uint8_t>&
     return true;
 }
 
+Buffer AbstractProtocol::requestReadDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils) const
+{
+    return toADU(Codec<FunctionCode::ReadDiscreteInputs>::Request(m_slave, startingAddress, quantityOfCoils).encode());
+}
+
+bool AbstractProtocol::onResponseReadDiscreteInputs(Buffer& buffer, std::vector<uint8_t>& status) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toCommon(FunctionCode::ReadDiscreteInputs, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::ReadDiscreteInputs>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    status = std::move(resp).coilStatus();
+    return true;
+}
+
 std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto, const uint8_t& slave)
 {
     switch (proto)

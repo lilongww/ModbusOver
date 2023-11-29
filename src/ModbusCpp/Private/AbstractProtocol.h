@@ -58,6 +58,8 @@ public:
     virtual ~AbstractProtocol();
     Buffer requestReadColis(uint16_t startingAddress, uint16_t quantityOfCoils) const;
     bool onResponseReadColis(Buffer& buffer, std::vector<uint8_t>& status) const;
+    Buffer requestReadDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils) const;
+    bool onResponseReadDiscreteInputs(Buffer& buffer, std::vector<uint8_t>& status) const;
     static std::shared_ptr<AbstractProtocol> create(ModbusProtocol proto, const uint8_t& slave);
 
 protected:

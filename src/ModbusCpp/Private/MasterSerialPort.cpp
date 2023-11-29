@@ -150,4 +150,17 @@ std::vector<uint8_t> MasterSerialPort::readCoils(uint16_t startingAddress, uint1
     }
 }
 
+std::vector<boost::uint8_t> MasterSerialPort::readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils)
+{
+    write(m_impl->protocol->requestReadDiscreteInputs(startingAddress, quantityOfCoils).data());
+    std::vector<uint8_t> ret;
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_impl->protocol->onResponseReadDiscreteInputs(buffer, ret))
+            return ret;
+    }
+}
+
 } // namespace ModbusCpp

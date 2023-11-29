@@ -71,14 +71,13 @@ struct Codec
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadColis>
 {
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadColis>
     class Request : public Common
     {
     public:
         inline Request() {}
         inline Request(uint8_t slave, uint16_t startingAddress, uint16_t quantityOfCoils)
-            : Common(slave, AbstractProtocol::FunctionCode::ReadColis)
-            , m_startingAddress(startingAddress)
-            , m_quantityOfCoils(quantityOfCoils)
+            : Common(slave, code), m_startingAddress(startingAddress), m_quantityOfCoils(quantityOfCoils)
         {
         }
         inline uint16_t startingAddress() const { return m_startingAddress; }
@@ -138,5 +137,12 @@ struct Codec<AbstractProtocol::FunctionCode::ReadColis>
     private:
         std::vector<uint8_t> m_coilStatus;
     };
+};
+
+template<>
+struct Codec<AbstractProtocol::FunctionCode::ReadDiscreteInputs>
+{
+    using Request  = Codec<AbstractProtocol::FunctionCode::ReadColis>::Request<AbstractProtocol::FunctionCode::ReadDiscreteInputs>;
+    using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response;
 };
 } // namespace ModbusCpp
