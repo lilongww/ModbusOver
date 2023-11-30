@@ -42,6 +42,8 @@ public:
     std::vector<uint16_t> readInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters);
     void writeSingleCoil(uint16_t address, bool on);
     void writeSingleRegister(uint16_t address, uint16_t value);
+    void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states);
+    void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, const std::vector<uint8_t>& states);
 
 private:
     struct Impl;

@@ -128,6 +128,24 @@ bool AbstractProtocol::onResponseWriteSingleRegister(Buffer& buffer) const
     return resp.decode(*stream);
 }
 
+Buffer AbstractProtocol::requestWriteMultipleCoils(uint16_t startingAddress,
+                                                   uint16_t quantityOfOutputs,
+                                                   std::vector<uint8_t>&& states) const
+{
+    return toADU(Codec<FunctionCode::WriteMultipleCoils>::Request(m_slave, startingAddress, quantityOfOutputs, std::move(states)).encode());
+}
+
+bool AbstractProtocol::onResponseWriteMultipleCoils(Buffer& buffer) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toCommon(FunctionCode::WriteMultipleCoils, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::WriteMultipleCoils>::Response resp;
+    return resp.decode(*stream);
+}
+
 std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto, const uint8_t& slave)
 {
     switch (proto)

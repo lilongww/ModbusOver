@@ -22,6 +22,8 @@
 #include "AbstractProtocol.h"
 #include "BufferStream.h"
 
+#include <cstdlib>
+
 namespace ModbusCpp
 {
 class Common
@@ -214,5 +216,52 @@ struct Codec<AbstractProtocol::FunctionCode::WriteSingleRegister>
         using Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>::Request<AbstractProtocol::FunctionCode::WriteSingleRegister>::state;
     };
     using Response = Request;
+};
+
+template<>
+struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::WriteMultipleCoils>
+    class Request : public Common
+    {
+    public:
+        inline Request() {}
+        inline Request(uint8_t slave, uint16_t startingAddress, uint16_t quantityOfOutputs, std::vector<uint8_t>&& states)
+            : Common(slave, code), m_startingAddress(startingAddress), m_quantityOfOutputs(quantityOfOutputs), m_states(std::move(states))
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_startingAddress);
+            buffer.append(m_quantityOfOutputs);
+            for (auto state : m_states)
+            {
+                buffer.append(state);
+            }
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 5)
+                return false;
+            stream >> m_startingAddress;
+            stream >> m_quantityOfOutputs;
+            auto d    = std::div(m_quantityOfOutputs, 8);
+            auto size = d.quot + (d.rem ? 1 : 0);
+            if (stream.size() < size)
+                return false;
+            m_states.resize(size);
+            for (auto i : std::views::iota(0, size))
+            {
+                stream >> m_states[i];
+            }
+            return true;
+        }
+
+    private:
+        uint16_t m_startingAddress;
+        uint16_t m_quantityOfOutputs;
+        std::vector<uint8_t> m_states;
+    };
+    using Response = Request<AbstractProtocol::FunctionCode::WriteMultipleCoils>;
 };
 } // namespace ModbusCpp

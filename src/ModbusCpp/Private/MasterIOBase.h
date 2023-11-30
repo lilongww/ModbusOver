@@ -30,17 +30,18 @@ class MasterIOBase
 {
 public:
     MasterIOBase(const MasterCommonData& data) : m_data(data) {}
-    virtual ~MasterIOBase() noexcept                                                                           = default;
-    virtual std::vector<uint8_t> read()                                                                        = 0;
-    virtual void write(std::vector<uint8_t>&& data)                                                            = 0;
-    virtual void close() noexcept                                                                              = 0;
-    virtual bool connected() const noexcept                                                                    = 0;
-    virtual std::vector<uint8_t> readCoils(uint16_t startingAddress, uint16_t quantityOfCoils)                 = 0;
-    virtual std::vector<uint8_t> readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils)        = 0;
-    virtual std::vector<uint16_t> readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters) = 0;
-    virtual std::vector<uint16_t> readInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters)   = 0;
-    virtual void writeSingleCoil(uint16_t address, bool on)                                                    = 0;
-    virtual void writeSingleRegister(uint16_t address, uint16_t value)                                         = 0;
+    virtual ~MasterIOBase() noexcept                                                                                   = default;
+    virtual std::vector<uint8_t> read()                                                                                = 0;
+    virtual void write(std::vector<uint8_t>&& data)                                                                    = 0;
+    virtual void close() noexcept                                                                                      = 0;
+    virtual bool connected() const noexcept                                                                            = 0;
+    virtual std::vector<uint8_t> readCoils(uint16_t startingAddress, uint16_t quantityOfCoils)                         = 0;
+    virtual std::vector<uint8_t> readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils)                = 0;
+    virtual std::vector<uint16_t> readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters)         = 0;
+    virtual std::vector<uint16_t> readInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters)           = 0;
+    virtual void writeSingleCoil(uint16_t address, bool on)                                                            = 0;
+    virtual void writeSingleRegister(uint16_t address, uint16_t value)                                                 = 0;
+    virtual void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states) = 0;
 
 protected:
     const MasterCommonData& m_data;

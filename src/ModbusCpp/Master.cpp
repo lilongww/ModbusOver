@@ -64,6 +64,16 @@ void Master::writeSingleCoil(uint16_t address, bool on) { m_impl->iobase->writeS
 
 void Master::writeSingleRegister(uint16_t address, uint16_t value) { m_impl->iobase->writeSingleRegister(address, value); }
 
+void Master::writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states)
+{
+    m_impl->iobase->writeMultipleCoils(startingAddress, quantityOfCoils, std::move(states));
+}
+
+void Master::writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, const std::vector<uint8_t>& states)
+{
+    writeMultipleCoils(startingAddress, quantityOfCoils, std::vector<uint8_t>(states.begin(), states.end()));
+}
+
 template<>
 MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
                                                                         const std::chrono::milliseconds& connectTimeout)

@@ -213,4 +213,16 @@ void MasterSerialPort::writeSingleRegister(uint16_t address, uint16_t value)
     }
 }
 
+void MasterSerialPort::writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states)
+{
+    write(m_impl->protocol->requestWriteMultipleCoils(startingAddress, quantityOfCoils, std::move(states)).data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_impl->protocol->onResponseWriteMultipleCoils(buffer))
+            return;
+    }
+}
+
 } // namespace ModbusCpp
