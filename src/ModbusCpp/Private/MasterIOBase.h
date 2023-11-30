@@ -46,6 +46,9 @@ public:
     void writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values);
 
 protected:
+    bool isBroadcast() const { return m_data.slave == Broadcast; }
+
+protected:
     const MasterCommonData& m_data;
     std::shared_ptr<AbstractProtocol> m_protocol;
 };

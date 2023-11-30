@@ -26,6 +26,6 @@ namespace ModbusCpp
 struct MasterCommonData
 {
     std::chrono::milliseconds timeout { 5000LL };
-    uint8_t slave { 1 };
+    uint8_t slave { 0xFF };
 };
 } // namespace ModbusCpp
