@@ -2,7 +2,7 @@
 #include "AbstractProtocol.h"
 #include "Buffer.h"
 
-namespace ModbusCpp
+namespace ModbusOver
 {
 std::vector<uint8_t> MasterIOBase::readCoils(uint16_t startingAddress, uint16_t quantityOfCoils)
 {
@@ -111,4 +111,4 @@ void MasterIOBase::writeMultipleRegisters(uint16_t startingAddress, std::vector<
             return;
     }
 }
-} // namespace ModbusCpp
+} // namespace ModbusOver

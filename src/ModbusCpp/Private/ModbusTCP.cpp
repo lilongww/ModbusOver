@@ -1,7 +1,7 @@
 ﻿#include "ModbusTCP.h"
 #include "BufferStream.h"
 
-namespace ModbusCpp
+namespace ModbusOver
 {
 constexpr auto MBAPSize = 7;
 
@@ -49,4 +49,4 @@ uint16_t ModbusTCP::aduMaximum() const { return 260; }
 // MBAP size + functionCode size
 uint16_t ModbusTCP::minimumSize() const { return MBAPSize + 1; }
 
-} // namespace ModbusCpp
+} // namespace ModbusOver

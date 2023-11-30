@@ -3,7 +3,7 @@
 
 #include <boost/asio.hpp>
 
-namespace ModbusCpp
+namespace ModbusOver
 {
 struct MasterSerialPort::Impl
 {
@@ -135,4 +135,4 @@ void MasterSerialPort::setStopBits(StopBits bits)
     m_impl->serialPort.set_option(boost::asio::serial_port::stop_bits { static_cast<boost::asio::serial_port::stop_bits::type>(bits) });
 }
 
-} // namespace ModbusCpp
+} // namespace ModbusOver

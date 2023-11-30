@@ -9,7 +9,7 @@
 #include <functional>
 #include <map>
 
-namespace ModbusCpp
+namespace ModbusOver
 {
 
 AbstractProtocol::~AbstractProtocol() {}
@@ -187,4 +187,4 @@ void AbstractProtocol::checkException(FunctionCode code, uint8_t receiveCode, Bu
     }
 }
 
-} // namespace ModbusCpp
+} // namespace ModbusOver

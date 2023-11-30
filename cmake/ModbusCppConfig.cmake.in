@@ -1,6 +1,0 @@
-@PACKAGE_INIT@
-
-include_directories("@includedir@")
-include("@installdir@/cmake/ModbusCppTargets.cmake")
-
-set(ModbusCpp_INCLUDEDIR "@includedir@")

@@ -1,27 +1,27 @@
 ﻿/*********************************************************************************
 **                                                                              **
 **  Copyright (C) 2023 LiLong                                                   **
-**  This file is part of ModbusCpp.                                             **
+**  This file is part of ModbusOver.                                             **
 **                                                                              **
-**  ModbusCpp is free software: you can redistribute it and/or modify           **
+**  ModbusOver is free software: you can redistribute it and/or modify           **
 **  it under the terms of the GNU Lesser General Public License as published by **
 **  the Free Software Foundation, either version 3 of the License, or           **
 **  (at your option) any later version.                                         **
 **                                                                              **
-**  ModbusCpp is distributed in the hope that it will be useful,                **
+**  ModbusOver is distributed in the hope that it will be useful,                **
 **  but WITHOUT ANY WARRANTY; without even the implied warranty of              **
 **  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               **
 **  GNU Lesser General Public License for more details.                         **
 **                                                                              **
 **  You should have received a copy of the GNU Lesser General Public License    **
-**  along with ModbusCpp.  If not, see <https://www.gnu.org/licenses/>.         **
+**  along with ModbusOver.  If not, see <https://www.gnu.org/licenses/>.         **
 **********************************************************************************/
 #include "Master.h"
 #include "Private/CommonData.h"
 #include "Private/MasterSerialPort.h"
 #include "Private/MasterTCP.h"
 
-namespace ModbusCpp
+namespace ModbusOver
 {
 inline void throwUnconnected(const std::shared_ptr<MasterIOBase>& ptr)
 {
@@ -113,17 +113,17 @@ void Master::writeMultipleRegisters(uint16_t startingAddress, const std::vector<
 }
 
 template<>
-MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
+MODBUSOVER_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
                                                                         const std::chrono::milliseconds& connectTimeout)
 {
     m_impl->iobase = std::make_shared<MasterSerialPort>(m_impl->common);
 }
 
 template<>
-MODBUSCPP_EXPORT void Master::connect<Address<AddressType::TCP>>(const Address<AddressType::TCP>& address,
+MODBUSOVER_EXPORT void Master::connect<Address<AddressType::TCP>>(const Address<AddressType::TCP>& address,
                                                                  const std::chrono::milliseconds& connectTimeout)
 {
     m_impl->iobase = std::make_shared<MasterTCP>(m_impl->common);
 }
 
-} // namespace ModbusCpp
+} // namespace ModbusOver

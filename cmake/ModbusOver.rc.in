@@ -17,12 +17,12 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "FileDescription", "ModbusCpp"
+            VALUE "FileDescription", "ModbusOver"
             VALUE "FileVersion", "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}"
-            VALUE "InternalName", "ModbusCpp"
-            VALUE "LegalCopyright", "Copyright (C) 2023 ModbusCpp"
-            VALUE "OriginalFilename", "ModbusCpp.dll"
-            VALUE "ProductName", "ModbusCpp"
+            VALUE "InternalName", "ModbusOver"
+            VALUE "LegalCopyright", "Copyright (C) 2023 ModbusOver"
+            VALUE "OriginalFilename", "ModbusOver.dll"
+            VALUE "ProductName", "ModbusOver"
             VALUE "ProductVersion", "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}"
         END
     END

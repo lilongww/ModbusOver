@@ -1,0 +1,6 @@
+@PACKAGE_INIT@
+
+include_directories("@includedir@")
+include("@installdir@/cmake/ModbusOverTargets.cmake")
+
+set(ModbusOver_INCLUDEDIR "@includedir@")

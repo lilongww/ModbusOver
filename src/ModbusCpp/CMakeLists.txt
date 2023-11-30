@@ -1,11 +1,11 @@
-﻿set(TARGET_NAME ModbusCpp)
+﻿set(TARGET_NAME ModbusOver)
 
-add_compile_definitions(MODBUSCPP_LIB)
-if(BUILD_MODBUSCPP_STATIC)
-    add_compile_definitions(BUILD_MODBUSCPP_STATIC)
-    set(MODBUSCPP_OPT)
+add_compile_definitions(MODBUSOVER_LIB)
+if(BUILD_MODBUSOVER_STATIC)
+    add_compile_definitions(BUILD_MODBUSOVER_STATIC)
+    set(MODBUSOVER_OPT)
 else()
-    set(MODBUSCPP_OPT SHARED)
+    set(MODBUSOVER_OPT SHARED)
 endif()
 
 find_package(Boost COMPONENTS system REQUIRED)
@@ -17,14 +17,14 @@ file(GLOB DOCS "Docs/*.qdoc")
 file(GLOB RESOURCES "*.rc")
 
 if(MSVC)
-    set(MODBUSCPP_VERSIONINFO_RC ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_NAME}.rc)
-    configure_file("${PROJECT_SOURCE_DIR}/cmake/${TARGET_NAME}.rc.in" "${MODBUSCPP_VERSIONINFO_RC}")
-    list(APPEND RESOURCES ${MODBUSCPP_VERSIONINFO_RC}) 
+    set(MODBUSOVER_VERSIONINFO_RC ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_NAME}.rc)
+    configure_file("${PROJECT_SOURCE_DIR}/cmake/${TARGET_NAME}.rc.in" "${MODBUSOVER_VERSIONINFO_RC}")
+    list(APPEND RESOURCES ${MODBUSOVER_VERSIONINFO_RC}) 
 endif(MSVC)
 
-set(MODBUSCPP_VERSION_H ${CMAKE_CURRENT_BINARY_DIR}/Version.h)
-configure_file("${PROJECT_SOURCE_DIR}/cmake/Version.h.in" "${MODBUSCPP_VERSION_H}")
-list(APPEND HEADERS ${MODBUSCPP_VERSION_H}) 
+set(MODBUSOVER_VERSION_H ${CMAKE_CURRENT_BINARY_DIR}/Version.h)
+configure_file("${PROJECT_SOURCE_DIR}/cmake/Version.h.in" "${MODBUSOVER_VERSION_H}")
+list(APPEND HEADERS ${MODBUSOVER_VERSION_H}) 
 
 source_group("Headers" FILES ${HEADERS})
 source_group("Sources" FILES ${SOURCES})
@@ -32,7 +32,7 @@ source_group("Privates" FILES ${PRIVATES})
 source_group("Docs" FILES ${DOCS})
 source_group("Resources" FILES ${RESOURCES})
 
-add_library(${TARGET_NAME} ${MODBUSCPP_OPT}
+add_library(${TARGET_NAME} ${MODBUSOVER_OPT}
     ${HEADERS}
     ${SOURCES}
     ${PRIVATES}
@@ -40,7 +40,7 @@ add_library(${TARGET_NAME} ${MODBUSCPP_OPT}
     ${RESOURCES}
     )
 
-if(NOT BUILD_MODBUSCPP_STATIC)
+if(NOT BUILD_MODBUSOVER_STATIC)
     target_link_libraries(${TARGET_NAME} PUBLIC Setupapi PRIVATE Boost::system)
 endif()
 set_target_properties(${TARGET_NAME} PROPERTIES PUBLIC_HEADER "${HEADERS}")

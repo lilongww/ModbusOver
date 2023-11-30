@@ -3,7 +3,7 @@
 #include "BufferStream.h"
 #include "CRC.h"
 
-namespace ModbusCpp
+namespace ModbusOver
 {
 Buffer ModbusRTU::toADU(Buffer pdu) const
 {
@@ -35,4 +35,4 @@ uint16_t ModbusRTU::aduMaximum() const { return 256; }
 
 // RTU最小数据包 id + functionCode + crc16 = 4
 uint16_t ModbusRTU::minimumSize() const { return 4; };
-} // namespace ModbusCpp
+} // namespace ModbusOver
