@@ -31,7 +31,7 @@ public:
     Master();
     virtual ~Master();
     template<IsAddress T>
-    void connect(const T& address, const std::chrono::milliseconds& connectTimeout);
+    void connect(const T& address, const std::chrono::milliseconds& connectTimeout = std::chrono::milliseconds(5000));
     void close() noexcept;
     void setTimeout(const std::chrono::milliseconds& timeout);
     const std::chrono::milliseconds& timeout() const;
