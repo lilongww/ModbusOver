@@ -23,6 +23,13 @@
 
 namespace ModbusCpp
 {
+inline void throwUnconnected(const std::shared_ptr<MasterIOBase>& ptr)
+{
+    if (!ptr)
+    {
+        throw std::runtime_error("No connection.");
+    }
+}
 struct Master::Impl
 {
     std::shared_ptr<MasterIOBase> iobase;
@@ -32,6 +39,12 @@ struct Master::Impl
 Master::Master() : m_impl(std::make_unique<Impl>()) {}
 
 Master::~Master() {}
+
+void Master::close() noexcept
+{
+    if (m_impl->iobase)
+        m_impl->iobase->close();
+}
 
 void Master::setTimeout(const std::chrono::milliseconds& timeout) { m_impl->common.timeout = timeout; }
 
@@ -43,30 +56,43 @@ uint8_t Master::slave() const { return m_impl->common.slave; }
 
 std::vector<uint8_t> Master::readCoils(uint16_t startingAddress, uint16_t quantityOfCoils)
 {
+    throwUnconnected(m_impl->iobase);
     return m_impl->iobase->readCoils(startingAddress, quantityOfCoils);
 }
 
 std::vector<uint8_t> Master::readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils)
 {
+    throwUnconnected(m_impl->iobase);
     return m_impl->iobase->readDiscreteInputs(startingAddress, quantityOfCoils);
 }
 
 std::vector<uint16_t> Master::readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters)
 {
+    throwUnconnected(m_impl->iobase);
     return m_impl->iobase->readHoldingRegisters(startingAddress, quantityOfRegisters);
 }
 
 std::vector<uint16_t> Master::readInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters)
 {
+    throwUnconnected(m_impl->iobase);
     return m_impl->iobase->readInputRegisters(startingAddress, quantityOfRegisters);
 }
 
-void Master::writeSingleCoil(uint16_t address, bool on) { m_impl->iobase->writeSingleCoil(address, on); }
+void Master::writeSingleCoil(uint16_t address, bool on)
+{
+    throwUnconnected(m_impl->iobase);
+    m_impl->iobase->writeSingleCoil(address, on);
+}
 
-void Master::writeSingleRegister(uint16_t address, uint16_t value) { m_impl->iobase->writeSingleRegister(address, value); }
+void Master::writeSingleRegister(uint16_t address, uint16_t value)
+{
+    throwUnconnected(m_impl->iobase);
+    m_impl->iobase->writeSingleRegister(address, value);
+}
 
 void Master::writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states)
 {
+    throwUnconnected(m_impl->iobase);
     m_impl->iobase->writeMultipleCoils(startingAddress, quantityOfCoils, std::move(states));
 }
 
@@ -77,6 +103,7 @@ void Master::writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoi
 
 void Master::writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values)
 {
+    throwUnconnected(m_impl->iobase);
     m_impl->iobase->writeMultipleRegisters(startingAddress, std::move(values));
 }
 

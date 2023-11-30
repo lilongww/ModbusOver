@@ -32,6 +32,7 @@ public:
     virtual ~Master();
     template<IsAddress T>
     void connect(const T& address, const std::chrono::milliseconds& connectTimeout);
+    void close() noexcept;
     void setTimeout(const std::chrono::milliseconds& timeout);
     const std::chrono::milliseconds& timeout() const;
     void setSlave(uint8_t slave);
