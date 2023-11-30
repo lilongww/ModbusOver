@@ -27,9 +27,12 @@ struct ABCD
     uint8_t a, b, c, d;
 };
 
-constexpr _toABCD(const uint16_t* src)
+constexpr ABCD _toABCD(const uint16_t* src)
 {
-    return ABCD { (src[0] >> 8) & 0xFF, (src[0] >> 0) & 0xFF, (src[1] >> 8) & 0xFF, (src[1] >> 0) & 0xFF };
+    return ABCD { static_cast<uint8_t>((src[0] >> 8) & 0xFF),
+                  static_cast<uint8_t>((src[0] >> 0) & 0xFF),
+                  static_cast<uint8_t>((src[1] >> 8) & 0xFF),
+                  static_cast<uint8_t>((src[1] >> 0) & 0xFF) };
 }
 
 constexpr float toFloatABCD(const uint16_t* src)
@@ -60,7 +63,7 @@ constexpr float toFloatCDAB(const uint16_t* src)
     return std::bit_cast<float>(i);
 }
 
-constexpr void fromFloatABCD(float f, uint16_t* dest)
+inline void fromFloatABCD(float f, uint16_t* dest)
 {
     uint32_t i   = std::bit_cast<uint32_t>(f);
     uint8_t* out = reinterpret_cast<uint8_t*>(dest);
@@ -74,7 +77,7 @@ constexpr void fromFloatABCD(float f, uint16_t* dest)
     out[3]       = d;
 }
 
-constexpr void fromFloatDCBA(float f, uint16_t* dest)
+inline void fromFloatDCBA(float f, uint16_t* dest)
 {
     uint32_t i   = std::bit_cast<uint32_t>(f);
     uint8_t* out = reinterpret_cast<uint8_t*>(dest);
@@ -88,7 +91,7 @@ constexpr void fromFloatDCBA(float f, uint16_t* dest)
     out[3]       = a;
 }
 
-constexpr void fromFloatBADC(float f, uint16_t* dest)
+inline void fromFloatBADC(float f, uint16_t* dest)
 {
     uint32_t i   = std::bit_cast<uint32_t>(f);
     uint8_t* out = reinterpret_cast<uint8_t*>(dest);
@@ -102,7 +105,7 @@ constexpr void fromFloatBADC(float f, uint16_t* dest)
     out[3]       = c;
 }
 
-constexpr void fromFloatCDAB(float f, uint16_t* dest)
+inline void fromFloatCDAB(float f, uint16_t* dest)
 {
     uint32_t i   = std::bit_cast<uint32_t>(f);
     uint8_t* out = reinterpret_cast<uint8_t*>(dest);
