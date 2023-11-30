@@ -170,6 +170,8 @@ std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto,
     {
     case ModbusProtocol::ModbusRTU:
         return std::make_shared<ModbusRTU>(slave);
+    case ModbusProtocol::ModbusTCP:
+        return std::make_shared<ModbusTCP>(slave);
     default:
         return nullptr;
     }
