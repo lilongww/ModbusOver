@@ -30,7 +30,6 @@ struct MasterTCP::Impl
     boost::asio::io_context::work worker { io };
     std::jthread thread;
     std::vector<uint8_t> writeBuffer;
-    boost::asio::streambuf readBuffer;
 };
 
 MasterTCP::MasterTCP(const MasterCommonData& data) : MasterIOBase(data), m_impl(std::make_unique<Impl>())
@@ -84,17 +83,17 @@ std::vector<uint8_t> MasterTCP::read()
     mutex->lock();
     auto error = std::make_shared<boost::system::error_code>();
     auto size  = std::make_shared<std::size_t>(0);
+    auto ret   = std::make_shared<std::vector<uint8_t>>(260);
     m_impl->io.post(
         [=]()
         {
-            boost::asio::async_read(m_impl->socket,
-                                    m_impl->readBuffer,
-                                    [=](const boost::system::error_code& e, std::size_t s)
-                                    {
-                                        *size  = s;
-                                        *error = e;
-                                        mutex->unlock();
-                                    });
+            m_impl->socket.async_read_some(boost::asio::buffer(*ret),
+                                           [=](const boost::system::error_code& e, std::size_t s)
+                                           {
+                                               *size  = s;
+                                               *error = e;
+                                               mutex->unlock();
+                                           });
         });
 
     if (!mutex->try_lock_for(m_data.timeout))
@@ -107,9 +106,8 @@ std::vector<uint8_t> MasterTCP::read()
         m_impl->socket.close();
         boost::asio::detail::throw_error(*error, "readAllAscii");
     }
-    auto data = boost::asio::buffer_cast<const uint8_t*>(m_impl->readBuffer.data());
-    std::vector<uint8_t> buffer(data, data + m_impl->readBuffer.size());
-    return buffer;
+    ret->resize(*size);
+    return *ret;
 }
 
 void MasterTCP::write(std::vector<uint8_t>&& data)

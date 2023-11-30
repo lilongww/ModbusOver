@@ -19,6 +19,7 @@
 
 #pragma once
 
+#include "ArithmeticView.h"
 #include "Buffer.h"
 
 #include <ranges>
@@ -37,11 +38,11 @@ public:
         m_offset += sizeof(value);
         return *this;
     }
-    inline uint16_t crc() const { return *reinterpret_cast<const uint16_t*>(m_data.at(m_data.size() - 2)); }
+    inline uint16_t crc() const { return std::byteswap(*reinterpret_cast<const uint16_t*>(&m_data.at(m_data.size() - 2))); }
     template<typename T>
     inline void peak(T& value)
     {
-        std::ranges::reverse_copy(m_data | std::views::drop(m_offset) | std::views::take(sizeof(T)), reinterpret_cast<uint8_t*>(value));
+        std::ranges::reverse_copy(m_data | std::views::drop(m_offset) | std::views::take(sizeof(T)), reinterpret_cast<int8_t*>(&value));
     }
 
 private:

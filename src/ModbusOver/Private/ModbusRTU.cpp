@@ -26,7 +26,7 @@ namespace ModbusOver
 Buffer ModbusRTU::toADU(Buffer pdu) const
 {
     pdu.prepend(m_slave);
-    pdu.appendCrc(crc16(pdu.data().data(), static_cast<uint16_t>(pdu.data().size())));
+    pdu.append(crc16(pdu.data().data(), static_cast<uint16_t>(pdu.data().size())));
     return pdu;
 }
 
