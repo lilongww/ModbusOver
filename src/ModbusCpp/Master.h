@@ -19,7 +19,7 @@
 #pragma once
 
 #include "Address.h"
-#include "modbuscpp_global.h"
+#include "modbusover_global.h"
 
 #include <chrono>
 

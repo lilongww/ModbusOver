@@ -19,7 +19,7 @@
 #pragma once
 
 #include "Standard.h"
-#include "modbuscpp_global.h"
+#include "modbusover_global.h"
 
 #include <stdexcept>
 
