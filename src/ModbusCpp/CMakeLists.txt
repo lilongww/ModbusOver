@@ -1,7 +1,5 @@
 ﻿set(TARGET_NAME ModbusCpp)
 
-include(${PROJECT_SOURCE_DIR}/cmake/ExportHelper.cmake)
-
 add_compile_definitions(MODBUSCPP_LIB)
 if(BUILD_MODBUSCPP_STATIC)
     add_compile_definitions(BUILD_MODBUSCPP_STATIC)
@@ -46,5 +44,4 @@ if(NOT BUILD_MODBUSCPP_STATIC)
     target_link_libraries(${TARGET_NAME} PUBLIC Setupapi PRIVATE Boost::system)
 endif()
 set_target_properties(${TARGET_NAME} PROPERTIES PUBLIC_HEADER "${HEADERS}")
-
 export_install_target(${TARGET_NAME} ${INSTALL_INCLUDEDIR} ${INSTALL_LIBRARYDIR} ${INSTALL_BINDIR})
