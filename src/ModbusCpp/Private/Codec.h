@@ -262,6 +262,33 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>
         uint16_t m_quantityOfOutputs;
         std::vector<uint8_t> m_states;
     };
-    using Response = Request<AbstractProtocol::FunctionCode::WriteMultipleCoils>;
+
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::WriteMultipleCoils>
+    class Response : public Common
+    {
+    public:
+        inline Response() {}
+        inline Response(uint8_t slave, uint16_t startingAddress, uint16_t quantityOfOutputs)
+            : Common(slave, code), m_startingAddress(startingAddress), m_quantityOfOutputs(quantityOfOutputs)
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_startingAddress);
+            buffer.append(m_quantityOfOutputs);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 4)
+                return false;
+            stream >> m_startingAddress;
+            stream >> m_quantityOfOutputs;
+            return true;
+        }
+
+    private:
+        uint16_t m_startingAddress;
+        uint16_t m_quantityOfOutputs;
+    };
 };
 } // namespace ModbusCpp
