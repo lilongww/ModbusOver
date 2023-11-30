@@ -70,6 +70,8 @@ public:
     bool onResponseWriteSingleRegister(Buffer& buffer) const;
     Buffer requestWriteMultipleCoils(uint16_t startingAddress, uint16_t quantityOfOutputs, std::vector<uint8_t>&& states) const;
     bool onResponseWriteMultipleCoils(Buffer& buffer) const;
+    Buffer requestWriteMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values) const;
+    bool onResponseWriteMultipleRegisters(Buffer& buffer) const;
     static std::shared_ptr<AbstractProtocol> create(ModbusProtocol proto, const uint8_t& slave);
 
 protected:

@@ -74,6 +74,16 @@ void Master::writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoi
     writeMultipleCoils(startingAddress, quantityOfCoils, std::vector<uint8_t>(states.begin(), states.end()));
 }
 
+void Master::writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values)
+{
+    m_impl->iobase->writeMultipleRegisters(startingAddress, std::move(values));
+}
+
+void Master::writeMultipleRegisters(uint16_t startingAddress, const std::vector<uint16_t>& values)
+{
+    writeMultipleRegisters(startingAddress, std::vector<uint16_t>(values.begin(), values.end()));
+}
+
 template<>
 MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
                                                                         const std::chrono::milliseconds& connectTimeout)

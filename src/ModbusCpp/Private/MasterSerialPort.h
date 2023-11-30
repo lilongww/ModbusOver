@@ -45,6 +45,7 @@ public:
     void writeSingleCoil(uint16_t address, bool on) override;
     void writeSingleRegister(uint16_t address, uint16_t value) override;
     void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states) override;
+    void writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values) override;
 
 private:
     struct Impl;

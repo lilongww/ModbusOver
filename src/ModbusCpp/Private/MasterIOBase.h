@@ -42,6 +42,7 @@ public:
     virtual void writeSingleCoil(uint16_t address, bool on)                                                            = 0;
     virtual void writeSingleRegister(uint16_t address, uint16_t value)                                                 = 0;
     virtual void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states) = 0;
+    virtual void writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values)                      = 0;
 
 protected:
     const MasterCommonData& m_data;

@@ -59,8 +59,7 @@ bool Common::decode(this T& self, BufferStream& stream)
 {
     if (stream.size() < 2)
         return false;
-    stream >> self.m_slave;
-    stream >> self.m_functionCode;
+    stream >> self.m_slave >> self.m_functionCode;
     return self.unserialize(stream);
 }
 
@@ -94,8 +93,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadColis>
         {
             if (stream.size() < 4)
                 return false;
-            stream >> m_startingAddress;
-            stream >> m_quantityOfCoils;
+            stream >> m_startingAddress >> m_quantityOfCoils;
             return true;
         }
 
@@ -181,8 +179,7 @@ struct Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>
         {
             if (stream.size() < 4)
                 return false;
-            stream >> m_address;
-            stream >> m_value;
+            stream >> m_address >> m_value;
             return true;
         }
 
@@ -234,6 +231,8 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>
         {
             buffer.append(m_startingAddress);
             buffer.append(m_quantityOfOutputs);
+            uint8_t byteCount = static_cast<uint8_t>(m_states.size());
+            buffer.append(byteCount);
             for (auto state : m_states)
             {
                 buffer.append(state);
@@ -243,14 +242,12 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>
         {
             if (stream.size() < 5)
                 return false;
-            stream >> m_startingAddress;
-            stream >> m_quantityOfOutputs;
-            auto d    = std::div(m_quantityOfOutputs, 8);
-            auto size = d.quot + (d.rem ? 1 : 0);
+            uint8_t size;
+            stream >> m_startingAddress >> m_quantityOfOutputs >> size;
             if (stream.size() < size)
                 return false;
             m_states.resize(size);
-            for (auto i : std::views::iota(0, size))
+            for (auto i : std::views::iota(static_cast<uint8_t>(0), size))
             {
                 stream >> m_states[i];
             }
@@ -281,8 +278,7 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>
         {
             if (stream.size() < 4)
                 return false;
-            stream >> m_startingAddress;
-            stream >> m_quantityOfOutputs;
+            stream >> m_startingAddress >> m_quantityOfOutputs;
             return true;
         }
 
@@ -290,5 +286,56 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>
         uint16_t m_startingAddress;
         uint16_t m_quantityOfOutputs;
     };
+};
+
+template<>
+struct Codec<AbstractProtocol::FunctionCode::WriteMultipleRegisters>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::WriteMultipleRegisters>
+    class Request : public Common
+    {
+    public:
+        inline Request() {}
+        inline Request(uint8_t slave, uint16_t startingAddress, uint16_t quantityOfRegisters, std::vector<uint16_t>&& values)
+            : Common(slave, code)
+            , m_startingAddress(startingAddress)
+            , m_quantityOfRegisters(quantityOfRegisters)
+            , m_values(std::move(values))
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_startingAddress);
+            buffer.append(m_quantityOfRegisters);
+            uint8_t byteCount = static_cast<uint8_t>(m_values.size());
+            buffer.append(byteCount);
+            for (auto value : m_values)
+            {
+                buffer.append(value);
+            }
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 5)
+                return false;
+            uint8_t size;
+            stream >> m_startingAddress >> m_quantityOfRegisters >> size;
+            if (stream.size() < size)
+                return false;
+            m_values.resize(size);
+            for (auto i : std::views::iota(static_cast<uint8_t>(0), size))
+            {
+                stream >> m_values[i];
+            }
+            return true;
+        }
+
+    private:
+        uint16_t m_startingAddress;
+        uint16_t m_quantityOfRegisters;
+        std::vector<uint16_t> m_values;
+    };
+    using Response =
+        Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>::Response<AbstractProtocol::FunctionCode::WriteMultipleRegisters>;
 };
 } // namespace ModbusCpp
