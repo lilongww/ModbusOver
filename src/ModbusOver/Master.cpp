@@ -114,16 +114,20 @@ void Master::writeMultipleRegisters(uint16_t startingAddress, const std::vector<
 
 template<>
 MODBUSOVER_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
-                                                                        const std::chrono::milliseconds& connectTimeout)
+                                                                         const std::chrono::milliseconds& connectTimeout)
 {
-    m_impl->iobase = std::make_shared<MasterSerialPort>(m_impl->common);
+    auto io = std::make_shared<MasterSerialPort>(m_impl->common);
+    io->connect(address, connectTimeout);
+    m_impl->iobase = io;
 }
 
 template<>
 MODBUSOVER_EXPORT void Master::connect<Address<AddressType::TCP>>(const Address<AddressType::TCP>& address,
-                                                                 const std::chrono::milliseconds& connectTimeout)
+                                                                  const std::chrono::milliseconds& connectTimeout)
 {
-    m_impl->iobase = std::make_shared<MasterTCP>(m_impl->common);
+    auto io = std::make_shared<MasterTCP>(m_impl->common);
+    io->connect(address, connectTimeout);
+    m_impl->iobase = io;
 }
 
 } // namespace ModbusOver
