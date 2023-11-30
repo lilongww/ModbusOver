@@ -16,5 +16,22 @@
 **  You should have received a copy of the GNU Lesser General Public License    **
 **  along with ModbusCpp.  If not, see <https://www.gnu.org/licenses/>.         **
 **********************************************************************************/
-
 #pragma once
+
+#include "AbstractProtocol.h"
+
+namespace ModbusCpp
+{
+class ModbusTCP : public AbstractProtocol
+{
+public:
+    using AbstractProtocol::AbstractProtocol;
+    Buffer toADU(Buffer pdu) const override;
+    std::optional<BufferStream> toPDU(FunctionCode expectFunctionCode, Buffer& adu) const override;
+    uint16_t aduMaximum() const override;
+    uint16_t minimumSize() const override;
+
+private:
+    uint16_t m_transactionIdentifier { 0 };
+};
+} // namespace ModbusCpp

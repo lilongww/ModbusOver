@@ -19,6 +19,7 @@
 #pragma once
 
 #include "ArithmeticView.h"
+#include "MBAP.h"
 
 #include <algorithm>
 #include <cstddef>
@@ -28,6 +29,7 @@
 
 namespace ModbusCpp
 {
+
 class Buffer
 {
 public:
@@ -47,6 +49,9 @@ public:
     inline void append(const T& value);
     inline void appendCrc(uint16_t value) { std::ranges::copy(ArithmeticView(value), std::back_inserter(m_data)); }
     inline size_t size() const { return m_data.size(); }
+    template<typename T>
+    requires std::is_arithmetic_v<T> || std::is_enum_v<T>
+    inline void prepend(const T& value);
 
 private:
     std::vector<uint8_t> m_data;
@@ -64,4 +69,12 @@ inline void Buffer::append(const T& value)
 {
     std::ranges::reverse_copy(ArithmeticView(value), std::back_inserter(m_data));
 }
+
+template<typename T>
+requires std::is_arithmetic_v<T> || std::is_enum_v<T>
+void Buffer::prepend(const T& value)
+{
+    m_data.insert_range(m_data.begin(), ArithmeticView(value) | std::views::reverse);
+}
+
 } // namespace ModbusCpp

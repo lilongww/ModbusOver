@@ -30,11 +30,7 @@ class Common
 {
 public:
     inline Common() {}
-    inline Common(uint8_t slave, AbstractProtocol::FunctionCode functionCode)
-        : m_slave(slave), m_functionCode(static_cast<uint8_t>(functionCode))
-    {
-    }
-    inline uint8_t slave() const { return m_slave; }
+    inline Common(AbstractProtocol::FunctionCode functionCode) : m_functionCode(static_cast<uint8_t>(functionCode)) {}
     inline AbstractProtocol::FunctionCode functionCode() const { return static_cast<AbstractProtocol::FunctionCode>(m_functionCode); }
     template<typename T>
     inline Buffer encode(this T&& self);
@@ -42,14 +38,13 @@ public:
     inline bool decode(this T& self, BufferStream& buffer);
 
 private:
-    uint8_t m_slave;
     uint8_t m_functionCode;
 };
 
 template<typename T>
 inline Buffer Common::encode(this T&& self)
 {
-    Buffer buffer { self.m_slave, self.m_functionCode };
+    Buffer buffer { self.m_functionCode };
     self.serialize(buffer);
     return buffer;
 }
@@ -59,7 +54,7 @@ bool Common::decode(this T& self, BufferStream& stream)
 {
     if (stream.size() < 2)
         return false;
-    stream >> self.m_slave >> self.m_functionCode;
+    stream >> self.m_functionCode;
     return self.unserialize(stream);
 }
 
@@ -77,8 +72,8 @@ struct Codec<AbstractProtocol::FunctionCode::ReadColis>
     {
     public:
         inline Request() {}
-        inline Request(uint8_t slave, uint16_t startingAddress, uint16_t quantityOfCoils)
-            : Common(slave, code), m_startingAddress(startingAddress), m_quantityOfCoils(quantityOfCoils)
+        inline Request(uint16_t startingAddress, uint16_t quantityOfCoils)
+            : Common(code), m_startingAddress(startingAddress), m_quantityOfCoils(quantityOfCoils)
         {
         }
         inline uint16_t startingAddress() const { return m_startingAddress; }
@@ -102,14 +97,14 @@ struct Codec<AbstractProtocol::FunctionCode::ReadColis>
         uint16_t m_quantityOfCoils;
     };
 
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadColis>
     class Response : public Common
     {
     public:
         inline Response() {}
-        inline Response(std::vector<uint8_t>&& data) : m_coilStatus(std::move(data)) {}
+        inline Response(std::vector<uint8_t>&& data) : Common(code), m_coilStatus(std::move(data)) {}
         inline const std::vector<uint8_t>& coilStatus() const& { return m_coilStatus; }
         inline std::vector<uint8_t> coilStatus() const&& { return std::move(m_coilStatus); }
-
         inline void serialize(Buffer& buffer) const
         {
             buffer.append(static_cast<uint8_t>(m_coilStatus.size()));
@@ -143,21 +138,21 @@ template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadDiscreteInputs>
 {
     using Request  = Codec<AbstractProtocol::FunctionCode::ReadColis>::Request<AbstractProtocol::FunctionCode::ReadDiscreteInputs>;
-    using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response;
+    using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response<AbstractProtocol::FunctionCode::ReadDiscreteInputs>;
 };
 
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadHoldingRegisters>
 {
     using Request  = Codec<AbstractProtocol::FunctionCode::ReadColis>::Request<AbstractProtocol::FunctionCode::ReadHoldingRegisters>;
-    using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response;
+    using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response<AbstractProtocol::FunctionCode::ReadHoldingRegisters>;
 };
 
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadInputRegisters>
 {
     using Request  = Codec<AbstractProtocol::FunctionCode::ReadColis>::Request<AbstractProtocol::FunctionCode::ReadInputRegisters>;
-    using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response;
+    using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response<AbstractProtocol::FunctionCode::ReadInputRegisters>;
 };
 
 template<>
@@ -168,7 +163,7 @@ struct Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>
     {
     public:
         inline Request() {}
-        inline Request(uint8_t slave, uint16_t address, bool on) : Common(slave, code), m_address(address), m_value(on ? 0xFF00 : 0x0000) {}
+        inline Request(uint16_t address, bool on) : Common(code), m_address(address), m_value(on ? 0xFF00 : 0x0000) {}
         inline bool state() const { return static_cast<bool>(m_value); }
         inline void serialize(Buffer& buffer) const
         {
@@ -184,7 +179,7 @@ struct Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>
         }
 
     protected:
-        inline Request(uint8_t slave, uint16_t address, uint16_t value) : Common(slave, code), m_address(address), m_value(value) {}
+        inline Request(uint16_t address, uint16_t value) : Common(code), m_address(address), m_value(value) {}
 
     protected:
         uint16_t m_address;
@@ -201,9 +196,8 @@ struct Codec<AbstractProtocol::FunctionCode::WriteSingleRegister>
     {
     public:
         inline Request() {}
-        inline Request(uint8_t slave, uint16_t address, uint16_t value)
-            : Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>::Request<AbstractProtocol::FunctionCode::WriteSingleRegister>(slave,
-                                                                                                                                   address,
+        inline Request(uint16_t address, uint16_t value)
+            : Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>::Request<AbstractProtocol::FunctionCode::WriteSingleRegister>(address,
                                                                                                                                    value)
         {
         }
@@ -223,8 +217,8 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>
     {
     public:
         inline Request() {}
-        inline Request(uint8_t slave, uint16_t startingAddress, uint16_t quantityOfOutputs, std::vector<uint8_t>&& states)
-            : Common(slave, code), m_startingAddress(startingAddress), m_quantityOfOutputs(quantityOfOutputs), m_states(std::move(states))
+        inline Request(uint16_t startingAddress, uint16_t quantityOfOutputs, std::vector<uint8_t>&& states)
+            : Common(code), m_startingAddress(startingAddress), m_quantityOfOutputs(quantityOfOutputs), m_states(std::move(states))
         {
         }
         inline void serialize(Buffer& buffer) const
@@ -265,8 +259,8 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>
     {
     public:
         inline Response() {}
-        inline Response(uint8_t slave, uint16_t startingAddress, uint16_t quantityOfOutputs)
-            : Common(slave, code), m_startingAddress(startingAddress), m_quantityOfOutputs(quantityOfOutputs)
+        inline Response(uint16_t startingAddress, uint16_t quantityOfOutputs)
+            : Common(code), m_startingAddress(startingAddress), m_quantityOfOutputs(quantityOfOutputs)
         {
         }
         inline void serialize(Buffer& buffer) const
@@ -296,11 +290,8 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleRegisters>
     {
     public:
         inline Request() {}
-        inline Request(uint8_t slave, uint16_t startingAddress, uint16_t quantityOfRegisters, std::vector<uint16_t>&& values)
-            : Common(slave, code)
-            , m_startingAddress(startingAddress)
-            , m_quantityOfRegisters(quantityOfRegisters)
-            , m_values(std::move(values))
+        inline Request(uint16_t startingAddress, uint16_t quantityOfRegisters, std::vector<uint16_t>&& values)
+            : Common(code), m_startingAddress(startingAddress), m_quantityOfRegisters(quantityOfRegisters), m_values(std::move(values))
         {
         }
         inline void serialize(Buffer& buffer) const

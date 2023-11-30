@@ -44,7 +44,8 @@ template<>
 class Address<AddressType::TCP> : public AddressBase
 {
 public:
-    inline Address(std::string_view ip, uint16_t port, ModbusProtocol proto = ModbusProtocol::ModbusTCP)
+    constexpr static auto DefaultPort = 502;
+    inline Address(std::string_view ip, uint16_t port = DefaultPort, ModbusProtocol proto = ModbusProtocol::ModbusTCP)
         : AddressBase(proto), m_ip(ip), m_port(port)
     {
     }

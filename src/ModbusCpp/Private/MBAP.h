@@ -16,36 +16,18 @@
 **  You should have received a copy of the GNU Lesser General Public License    **
 **  along with ModbusCpp.  If not, see <https://www.gnu.org/licenses/>.         **
 **********************************************************************************/
-
 #pragma once
 
-#include "Buffer.h"
-
-#include <ranges>
+#include <cstdint>
 
 namespace ModbusCpp
 {
-class BufferStream
-{
-public:
-    inline BufferStream(const Buffer& buffer, size_t offset = 0) : m_data(buffer.data()), m_offset(offset) {}
-    inline size_t size() const { return m_data.size() - m_offset; }
-    template<typename T>
-    inline BufferStream& operator>>(T& value)
-    {
-        peak(value);
-        m_offset += sizeof(value);
-        return *this;
-    }
-    inline uint16_t crc() const { return *reinterpret_cast<const uint16_t*>(m_data.at(m_data.size() - 2)); }
-    template<typename T>
-    inline void peak(T& value)
-    {
-        std::ranges::reverse_copy(m_data | std::views::drop(m_offset) | std::views::take(sizeof(T)), reinterpret_cast<uint8_t*>(value));
-    }
 
-private:
-    const std::vector<uint8_t>& m_data;
-    size_t m_offset;
+struct MBAP
+{
+    uint16_t transactionIdentifier;
+    uint16_t protocolIdentifier { 0 };
+    uint16_t length;
+    uint8_t unitIdentifier;
 };
 } // namespace ModbusCpp
