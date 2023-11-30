@@ -26,6 +26,8 @@ std::optional<BufferStream> ModbusTCP::toPDU(FunctionCode expectFunctionCode, Bu
     BufferStream stream(adu);
     MBAP mbap;
     stream >> mbap.transactionIdentifier >> mbap.protocolIdentifier >> mbap.length >> mbap.unitIdentifier;
+    if (stream.size() < mbap.length - 1)
+        return std::nullopt;
     if (mbap.transactionIdentifier != m_transactionIdentifier - 1) // 回复id不一致
     {
         adu.data().clear();
