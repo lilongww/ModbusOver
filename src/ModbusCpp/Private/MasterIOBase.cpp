@@ -72,9 +72,9 @@ void MasterIOBase::writeSingleCoil(uint16_t address, bool on)
 
 void MasterIOBase::writeSingleRegister(uint16_t address, uint16_t value)
 {
+    write(m_protocol->requestWriteSingleRegister(address, value).data());
     if (isBroadcast())
         return;
-    write(m_protocol->requestWriteSingleRegister(address, value).data());
     Buffer buffer;
     for (;;)
     {
@@ -86,9 +86,9 @@ void MasterIOBase::writeSingleRegister(uint16_t address, uint16_t value)
 
 void MasterIOBase::writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states)
 {
+    write(m_protocol->requestWriteMultipleCoils(startingAddress, quantityOfCoils, std::move(states)).data());
     if (isBroadcast())
         return;
-    write(m_protocol->requestWriteMultipleCoils(startingAddress, quantityOfCoils, std::move(states)).data());
     Buffer buffer;
     for (;;)
     {
@@ -100,9 +100,9 @@ void MasterIOBase::writeMultipleCoils(uint16_t startingAddress, uint16_t quantit
 
 void MasterIOBase::writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values)
 {
+    write(m_protocol->requestWriteMultipleRegisters(startingAddress, std::move(values)).data());
     if (isBroadcast())
         return;
-    write(m_protocol->requestWriteMultipleRegisters(startingAddress, std::move(values)).data());
     Buffer buffer;
     for (;;)
     {
