@@ -40,6 +40,7 @@ public:
     virtual std::vector<uint16_t> readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters) = 0;
     virtual std::vector<uint16_t> readInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters)   = 0;
     virtual void writeSingleCoil(uint16_t address, bool on)                                                    = 0;
+    virtual void writeSingleRegister(uint16_t address, uint16_t value)                                         = 0;
 
 protected:
     const MasterCommonData& m_data;

@@ -163,14 +163,12 @@ struct Codec<AbstractProtocol::FunctionCode::ReadInputRegisters>
 template<>
 struct Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>
 {
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::WriteSingleCoil>
     class Request : public Common
     {
     public:
         inline Request() {}
-        inline Request(uint8_t slave, uint16_t address, bool on)
-            : Common(slave, AbstractProtocol::FunctionCode::WriteSingleCoil), m_address(address), m_value(on ? 0xFF00 : 0x0000)
-        {
-        }
+        inline Request(uint8_t slave, uint16_t address, bool on) : Common(slave, code), m_address(address), m_value(on ? 0xFF00 : 0x0000) {}
         inline bool state() const { return static_cast<bool>(m_value); }
         inline void serialize(Buffer& buffer) const
         {
@@ -186,11 +184,35 @@ struct Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>
             return true;
         }
 
-    private:
+    protected:
+        inline Request(uint8_t slave, uint16_t address, uint16_t value) : Common(slave, code), m_address(address), m_value(value) {}
+
+    protected:
         uint16_t m_address;
         uint16_t m_value;
     };
-    using Response = Request;
+    using Response = Request<AbstractProtocol::FunctionCode::WriteSingleCoil>;
 };
 
+template<>
+struct Codec<AbstractProtocol::FunctionCode::WriteSingleRegister>
+{
+    class Request
+        : public Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>::Request<AbstractProtocol::FunctionCode::WriteSingleRegister>
+    {
+    public:
+        inline Request() {}
+        inline Request(uint8_t slave, uint16_t address, uint16_t value)
+            : Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>::Request<AbstractProtocol::FunctionCode::WriteSingleRegister>(slave,
+                                                                                                                                   address,
+                                                                                                                                   value)
+        {
+        }
+        inline uint16_t value() const { return m_value; }
+
+    protected:
+        using Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>::Request<AbstractProtocol::FunctionCode::WriteSingleRegister>::state;
+    };
+    using Response = Request;
+};
 } // namespace ModbusCpp

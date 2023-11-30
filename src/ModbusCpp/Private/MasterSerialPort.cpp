@@ -201,4 +201,16 @@ void MasterSerialPort::writeSingleCoil(uint16_t address, bool on)
     }
 }
 
+void MasterSerialPort::writeSingleRegister(uint16_t address, uint16_t value)
+{
+    write(m_impl->protocol->requestWriteSingleRegister(address, value).data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_impl->protocol->onResponseWriteSingleRegister(buffer))
+            return;
+    }
+}
+
 } // namespace ModbusCpp

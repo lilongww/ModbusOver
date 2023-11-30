@@ -41,6 +41,7 @@ public:
     std::vector<uint16_t> readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters);
     std::vector<uint16_t> readInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters);
     void writeSingleCoil(uint16_t address, bool on);
+    void writeSingleRegister(uint16_t address, uint16_t value);
 
 private:
     struct Impl;

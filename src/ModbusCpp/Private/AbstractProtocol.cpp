@@ -112,6 +112,22 @@ bool AbstractProtocol::onResponseWriteSingleCoil(Buffer& buffer) const
     return resp.decode(*stream);
 }
 
+Buffer AbstractProtocol::requestWriteSingleRegister(uint16_t address, uint16_t value) const
+{
+    return toADU(Codec<FunctionCode::WriteSingleRegister>::Request(m_slave, address, value).encode());
+}
+
+bool AbstractProtocol::onResponseWriteSingleRegister(Buffer& buffer) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toCommon(FunctionCode::WriteSingleRegister, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::WriteSingleRegister>::Response resp;
+    return resp.decode(*stream);
+}
+
 std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto, const uint8_t& slave)
 {
     switch (proto)

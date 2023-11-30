@@ -60,7 +60,9 @@ std::vector<uint16_t> Master::readInputRegisters(uint16_t startingAddress, uint1
     return m_impl->iobase->readInputRegisters(startingAddress, quantityOfRegisters);
 }
 
-void Master::writeSingleCoil(uint16_t address, bool on) {}
+void Master::writeSingleCoil(uint16_t address, bool on) { m_impl->iobase->writeSingleCoil(address, on); }
+
+void Master::writeSingleRegister(uint16_t address, uint16_t value) { m_impl->iobase->writeSingleRegister(address, value); }
 
 template<>
 MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
