@@ -14,7 +14,6 @@ struct MasterSerialPort::Impl
     std::jthread thread;
     std::vector<uint8_t> writeBuffer;
     boost::asio::streambuf readBuffer;
-    std::shared_ptr<AbstractProtocol> protocol;
 };
 
 MasterSerialPort::MasterSerialPort(const MasterCommonData& data) : MasterIOBase(data), m_impl(std::make_unique<Impl>())
@@ -41,7 +40,7 @@ void MasterSerialPort::connect(const Address<AddressType::SerialPort>& address, 
     setFlowControl(address.flowControl());
     setParity(address.parity());
     setStopBits(address.stopBits());
-    m_impl->protocol = AbstractProtocol::create(address.protocol(), m_data.slave);
+    m_protocol = AbstractProtocol::create(address.protocol(), m_data.slave);
 }
 
 std::vector<uint8_t> MasterSerialPort::read()
@@ -135,106 +134,6 @@ void MasterSerialPort::setParity(Parity p)
 void MasterSerialPort::setStopBits(StopBits bits)
 {
     m_impl->serialPort.set_option(boost::asio::serial_port::stop_bits { static_cast<boost::asio::serial_port::stop_bits::type>(bits) });
-}
-
-std::vector<uint8_t> MasterSerialPort::readCoils(uint16_t startingAddress, uint16_t quantityOfCoils)
-{
-    write(m_impl->protocol->requestReadColis(startingAddress, quantityOfCoils).data());
-    std::vector<uint8_t> ret;
-    Buffer buffer;
-    for (;;)
-    {
-        buffer.data().append_range(read());
-        if (m_impl->protocol->onResponseReadColis(buffer, ret))
-            return ret;
-    }
-}
-
-std::vector<boost::uint8_t> MasterSerialPort::readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils)
-{
-    write(m_impl->protocol->requestReadDiscreteInputs(startingAddress, quantityOfCoils).data());
-    std::vector<uint8_t> ret;
-    Buffer buffer;
-    for (;;)
-    {
-        buffer.data().append_range(read());
-        if (m_impl->protocol->onResponseReadDiscreteInputs(buffer, ret))
-            return ret;
-    }
-}
-
-std::vector<uint16_t> MasterSerialPort::readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters)
-{
-    write(m_impl->protocol->requestReadHoldingRegisters(startingAddress, quantityOfRegisters).data());
-    std::vector<uint16_t> ret;
-    Buffer buffer;
-    for (;;)
-    {
-        buffer.data().append_range(read());
-        if (m_impl->protocol->onResponseReadHoldingRegisters(buffer, ret))
-            return ret;
-    }
-}
-
-std::vector<uint16_t> MasterSerialPort::readInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters)
-{
-    write(m_impl->protocol->requestReadInputRegisters(startingAddress, quantityOfRegisters).data());
-    std::vector<uint16_t> ret;
-    Buffer buffer;
-    for (;;)
-    {
-        buffer.data().append_range(read());
-        if (m_impl->protocol->onResponseReadInputRegisters(buffer, ret))
-            return ret;
-    }
-}
-
-void MasterSerialPort::writeSingleCoil(uint16_t address, bool on)
-{
-    write(m_impl->protocol->requestWriteSingleCoil(address, on).data());
-    Buffer buffer;
-    for (;;)
-    {
-        buffer.data().append_range(read());
-        if (m_impl->protocol->onResponseWriteSingleCoil(buffer))
-            return;
-    }
-}
-
-void MasterSerialPort::writeSingleRegister(uint16_t address, uint16_t value)
-{
-    write(m_impl->protocol->requestWriteSingleRegister(address, value).data());
-    Buffer buffer;
-    for (;;)
-    {
-        buffer.data().append_range(read());
-        if (m_impl->protocol->onResponseWriteSingleRegister(buffer))
-            return;
-    }
-}
-
-void MasterSerialPort::writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states)
-{
-    write(m_impl->protocol->requestWriteMultipleCoils(startingAddress, quantityOfCoils, std::move(states)).data());
-    Buffer buffer;
-    for (;;)
-    {
-        buffer.data().append_range(read());
-        if (m_impl->protocol->onResponseWriteMultipleCoils(buffer))
-            return;
-    }
-}
-
-void MasterSerialPort::writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values)
-{
-    write(m_impl->protocol->requestWriteMultipleRegisters(startingAddress, std::move(values)).data());
-    Buffer buffer;
-    for (;;)
-    {
-        buffer.data().append_range(read());
-        if (m_impl->protocol->onResponseWriteMultipleRegisters(buffer))
-            return;
-    }
 }
 
 } // namespace ModbusCpp
