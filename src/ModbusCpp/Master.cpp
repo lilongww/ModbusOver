@@ -19,6 +19,7 @@
 #include "Master.h"
 #include "Private/CommonData.h"
 #include "Private/MasterSerialPort.h"
+#include "Private/MasterTCP.h"
 
 namespace ModbusCpp
 {
@@ -89,6 +90,13 @@ MODBUSCPP_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Ad
                                                                         const std::chrono::milliseconds& connectTimeout)
 {
     m_impl->iobase = std::make_shared<MasterSerialPort>(m_impl->common);
+}
+
+template<>
+MODBUSCPP_EXPORT void Master::connect<Address<AddressType::TCP>>(const Address<AddressType::TCP>& address,
+                                                                 const std::chrono::milliseconds& connectTimeout)
+{
+    m_impl->iobase = std::make_shared<MasterTCP>(m_impl->common);
 }
 
 } // namespace ModbusCpp

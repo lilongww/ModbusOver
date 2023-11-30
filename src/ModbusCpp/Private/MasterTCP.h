@@ -18,6 +18,7 @@
 **********************************************************************************/
 #pragma once
 
+#include "../Address.h"
 #include "MasterIOBase.h"
 
 namespace ModbusCpp
@@ -25,5 +26,16 @@ namespace ModbusCpp
 class MasterTCP : public MasterIOBase
 {
 public:
+    MasterTCP(const MasterCommonData& data);
+    ~MasterTCP();
+    void connect(const Address<AddressType::TCP>& address, const std::chrono::milliseconds& connectTimeout);
+    std::vector<uint8_t> read() override;
+    void write(std::vector<uint8_t>&& data) override;
+    void close() noexcept override;
+    bool connected() const noexcept override;
+
+private:
+    struct Impl;
+    std::unique_ptr<Impl> m_impl;
 };
 } // namespace ModbusCpp

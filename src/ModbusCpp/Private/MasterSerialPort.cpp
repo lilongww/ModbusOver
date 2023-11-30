@@ -1,6 +1,5 @@
 ﻿#include "MasterSerialPort.h"
 #include "AbstractProtocol.h"
-#include "Buffer.h"
 
 #include <boost/asio.hpp>
 
