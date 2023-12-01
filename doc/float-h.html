@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- Float.qdoc -->
+  <meta name="description" content="Float类型转换工具集合.">
+  <title>&lt;Float.h&gt; - Float | ModbusOver 0.1.0</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">ModbusOver 0.1&#x2e;0</a></li>
+<li>&lt;Float.h&gt; - Float</li>
+<li id="buildversion">ModbusOver 0.1.0 Reference Documentation</li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">&lt;Float.h&gt; - Float</h1>
+<!-- $$$<Float.h>-brief -->
+<p>Float类型转换工具集合. <a href="#details">More...</a></p>
+<!-- @@@<Float.h> -->
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">  <span class="preprocessor">#include &lt;Float.h&gt;</span></td></tr>
+</table></div>
+<h2 id="functions">Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="float-h.html#fromFloatABCD" translate="no">fromFloatABCD</a></b>(float <i>f</i>, uint16_t *<i>dest</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="float-h.html#fromFloatBADC" translate="no">fromFloatBADC</a></b>(float <i>f</i>, uint16_t *<i>dest</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="float-h.html#fromFloatCDAB" translate="no">fromFloatCDAB</a></b>(float <i>f</i>, uint16_t *<i>dest</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="float-h.html#fromFloatDCBA" translate="no">fromFloatDCBA</a></b>(float <i>f</i>, uint16_t *<i>dest</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> float </td><td class="memItemRight bottomAlign"><b><a href="float-h.html#toFloatABCD" translate="no">toFloatABCD</a></b>(const uint16_t *<i>src</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> float </td><td class="memItemRight bottomAlign"><b><a href="float-h.html#toFloatCDAB" translate="no">toFloatCDAB</a></b>(const uint16_t *<i>src</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> float </td><td class="memItemRight bottomAlign"><b><a href="float-h.html#toFloatDABC" translate="no">toFloatDABC</a></b>(const uint16_t *<i>src</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> float </td><td class="memItemRight bottomAlign"><b><a href="float-h.html#toFloatDCBA" translate="no">toFloatDCBA</a></b>(const uint16_t *<i>src</i>)</td></tr>
+</table></div>
+<!-- $$$<Float.h>-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+</div>
+<!-- @@@<Float.h> -->
+<div class="func">
+<h2>Function Documentation</h2>
+<!-- $$$fromFloatABCD[overload1]$$$fromFloatABCDfloatuint16_t* -->
+<h3 class="fn" translate="no" id="fromFloatABCD"><span class="type">void</span> <span class="name">fromFloatABCD</span>(<span class="type">float</span> <i>f</i>, <span class="type">uint16_t</span> *<i>dest</i>)</h3>
+<p>按照ABCD顺序将float值 <i translate="no">f</i> 转换到要发送到Modbus总线的缓冲区 <i translate="no">dest</i> 中.</p>
+<!-- @@@fromFloatABCD -->
+<!-- $$$fromFloatBADC[overload1]$$$fromFloatBADCfloatuint16_t* -->
+<h3 class="fn" translate="no" id="fromFloatBADC"><span class="type">void</span> <span class="name">fromFloatBADC</span>(<span class="type">float</span> <i>f</i>, <span class="type">uint16_t</span> *<i>dest</i>)</h3>
+<p>按照BADC顺序将float值 <i translate="no">f</i> 转换到要发送到Modbus总线的缓冲区 <i translate="no">dest</i> 中.</p>
+<!-- @@@fromFloatBADC -->
+<!-- $$$fromFloatCDAB[overload1]$$$fromFloatCDABfloatuint16_t* -->
+<h3 class="fn" translate="no" id="fromFloatCDAB"><span class="type">void</span> <span class="name">fromFloatCDAB</span>(<span class="type">float</span> <i>f</i>, <span class="type">uint16_t</span> *<i>dest</i>)</h3>
+<p>按照CDAB顺序将float值 <i translate="no">f</i> 转换到要发送到Modbus总线的缓冲区 <i translate="no">dest</i> 中.</p>
+<!-- @@@fromFloatCDAB -->
+<!-- $$$fromFloatDCBA[overload1]$$$fromFloatDCBAfloatuint16_t* -->
+<h3 class="fn" translate="no" id="fromFloatDCBA"><span class="type">void</span> <span class="name">fromFloatDCBA</span>(<span class="type">float</span> <i>f</i>, <span class="type">uint16_t</span> *<i>dest</i>)</h3>
+<p>按照DCBA顺序将float值 <i translate="no">f</i> 转换到要发送到Modbus总线的缓冲区 <i translate="no">dest</i> 中.</p>
+<!-- @@@fromFloatDCBA -->
+<!-- $$$toFloatABCD[overload1]$$$toFloatABCDconstuint16_t* -->
+<h3 class="fn" translate="no" id="toFloatABCD"><code translate="no">[constexpr] </code><span class="type">float</span> <span class="name">toFloatABCD</span>(const <span class="type">uint16_t</span> *<i>src</i>)</h3>
+<p>按照ABCD顺序从寄存器返回值 <i translate="no">src</i> 中得到float数值.</p>
+<!-- @@@toFloatABCD -->
+<!-- $$$toFloatCDAB[overload1]$$$toFloatCDABconstuint16_t* -->
+<h3 class="fn" translate="no" id="toFloatCDAB"><code translate="no">[constexpr] </code><span class="type">float</span> <span class="name">toFloatCDAB</span>(const <span class="type">uint16_t</span> *<i>src</i>)</h3>
+<p>按照CDAB顺序从寄存器返回值 <i translate="no">src</i> 中得到float数值.</p>
+<!-- @@@toFloatCDAB -->
+<!-- $$$toFloatDABC[overload1]$$$toFloatDABCconstuint16_t* -->
+<h3 class="fn" translate="no" id="toFloatDABC"><code translate="no">[constexpr] </code><span class="type">float</span> <span class="name">toFloatDABC</span>(const <span class="type">uint16_t</span> *<i>src</i>)</h3>
+<p>按照DABC顺序从寄存器返回值 <i translate="no">src</i> 中得到float数值.</p>
+<!-- @@@toFloatDABC -->
+<!-- $$$toFloatDCBA[overload1]$$$toFloatDCBAconstuint16_t* -->
+<h3 class="fn" translate="no" id="toFloatDCBA"><code translate="no">[constexpr] </code><span class="type">float</span> <span class="name">toFloatDCBA</span>(const <span class="type">uint16_t</span> *<i>src</i>)</h3>
+<p>按照DCBA顺序从寄存器返回值 <i translate="no">src</i> 中得到float数值.</p>
+<!-- @@@toFloatDCBA -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> ModbusOver
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br/>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br/> </div>
+</body>
+</html>

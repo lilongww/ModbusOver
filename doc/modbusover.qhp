@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>com.modbusover.0.1.0</namespace>
+    <virtualFolder>modbusover</virtualFolder>
+    <metaData name="version" value=""/>
+    <customFilter name="ModbusOver">
+        <filterAttribute>modbusover</filterAttribute>
+    </customFilter>
+    <filterSection>
+        <filterAttribute>modbusover</filterAttribute>
+        <toc>
+            <section ref="index.html" title="ModbusOver">
+                <section ref="modbusover-module.html" title="ModbusOver Classes">
+                    <section ref="address-h.html" title="&lt;Address.h&gt; - Address"/>
+                    <section ref="float-h.html" title="&lt;Float.h&gt; - Float"/>
+                    <section ref="standard-h.html" title="&lt;Standard.h&gt; - Standard"/>
+                    <section ref="version-h.html" title="&lt;Version.h&gt; - Version"/>
+                    <section ref="modbusover-address.html" title="ModbusOver::Address Class Reference"/>
+                    <section ref="modbusover-master.html" title="ModbusOver::Master Class Reference">
+                        <section ref="modbusover-master-members.html" title="List of all members"/>
+                    </section>
+                    <section ref="modbusover-modbusexception.html" title="ModbusOver::ModbusException Class Reference">
+                        <section ref="modbusover-modbusexception-members.html" title="List of all members"/>
+                    </section>
+                </section>
+            </section>
+        </toc>
+        <keywords>
+            <keyword name="&lt;Standard.h&gt;::Acknowledge" id="&lt;Standard.h&gt;::Acknowledge" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::AddressType" id="AddressType" ref="standard-h.html#AddressType-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ExceptionCode" id="ExceptionCode" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::GatewayPathUnavailable" id="&lt;Standard.h&gt;::GatewayPathUnavailable" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::GatewayTargetDeviceFailedToRespond" id="&lt;Standard.h&gt;::GatewayTargetDeviceFailedToRespond" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::IllegalDataAddress" id="&lt;Standard.h&gt;::IllegalDataAddress" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::IllegalDataValue" id="&lt;Standard.h&gt;::IllegalDataValue" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::IllegalFunction" id="&lt;Standard.h&gt;::IllegalFunction" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::MemoryParityError" id="&lt;Standard.h&gt;::MemoryParityError" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ModbusASCII" id="&lt;Standard.h&gt;::ModbusASCII" ref="standard-h.html#ModbusProtocol-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ModbusProtocol" id="ModbusProtocol" ref="standard-h.html#ModbusProtocol-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ModbusRTU" id="&lt;Standard.h&gt;::ModbusRTU" ref="standard-h.html#ModbusProtocol-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ModbusTCP" id="&lt;Standard.h&gt;::ModbusTCP" ref="standard-h.html#ModbusProtocol-enum"/>
+            <keyword name="&lt;Standard.h&gt;::SerialPort" id="&lt;Standard.h&gt;::SerialPort" ref="standard-h.html#AddressType-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ServerDeviceBusy" id="&lt;Standard.h&gt;::ServerDeviceBusy" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ServerDeviceFailure" id="&lt;Standard.h&gt;::ServerDeviceFailure" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::TCP" id="&lt;Standard.h&gt;::TCP" ref="standard-h.html#AddressType-enum"/>
+            <keyword name="&lt;Standard.h&gt;::UDP" id="&lt;Standard.h&gt;::UDP" ref="standard-h.html#AddressType-enum"/>
+            <keyword name="Address" id="ModbusOver::Address" ref="modbusover-address.html"/>
+            <keyword name="Broadcast" id="Broadcast" ref="standard-h.html#Broadcast-var"/>
+            <keyword name="ExceptionCodeAddend" id="ExceptionCodeAddend" ref="standard-h.html#ExceptionCodeAddend-var"/>
+            <keyword name="MODBUSOVER_VERSION" id="MODBUSOVER_VERSION" ref="version-h.html#MODBUSOVER_VERSION"/>
+            <keyword name="MODBUSOVER_VERSION_MAJOR" id="MODBUSOVER_VERSION_MAJOR" ref="version-h.html#MODBUSOVER_VERSION_MAJOR"/>
+            <keyword name="MODBUSOVER_VERSION_MICRO" id="MODBUSOVER_VERSION_MICRO" ref="version-h.html#MODBUSOVER_VERSION_MICRO"/>
+            <keyword name="MODBUSOVER_VERSION_MINOR" id="MODBUSOVER_VERSION_MINOR" ref="version-h.html#MODBUSOVER_VERSION_MINOR"/>
+            <keyword name="Master" id="ModbusOver::Master" ref="modbusover-master.html"/>
+            <keyword name="ModbusException" id="ModbusOver::ModbusException" ref="modbusover-modbusexception.html"/>
+            <keyword name="ModbusOver" id="ModbusOver" ref="index.html"/>
+            <keyword name="ModbusOver" id="ModbusOver" ref="modbusover.html"/>
+            <keyword name="ModbusOver Classes" id="ModbusOver Classes" ref="modbusover-module.html"/>
+            <keyword name="Search Results" id="Search Results" ref="search-results.html"/>
+            <keyword name="SlaveMax" id="SlaveMax" ref="standard-h.html#SlaveMax-var"/>
+            <keyword name="SlaveMin" id="SlaveMin" ref="standard-h.html#SlaveMin-var"/>
+            <keyword name="SlaveReservedMax" id="SlaveReservedMax" ref="standard-h.html#SlaveReservedMax-var"/>
+            <keyword name="SlaveReservedMin" id="SlaveReservedMin" ref="standard-h.html#SlaveReservedMin-var"/>
+            <keyword name="close" id="Master::close" ref="modbusover-master.html#close"/>
+            <keyword name="code" id="ModbusException::code" ref="modbusover-modbusexception.html#code"/>
+            <keyword name="connect" id="Master::connect" ref="modbusover-master.html#connect"/>
+            <keyword name="fromFloatABCD" id="fromFloatABCD" ref="float-h.html#fromFloatABCD"/>
+            <keyword name="fromFloatBADC" id="fromFloatBADC" ref="float-h.html#fromFloatBADC"/>
+            <keyword name="fromFloatCDAB" id="fromFloatCDAB" ref="float-h.html#fromFloatCDAB"/>
+            <keyword name="fromFloatDCBA" id="fromFloatDCBA" ref="float-h.html#fromFloatDCBA"/>
+            <keyword name="readCoils" id="Master::readCoils" ref="modbusover-master.html#readCoils"/>
+            <keyword name="readDiscreteInputs" id="Master::readDiscreteInputs" ref="modbusover-master.html#readDiscreteInputs"/>
+            <keyword name="readHoldingRegisters" id="Master::readHoldingRegisters" ref="modbusover-master.html#readHoldingRegisters"/>
+            <keyword name="readInputRegisters" id="Master::readInputRegisters" ref="modbusover-master.html#readInputRegisters"/>
+            <keyword name="setSlave" id="Master::setSlave" ref="modbusover-master.html#setSlave"/>
+            <keyword name="setTimeout" id="Master::setTimeout" ref="modbusover-master.html#setTimeout"/>
+            <keyword name="slave" id="Master::slave" ref="modbusover-master.html#slave"/>
+            <keyword name="timeout" id="Master::timeout" ref="modbusover-master.html#timeout"/>
+            <keyword name="toFloatABCD" id="toFloatABCD" ref="float-h.html#toFloatABCD"/>
+            <keyword name="toFloatCDAB" id="toFloatCDAB" ref="float-h.html#toFloatCDAB"/>
+            <keyword name="toFloatDABC" id="toFloatDABC" ref="float-h.html#toFloatDABC"/>
+            <keyword name="toFloatDCBA" id="toFloatDCBA" ref="float-h.html#toFloatDCBA"/>
+            <keyword name="toString" id="ModbusException::toString" ref="modbusover-modbusexception.html#toString"/>
+            <keyword name="writeMultipleCoils" id="Master::writeMultipleCoils" ref="modbusover-master.html#writeMultipleCoils"/>
+            <keyword name="writeMultipleRegisters" id="Master::writeMultipleRegisters" ref="modbusover-master.html#writeMultipleRegisters"/>
+            <keyword name="writeSingleCoil" id="Master::writeSingleCoil" ref="modbusover-master.html#writeSingleCoil"/>
+            <keyword name="writeSingleRegister" id="Master::writeSingleRegister" ref="modbusover-master.html#writeSingleRegister"/>
+            <keyword name="~Master" id="Master::~Master" ref="modbusover-master.html#dtor.Master"/>
+        </keywords>
+        <files>
+            <file>address-h.html</file>
+            <file>float-h.html</file>
+            <file>images/arrow_bc.png</file>
+            <file>images/bgrContent.png</file>
+            <file>images/btn_next.png</file>
+            <file>images/btn_prev.png</file>
+            <file>images/bullet_dn.png</file>
+            <file>images/bullet_sq.png</file>
+            <file>images/home.png</file>
+            <file>images/ico_note.png</file>
+            <file>images/ico_note_attention.png</file>
+            <file>images/ico_out.png</file>
+            <file>images/logo.png</file>
+            <file>index.html</file>
+            <file>modbusover-address.html</file>
+            <file>modbusover-master-members.html</file>
+            <file>modbusover-master.html</file>
+            <file>modbusover-modbusexception-members.html</file>
+            <file>modbusover-modbusexception.html</file>
+            <file>modbusover-module.html</file>
+            <file>modbusover.html</file>
+            <file>search-results.html</file>
+            <file>standard-h.html</file>
+            <file>style/offline-dark.css</file>
+            <file>style/offline-simple.css</file>
+            <file>style/offline.css</file>
+            <file>style/tech_preview.svg</file>
+            <file>version-h.html</file>
+        </files>
+    </filterSection>
+</QtHelpProject>

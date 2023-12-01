@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- ModbusException.cpp -->
+  <meta name="description" content="Modbus异常类，报告从机返回的错误.">
+  <title>ModbusException Class | ModbusOver 0.1.0</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">ModbusOver 0.1&#x2e;0</a></li>
+<li><a href="modbusover-module.html" translate="no">ModbusOver</a></li>
+<li>ModbusException</li>
+<li id="buildversion">ModbusOver 0.1.0 Reference Documentation</li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">ModbusException Class</h1>
+<span class="small-subtitle" translate="no">class <a href="modbusover-module.html" translate="no">ModbusOver</a>::ModbusException</span>
+<!-- $$$ModbusException-brief -->
+<p>Modbus异常类，报告从机返回的错误. <a href="#details">More...</a></p>
+<!-- @@@ModbusException -->
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">  <span class="preprocessor">#include &lt;ModbusException.h&gt;</span></td></tr>
+</table></div>
+<ul>
+<li><a href="modbusover-modbusexception-members.html">List of all members, including inherited members</a></li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="modbusover-modbusexception.html#ModbusException" translate="no">ModbusException</a></b>(ModbusOver::ExceptionCode <i>code</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> ModbusOver::ExceptionCode </td><td class="memItemRight bottomAlign"><b><a href="modbusover-modbusexception.html#code" translate="no">code</a></b>() const</td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> const std::string &amp;</td><td class="memItemRight bottomAlign"><b><a href="modbusover-modbusexception.html#toString" translate="no">toString</a></b>(ModbusOver::ExceptionCode <i>code</i>)</td></tr>
+</table></div>
+<!-- $$$ModbusException-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+</div>
+<!-- @@@ModbusException -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$ModbusException[overload1]$$$ModbusExceptionModbusOver::ExceptionCode -->
+<h3 class="fn" translate="no" id="ModbusException">ModbusException::<span class="name">ModbusException</span>(<span class="type"><a href="standard-h.html#ExceptionCode-enum" translate="no">ModbusOver::ExceptionCode</a></span> <i>code</i>)</h3>
+<p>构造函数 <i translate="no">code</i>.</p>
+<!-- @@@ModbusException -->
+<!-- $$$code[overload1]$$$code -->
+<h3 class="fn" translate="no" id="code"><span class="type"><a href="standard-h.html#ExceptionCode-enum" translate="no">ModbusOver::ExceptionCode</a></span> ModbusException::<span class="name">code</span>() const</h3>
+<p>返回Modbus异常码.</p>
+<!-- @@@code -->
+<!-- $$$toString[overload1]$$$toStringModbusOver::ExceptionCode -->
+<h3 class="fn" translate="no" id="toString"><code translate="no">[static] </code>const <span class="type">std::string</span> &amp;ModbusException::<span class="name">toString</span>(<span class="type"><a href="standard-h.html#ExceptionCode-enum" translate="no">ModbusOver::ExceptionCode</a></span> <i>code</i>)</h3>
+<p>将Modbus异常码 <i translate="no">code</i> 转换为文字.</p>
+<!-- @@@toString -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> ModbusOver
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br/>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br/> </div>
+</body>
+</html>
