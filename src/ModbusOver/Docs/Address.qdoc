@@ -8,6 +8,7 @@
 // clang-format off
 /*!
     \class      ModbusOver::Address
+    \inmodule   ModbusOver
     \brief      Modbus连接地址定义.
                 \list
                     \li ModbusOver::Address<ModbusOver::AddressType::TCP>(std::string_view ip, uint16_t port = ModbusOver::Address<AddressType::TCP>::DefaultPort, ModbusOver::ModbusProtocol proto = ModbusOver::ModbusProtocol::ModbusTCP)

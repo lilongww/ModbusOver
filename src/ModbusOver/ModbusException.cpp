@@ -56,7 +56,7 @@ static const std::string Unknown = "Unknown exception code.";
 */
 
 /*!
-    \brief      将Modbus异常码转换为文字.
+    \brief      将Modbus异常码 \a code 转换为文字.
 */
 const std::string& ModbusException::toString(ExceptionCode code)
 {
