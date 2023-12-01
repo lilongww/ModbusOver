@@ -1,0 +1,46 @@
+/*!
+    \headerfile <Float.h>
+    \title      Float
+    \brief      Float类型转换工具集合.
+    \inmodule   ModbusOver
+*/
+
+/*!
+    \fn         constexpr float ModbusOver::toFloatABCD(const uint16_t* src)
+    \brief      按照ABCD顺序从寄存器返回值中得到float数值.
+*/
+
+/*!
+    \fn         constexpr float ModbusOver::toFloatDCBA(const uint16_t* src)
+    \brief      按照DCBA顺序从寄存器返回值中得到float数值.
+*/
+
+/*!
+    \fn         constexpr float ModbusOver::toFloatDABC(const uint16_t* src)
+    \brief      按照DABC顺序从寄存器返回值中得到float数值.
+*/
+
+/*!
+    \fn         constexpr float ModbusOver::toFloatCDAB(const uint16_t* src)
+    \brief      按照CDAB顺序从寄存器返回值中得到float数值.
+*/
+
+/*!
+    \fn         inline void ModbusOver::fromFloatABCD(float f, uint16_t* dest)
+    \brief      按照ABCD顺序将float值转换到要发送到Modbus总线的缓冲区中.
+*/
+
+/*!
+    \fn         inline void ModbusOver::fromFloatDCBA(float f, uint16_t* dest)
+    \brief      按照DCBA顺序将float值转换到要发送到Modbus总线的缓冲区中.
+*/
+
+/*!
+    \fn         inline void ModbusOver::fromFloatBADC(float f, uint16_t* dest)
+    \brief      按照BADC顺序将float值转换到要发送到Modbus总线的缓冲区中.
+*/
+
+/*!
+    \fn         inline void ModbusOver::fromFloatCDAB(float f, uint16_t* dest)
+    \brief      按照CDAB顺序将float值转换到要发送到Modbus总线的缓冲区中.
+*/
