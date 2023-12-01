@@ -1,7 +1,7 @@
-/*!
+ï»¿/*!
     \headerfile <Address.h>
     \title      Address
-    \brief      ModbusÁ¬½ÓµØÖ·¶¨Òå.
+    \brief      Modbusè¿æ¥åœ°å€å®šä¹‰.
     \inmodule   ModbusOver
 */
 
@@ -9,17 +9,17 @@
 /*!
     \class      ModbusOver::Address
     \inmodule   ModbusOver
-    \brief      ModbusÁ¬½ÓµØÖ·¶¨Òå.
+    \brief      Modbusè¿æ¥åœ°å€å®šä¹‰.
                 \list
                     \li ModbusOver::Address<ModbusOver::AddressType::TCP>(std::string_view ip, uint16_t port = ModbusOver::Address<AddressType::TCP>::DefaultPort, ModbusOver::ModbusProtocol proto = ModbusOver::ModbusProtocol::ModbusTCP)
                         \list
-                            \li ½¨Á¢ TCP Á¬½Ó¡£
+                            \li å»ºç«‹ TCP è¿æ¥ã€‚
                         \endlist
                 \endlist
                 \list
                     \li ModbusOver::Address<ModbusOver::AddressType::UDP>(std::string_view ip, uint16_t port = ModbusOver::Address<AddressType::TCP>::DefaultPort, ModbusOver::ModbusProtocol proto = ModbusOver::ModbusProtocol::ModbusTCP)
                         \list
-                            \li ½¨Á¢ UDP Á¬½Ó¡£
+                            \li å»ºç«‹ UDP è¿æ¥ã€‚
                         \endlist
                 \endlist
                 \list
@@ -31,12 +31,12 @@
                             ModbusOver::StopBits stopBits       = ModbusOver::StopBits::One,
                             ModbusOver::ModbusProtocol proto    = ModbusOver::ModbusProtocol::ModbusRTU)
                         \list
-                            \li ½¨Á¢ ´®¿Ú Á¬½Ó¡£
+                            \li å»ºç«‹ ä¸²å£ è¿æ¥ã€‚
                         \endlist
                     \li ModbusOver::Address<ModbusOver::AddressType::SerialPort>(std::string_view portName,
                             ModbusOver::ModbusProtocol proto    = ModbusOver::ModbusProtocol::ModbusRTU)
                         \list
-                            \li ½¨Á¢ ´®¿Ú Á¬½Ó¡£
+                            \li å»ºç«‹ ä¸²å£ è¿æ¥ã€‚
                         \endlist
                 \endlist
 
