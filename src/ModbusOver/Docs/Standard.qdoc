@@ -8,31 +8,37 @@
 /*!
     \variable   ModbusOver::SlaveMin
     \brief      最小从机编号.
+    \relates    <Version.h>
 */
 
 /*!
     \variable   ModbusOver::SlaveMax
     \brief      最大从机编号.
+    \relates    <Version.h>
 */
 
 /*!
     \variable   ModbusOver::SlaveReservedMin
     \brief      最小保留从机编号.
+    \relates    <Version.h>
 */
 
 /*!
     \variable   ModbusOver::SlaveReservedMax
     \brief      最大保留从机编号.
+    \relates    <Version.h>
 */
 
 /*!
     \variable   ModbusOver::Broadcast
     \brief      广播编号.
+    \relates    <Version.h>
 */
 
 /*!
     \variable   ModbusOver::ExceptionCodeAddend
     \brief      异常附加码，异常码 = 功能码 + 异常附加码.
+    \relates    <Version.h>
 */
 
 /*!
@@ -41,6 +47,7 @@
     \value      ModbusTCP   ModbusTCP协议.
     \value      ModbusRTU   ModbusRTU协议.
     \value      ModbusASCII ModbusASCII协议.
+    \relates    <Version.h>
 */
 
 /*!
@@ -49,6 +56,7 @@
     \value      TCP         TCP连接.
     \value      UDP         UDP连接.
     \value      SerialPort  串口连接.
+    \relates    <Version.h>
 */
 
 /*!
@@ -87,4 +95,5 @@
                 与网关一起使用。它表示网关不能为处理请求分配输人端口至输出端口的内部通信路径。通常表示网关配置错误或过载。
     \value      GatewayTargetDeviceFailedToRespond
                 与网关一起使用。它表示没有从目标设备中获得响应。通常表示设备未在网络中。
+    \relates    <Version.h>
 */
