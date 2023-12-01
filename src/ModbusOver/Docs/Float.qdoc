@@ -1,46 +1,46 @@
-/*!
+ï»¿/*!
     \headerfile <Float.h>
     \title      Float
-    \brief      FloatÀàĞÍ×ª»»¹¤¾ß¼¯ºÏ.
+    \brief      Floatç±»å‹è½¬æ¢å·¥å…·é›†åˆ.
     \inmodule   ModbusOver
 */
 
 /*!
     \fn         constexpr float ModbusOver::toFloatABCD(const uint16_t* src)
-    \brief      °´ÕÕABCDË³Ğò´Ó¼Ä´æÆ÷·µ»ØÖµ \a src ÖĞµÃµ½floatÊıÖµ.
+    \brief      æŒ‰ç…§ABCDé¡ºåºä»å¯„å­˜å™¨è¿”å›å€¼ \a src ä¸­å¾—åˆ°floatæ•°å€¼.
 */
 
 /*!
     \fn         constexpr float ModbusOver::toFloatDCBA(const uint16_t* src)
-    \brief      °´ÕÕDCBAË³Ğò´Ó¼Ä´æÆ÷·µ»ØÖµ \a src ÖĞµÃµ½floatÊıÖµ.
+    \brief      æŒ‰ç…§DCBAé¡ºåºä»å¯„å­˜å™¨è¿”å›å€¼ \a src ä¸­å¾—åˆ°floatæ•°å€¼.
 */
 
 /*!
     \fn         constexpr float ModbusOver::toFloatDABC(const uint16_t* src)
-    \brief      °´ÕÕDABCË³Ğò´Ó¼Ä´æÆ÷·µ»ØÖµ \a src ÖĞµÃµ½floatÊıÖµ.
+    \brief      æŒ‰ç…§DABCé¡ºåºä»å¯„å­˜å™¨è¿”å›å€¼ \a src ä¸­å¾—åˆ°floatæ•°å€¼.
 */
 
 /*!
     \fn         constexpr float ModbusOver::toFloatCDAB(const uint16_t* src)
-    \brief      °´ÕÕCDABË³Ğò´Ó¼Ä´æÆ÷·µ»ØÖµ \a src ÖĞµÃµ½floatÊıÖµ.
+    \brief      æŒ‰ç…§CDABé¡ºåºä»å¯„å­˜å™¨è¿”å›å€¼ \a src ä¸­å¾—åˆ°floatæ•°å€¼.
 */
 
 /*!
     \fn         inline void ModbusOver::fromFloatABCD(float f, uint16_t* dest)
-    \brief      °´ÕÕABCDË³Ğò½«floatÖµ \a f ×ª»»µ½Òª·¢ËÍµ½Modbus×ÜÏßµÄ»º³åÇø \a dest ÖĞ.
+    \brief      æŒ‰ç…§ABCDé¡ºåºå°†floatå€¼ \a f è½¬æ¢åˆ°è¦å‘é€åˆ°Modbusæ€»çº¿çš„ç¼“å†²åŒº \a dest ä¸­.
 */
 
 /*!
     \fn         inline void ModbusOver::fromFloatDCBA(float f, uint16_t* dest)
-    \brief      °´ÕÕDCBAË³Ğò½«floatÖµ \a f ×ª»»µ½Òª·¢ËÍµ½Modbus×ÜÏßµÄ»º³åÇø \a dest ÖĞ.
+    \brief      æŒ‰ç…§DCBAé¡ºåºå°†floatå€¼ \a f è½¬æ¢åˆ°è¦å‘é€åˆ°Modbusæ€»çº¿çš„ç¼“å†²åŒº \a dest ä¸­.
 */
 
 /*!
     \fn         inline void ModbusOver::fromFloatBADC(float f, uint16_t* dest)
-    \brief      °´ÕÕBADCË³Ğò½«floatÖµ \a f ×ª»»µ½Òª·¢ËÍµ½Modbus×ÜÏßµÄ»º³åÇø \a dest ÖĞ.
+    \brief      æŒ‰ç…§BADCé¡ºåºå°†floatå€¼ \a f è½¬æ¢åˆ°è¦å‘é€åˆ°Modbusæ€»çº¿çš„ç¼“å†²åŒº \a dest ä¸­.
 */
 
 /*!
     \fn         inline void ModbusOver::fromFloatCDAB(float f, uint16_t* dest)
-    \brief      °´ÕÕCDABË³Ğò½«floatÖµ \a f ×ª»»µ½Òª·¢ËÍµ½Modbus×ÜÏßµÄ»º³åÇø \a dest ÖĞ.
+    \brief      æŒ‰ç…§CDABé¡ºåºå°†floatå€¼ \a f è½¬æ¢åˆ°è¦å‘é€åˆ°Modbusæ€»çº¿çš„ç¼“å†²åŒº \a dest ä¸­.
 */
