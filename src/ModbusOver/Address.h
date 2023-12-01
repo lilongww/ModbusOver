@@ -135,7 +135,7 @@ public:
     {
     }
     inline Address(std::string_view port, ModbusProtocol proto = ModbusProtocol::ModbusRTU)
-        : Address(port, BaudRate::_9600, DataBits::Data8, FlowControl::None, Parity::None, StopBits::One, proto)
+        : Address(port, BaudRate::_9600, DataBits::Data8, FlowControl::None, Parity::Even, StopBits::One, proto)
     {
     }
 
