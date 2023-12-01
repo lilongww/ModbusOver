@@ -33,7 +33,31 @@ static const std::map<ExceptionCode, std::string> ExceptionCodeTextMap {
     { ExceptionCode::GatewayPathUnavailable, "Gateway path unavailable." },
     { ExceptionCode::GatewayTargetDeviceFailedToRespond, "Gateway target device failed to respond." }
 };
+
 static const std::string Unknown = "Unknown exception code.";
+
+/*!
+    \class      ModbusOver::ModbusException
+    \brief      Modbus异常类，报告从机返回的错误.
+    \inherits   std::runtime_error
+    \ingroup    ModbusOver
+    \inmodule   ModbusOver
+    \inheaderfile ModbusException.h
+*/
+
+/*!
+    \fn         inline ModbusOver::ModbusException::ModbusException(ModbusOver::ExceptionCode code)
+    \brief      构造函数 \a code.
+*/
+
+/*!
+    \fn         inline ModbusOver::ExceptionCode ModbusOver::ModbusException::code() const
+    \brief      返回Modbus异常码.
+*/
+
+/*!
+    \brief      将Modbus异常码转换为文字.
+*/
 const std::string& ModbusException::toString(ExceptionCode code)
 {
     if (auto it = ExceptionCodeTextMap.find(code); it != ExceptionCodeTextMap.end())

@@ -1,0 +1,90 @@
+/*!
+    \headerfile <Standard.h>
+    \title      Standard
+    \brief      Modbus协议标准定义.
+    \inmodule   ModbusOver
+*/
+
+/*!
+    \variable   ModbusOver::SlaveMin
+    \brief      最小从机编号.
+*/
+
+/*!
+    \variable   ModbusOver::SlaveMax
+    \brief      最大从机编号.
+*/
+
+/*!
+    \variable   ModbusOver::SlaveReservedMin
+    \brief      最小保留从机编号.
+*/
+
+/*!
+    \variable   ModbusOver::SlaveReservedMax
+    \brief      最大保留从机编号.
+*/
+
+/*!
+    \variable   ModbusOver::Broadcast
+    \brief      广播编号.
+*/
+
+/*!
+    \variable   ModbusOver::ExceptionCodeAddend
+    \brief      异常附加码，异常码 = 功能码 + 异常附加码.
+*/
+
+/*!
+    \enum       ModbusOver::ModbusProtocol
+                Modbus协议类型.
+    \value      ModbusTCP   ModbusTCP协议.
+    \value      ModbusRTU   ModbusRTU协议.
+    \value      ModbusASCII ModbusASCII协议.
+*/
+
+/*!
+    \enum       ModbusOver::AddressType
+                连接地址类型.
+    \value      TCP         TCP连接.
+    \value      UDP         UDP连接.
+    \value      SerialPort  串口连接.
+*/
+
+/*!
+    \enum       ModbusOver::ExceptionCode
+                Modbus异常码.
+    \value      IllegalFunction
+                非法功能，对于服务器(或从站)来说，询问中接收到的功能码是不允许的操作。
+                这也许是因为功能码仅适用于新设备而在被选单元中没有实现；
+                还可能表示服务器(或从站)在错误状态中处理这种请求，
+                例如：因为它是未配置的，并且正被要求返回寄存器值。
+    \value      IllegalDataAddress
+                对于服务器(或从站)来说，询问中接收到的数据地址是不允许的地址。
+                特别是，奇存器编号和传输长度的组合是无效的。对于带有100个寄存器的控制器来说，
+                PDU赋值第一个寄存器为0，最后一个为99。
+                如果起始寄存器编号96和寄存器数量为4的请求被处理，
+                那么这个请求会成功操作于寄存器96、97、98和99；
+                而如果起始寄存器编号96和存器数量为5的请求被处理，那么将产生异常码02“非法数据地址”，
+                因为它试图作用于寄存器96、97、98、99和100，而寄存器100是不存在的。
+    \value      IllegalDataValue
+                对于服务器(或从站)来说，询问数据字段中包含的是不允许的值。它表示组合请求中剩余部分结构方面的错误，
+                例如：隐含长度不正确。它决不表示寄存器中被提交存储的数据项有一个应用程序期望之外的值。
+                因为 Modbus 协议并不知道任何特殊寄存器的任何特殊值的具体含义。
+    \value      ServerDeviceFailure
+                当服务器(或从站)正在试图执行所请求的操作时，产生不可恢复的差错。
+    \value      Acknowledge
+                与编命令一起使用。服务器(或从站)已经接受请求，并且正在进行处理，
+                但是需要较长的处理时间。返回这个响应以防止在客户机(或主站)中发生超时错误。
+                客户机(或主站)可以继续发送轮询程序完成报文来确定是否完成处理。
+    \value      ServerDeviceBusy
+                与编命令一起使用。服务器(或从站)正在处理较长时间的程序命令。当服务器(或从站)空闲时，客户机(或主站)应该稍后重新传送报文。
+    \value      MemoryParityError
+                与功能码20、21和引用类型6一起使用，以指示扩展文件区不能通过一致性校验；
+                服务器(或从站)试图读记录文件，但是在存储器中发现一个奇偶校验错误。
+                客户机(或主站)可以重新发送请求，但可能需要在服务器(或从站)设备上提供这种服务。
+    \value      GatewayPathUnavailable
+                与网关一起使用。它表示网关不能为处理请求分配输人端口至输出端口的内部通信路径。通常表示网关配置错误或过载。
+    \value      GatewayTargetDeviceFailedToRespond
+                与网关一起使用。它表示没有从目标设备中获得响应。通常表示设备未在网络中。
+*/
