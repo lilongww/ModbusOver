@@ -1,0 +1,44 @@
+/*!
+    \headerfile <Address.h>
+    \title      Address
+    \brief      Modbus连接地址定义.
+    \inmodule   ModbusOver
+*/
+
+// clang-format off
+/*!
+    \class      ModbusOver::Address
+    \brief      Modbus连接地址定义.
+                \list
+                    \li ModbusOver::Address<ModbusOver::AddressType::TCP>(std::string_view ip, uint16_t port = ModbusOver::Address<AddressType::TCP>::DefaultPort, ModbusOver::ModbusProtocol proto = ModbusOver::ModbusProtocol::ModbusTCP)
+                        \list
+                            \li 建立 TCP 连接。
+                        \endlist
+                \endlist
+                \list
+                    \li ModbusOver::Address<ModbusOver::AddressType::UDP>(std::string_view ip, uint16_t port = ModbusOver::Address<AddressType::TCP>::DefaultPort, ModbusOver::ModbusProtocol proto = ModbusOver::ModbusProtocol::ModbusTCP)
+                        \list
+                            \li 建立 UDP 连接。
+                        \endlist
+                \endlist
+                \list
+                    \li ModbusOver::Address<ModbusOver::AddressType::SerialPort>(std::string_view portName,
+                            uint32_t baudRate,
+                            ModbusOver::DataBits dataBits       = ModbusOver::DataBits::Data8,
+                            ModbusOver::FlowControl flowControl = ModbusOver::FlowControl::None,
+                            ModbusOver::Parity parity           = ModbusOver::Parity::None,
+                            ModbusOver::StopBits stopBits       = ModbusOver::StopBits::One,
+                            ModbusOver::ModbusProtocol proto    = ModbusOver::ModbusProtocol::ModbusRTU)
+                        \list
+                            \li 建立 串口 连接。
+                        \endlist
+                    \li ModbusOver::Address<ModbusOver::AddressType::SerialPort>(std::string_view portName,
+                            ModbusOver::ModbusProtocol proto    = ModbusOver::ModbusProtocol::ModbusRTU)
+                        \list
+                            \li 建立 串口 连接。
+                        \endlist
+                \endlist
+
+
+*/
+// clang-format on
