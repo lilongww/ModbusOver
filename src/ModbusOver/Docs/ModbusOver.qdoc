@@ -1,0 +1,6 @@
+﻿/*!
+    \namespace  ModbusOver
+    \brief      Modbus 通讯库.
+    \ingroup    ModbusOver
+    \inmodule   ModbusOver
+*/
