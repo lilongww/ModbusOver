@@ -28,5 +28,6 @@ struct MasterCommonData
     std::chrono::milliseconds timeout { 5000LL };
     uint8_t slave { 0xFF };
     bool useBigendianCRC16 = false;
+    std::chrono::milliseconds rtsDelay { 0LL };
 };
 } // namespace ModbusOver

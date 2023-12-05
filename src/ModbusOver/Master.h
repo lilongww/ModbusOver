@@ -39,6 +39,8 @@ public:
     uint8_t slave() const;
     void setUseBigendianCRC16(bool on);
     bool useBigendianCRC16() const;
+    void setRTSDelay(const std::chrono::milliseconds& delay);
+    const std::chrono::milliseconds& rtsDelay() const;
     std::vector<uint8_t> readCoils(uint16_t startingAddress, uint16_t quantityOfCoils);
     std::vector<uint8_t> readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils);
     std::vector<uint16_t> readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters);

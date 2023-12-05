@@ -31,6 +31,8 @@ struct MasterSerialPort::Impl
     std::jthread thread;
     std::vector<uint8_t> writeBuffer;
     boost::asio::streambuf readBuffer;
+    std::chrono::milliseconds rtsClock { std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()) };
 };
 
 MasterSerialPort::MasterSerialPort(const MasterCommonData& data) : MasterIOBase(data), m_impl(std::make_unique<Impl>())
@@ -95,6 +97,17 @@ std::vector<uint8_t> MasterSerialPort::read()
 
 void MasterSerialPort::write(std::vector<uint8_t>&& data)
 {
+    std::shared_ptr<void> scope = std::shared_ptr<void>(
+        nullptr,
+        [this](void*)
+        { m_impl->rtsClock = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()); });
+    for (;;)
+    {
+        if (std::chrono::system_clock::now().time_since_epoch() - m_impl->rtsClock < m_data.rtsDelay)
+            std::this_thread::yield();
+        else
+            break;
+    }
     m_impl->writeBuffer = data;
     auto mutex          = std::make_shared<std::timed_mutex>();
     mutex->lock();
