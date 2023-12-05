@@ -362,3 +362,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /out
 /build
+/CMakeSettings.json
