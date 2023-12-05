@@ -298,7 +298,7 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleRegisters>
         {
             buffer.append(m_startingAddress);
             buffer.append(m_quantityOfRegisters);
-            uint8_t byteCount = static_cast<uint8_t>(m_values.size());
+            uint8_t byteCount = static_cast<uint8_t>(m_values.size() * sizeof(uint16_t));
             buffer.append(byteCount);
             for (auto value : m_values)
             {

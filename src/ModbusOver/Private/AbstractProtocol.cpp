@@ -200,7 +200,7 @@ void AbstractProtocol::checkException(FunctionCode code, uint8_t receiveCode, Bu
     if (toExceptionCode(code) == receiveCode)
     {
         ExceptionCode exceptionCode;
-        stream >> exceptionCode;
+        stream >> receiveCode >> exceptionCode;
         throw ModbusException(exceptionCode);
     }
 }
