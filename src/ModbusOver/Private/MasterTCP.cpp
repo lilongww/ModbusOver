@@ -74,7 +74,7 @@ void MasterTCP::connect(const Address<AddressType::TCP>& address, const std::chr
     {
         boost::asio::detail::throw_error(*error, "connect");
     }
-    m_protocol = AbstractProtocol::create(address.protocol(), m_data.slave);
+    m_protocol = AbstractProtocol::create(address.protocol(), m_data.slave, m_data.useBigendianCRC16);
 }
 
 std::vector<uint8_t> MasterTCP::read()

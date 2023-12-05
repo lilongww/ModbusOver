@@ -38,7 +38,8 @@ public:
         m_offset += sizeof(value);
         return *this;
     }
-    inline uint16_t crc() const { return std::byteswap(*reinterpret_cast<const uint16_t*>(&m_data.at(m_data.size() - 2))); }
+    inline uint16_t msbCrc() const { return std::byteswap(*reinterpret_cast<const uint16_t*>(&m_data.at(m_data.size() - 2))); }
+    inline uint16_t lsbCrc() const { return *reinterpret_cast<const uint16_t*>(&m_data.at(m_data.size() - 2)); }
     template<typename T>
     inline void peak(T& value)
     {

@@ -182,12 +182,12 @@ bool AbstractProtocol::onResponseWriteMultipleRegisters(Buffer& buffer) const
     return resp.decode(*stream);
 }
 
-std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto, const uint8_t& slave)
+std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto, const uint8_t& slave, const bool& useBigendianCRC16)
 {
     switch (proto)
     {
     case ModbusProtocol::ModbusRTU:
-        return std::make_shared<ModbusRTU>(slave);
+        return std::make_shared<ModbusRTU>(slave, useBigendianCRC16);
     case ModbusProtocol::ModbusTCP:
         return std::make_shared<ModbusTCP>(slave);
     default:

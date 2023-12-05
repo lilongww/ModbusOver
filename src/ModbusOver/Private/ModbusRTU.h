@@ -25,10 +25,15 @@ namespace ModbusOver
 class ModbusRTU : public AbstractProtocol
 {
 public:
-    using AbstractProtocol::AbstractProtocol;
+    inline ModbusRTU(const uint8_t& slave, const bool& useBigendianCRC16) : AbstractProtocol(slave), m_useBigendianCRC16(useBigendianCRC16)
+    {
+    }
     Buffer toADU(Buffer pdu) const override;
     std::optional<BufferStream> toPDU(FunctionCode expectFunctionCode, Buffer& adu) const override;
     uint16_t aduMaximum() const override;
     uint16_t minimumSize() const override;
+
+private:
+    const bool& m_useBigendianCRC16;
 };
 } // namespace ModbusOver

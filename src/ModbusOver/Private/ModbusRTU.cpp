@@ -26,7 +26,10 @@ namespace ModbusOver
 Buffer ModbusRTU::toADU(Buffer pdu) const
 {
     pdu.prepend(m_slave);
-    pdu.append(crc16(pdu.data().data(), static_cast<uint16_t>(pdu.data().size())));
+    if (m_useBigendianCRC16)
+        pdu.append(crc16(pdu.data().data(), static_cast<uint16_t>(pdu.data().size())));
+    else
+        pdu.appendCrc(crc16(pdu.data().data(), static_cast<uint16_t>(pdu.data().size())));
     return pdu;
 }
 
@@ -44,7 +47,8 @@ std::optional<BufferStream> ModbusRTU::toPDU(FunctionCode expectFunctionCode, Bu
         return std::nullopt;
     }
     checkException(expectFunctionCode, receiveCode, stream);
-    if (crc16(adu.data().data(), static_cast<uint16_t>(adu.size() - sizeof(uint16_t))) != stream.crc())
+    if (crc16(adu.data().data(), static_cast<uint16_t>(adu.size() - sizeof(uint16_t))) !=
+        (m_useBigendianCRC16 ? stream.msbCrc() : stream.lsbCrc()))
         throw std::exception("Response data crc error.");
     return stream;
 }

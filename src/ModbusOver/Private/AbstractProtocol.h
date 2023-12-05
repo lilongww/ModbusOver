@@ -72,7 +72,7 @@ public:
     bool onResponseWriteMultipleCoils(Buffer& buffer) const;
     Buffer requestWriteMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values) const;
     bool onResponseWriteMultipleRegisters(Buffer& buffer) const;
-    static std::shared_ptr<AbstractProtocol> create(ModbusProtocol proto, const uint8_t& slave);
+    static std::shared_ptr<AbstractProtocol> create(ModbusProtocol proto, const uint8_t& slave, const bool& useBigendianCRC16);
 
 protected:
     virtual Buffer toADU(Buffer pdu) const                                                        = 0;

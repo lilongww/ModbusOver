@@ -97,6 +97,19 @@ void Master::setSlave(uint8_t slave) { m_impl->common.slave = slave; }
 uint8_t Master::slave() const { return m_impl->common.slave; }
 
 /*!
+    \brief      开启此选项 \a on, 将在ModbusRTU中使用MSB在前，LSB在后的CRC16校验码，以应对某些非标准仪器.
+    \note       在标准ModbusRTU中，CRC16的校验码发送顺序是LSB在前，MSB在后.
+    \sa         useBigendianCRC16
+*/
+void Master::setUseBigendianCRC16(bool on) { m_impl->common.useBigendianCRC16 = on; }
+
+/*!
+    \brief      返回在ModbusRTU中是否使用MSB在前，LSB在后的CRC16校验码.
+    \sa         setUseBigendianCRC16
+*/
+bool Master::useBigendianCRC16() const { return m_impl->common.useBigendianCRC16; }
+
+/*!
     \brief      功能码 0x01, 读取从地址 \a startingAddress 开始的 \a quantityOfCoils 个线圈.
     \note       quantityOfCoils表示线圈数量，每个线圈为 1 bit, 所以返回的字节数为 quantityOfCoils / 8 + ((quantityOfCoils % 8) ? 1 : 0).
     \sa         writeSingleCoil, writeMultipleCoils

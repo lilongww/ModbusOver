@@ -57,7 +57,7 @@ void MasterSerialPort::connect(const Address<AddressType::SerialPort>& address, 
     setFlowControl(address.flowControl());
     setParity(address.parity());
     setStopBits(address.stopBits());
-    m_protocol = AbstractProtocol::create(address.protocol(), m_data.slave);
+    m_protocol = AbstractProtocol::create(address.protocol(), m_data.slave, m_data.useBigendianCRC16);
 }
 
 std::vector<uint8_t> MasterSerialPort::read()
