@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QtHelpProject version="1.0">
-    <namespace>com.modbusover.0.1.0</namespace>
+    <namespace>com.modbusover.0.2.0</namespace>
     <virtualFolder>modbusover</virtualFolder>
     <metaData name="version" value=""/>
     <customFilter name="ModbusOver">
@@ -72,8 +72,11 @@
             <keyword name="readDiscreteInputs" id="Master::readDiscreteInputs" ref="modbusover-master.html#readDiscreteInputs"/>
             <keyword name="readHoldingRegisters" id="Master::readHoldingRegisters" ref="modbusover-master.html#readHoldingRegisters"/>
             <keyword name="readInputRegisters" id="Master::readInputRegisters" ref="modbusover-master.html#readInputRegisters"/>
+            <keyword name="rtsDelay" id="Master::rtsDelay" ref="modbusover-master.html#rtsDelay"/>
+            <keyword name="setRTSDelay" id="Master::setRTSDelay" ref="modbusover-master.html#setRTSDelay"/>
             <keyword name="setSlave" id="Master::setSlave" ref="modbusover-master.html#setSlave"/>
             <keyword name="setTimeout" id="Master::setTimeout" ref="modbusover-master.html#setTimeout"/>
+            <keyword name="setUseBigendianCRC16" id="Master::setUseBigendianCRC16" ref="modbusover-master.html#setUseBigendianCRC16"/>
             <keyword name="slave" id="Master::slave" ref="modbusover-master.html#slave"/>
             <keyword name="timeout" id="Master::timeout" ref="modbusover-master.html#timeout"/>
             <keyword name="toFloatABCD" id="toFloatABCD" ref="float-h.html#toFloatABCD"/>
@@ -81,6 +84,7 @@
             <keyword name="toFloatDABC" id="toFloatDABC" ref="float-h.html#toFloatDABC"/>
             <keyword name="toFloatDCBA" id="toFloatDCBA" ref="float-h.html#toFloatDCBA"/>
             <keyword name="toString" id="ModbusException::toString" ref="modbusover-modbusexception.html#toString"/>
+            <keyword name="useBigendianCRC16" id="Master::useBigendianCRC16" ref="modbusover-master.html#useBigendianCRC16"/>
             <keyword name="writeMultipleCoils" id="Master::writeMultipleCoils" ref="modbusover-master.html#writeMultipleCoils"/>
             <keyword name="writeMultipleRegisters" id="Master::writeMultipleRegisters" ref="modbusover-master.html#writeMultipleRegisters"/>
             <keyword name="writeSingleCoil" id="Master::writeSingleCoil" ref="modbusover-master.html#writeSingleCoil"/>

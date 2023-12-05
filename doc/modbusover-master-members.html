@@ -4,7 +4,7 @@
   <meta charset="utf-8">
 <!-- Master.cpp -->
   <meta name="description" content="Modbus 客户端（主站）接口.">
-  <title>List of All Members for Master | ModbusOver 0.1.0</title>
+  <title>List of All Members for Master | ModbusOver 0.2.0</title>
   <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
   <script type="text/javascript">
     document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
@@ -26,10 +26,10 @@
     <div class="main-rounded">
         <div class="navigationbar">
         <ul>
-<li><a href="index.html" translate="no">ModbusOver 0.1&#x2e;0</a></li>
+<li><a href="index.html" translate="no">ModbusOver 0.2&#x2e;0</a></li>
 <li><a href="modbusover-module.html" translate="no">ModbusOver</a></li>
 <li>Master</li>
-<li id="buildversion">ModbusOver 0.1.0 Reference Documentation</li>
+<li id="buildversion">ModbusOver 0.2.0 Reference Documentation</li>
     </ul>
     </div>
 </div>
@@ -49,11 +49,15 @@
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#readDiscreteInputs" translate="no">readDiscreteInputs</a></b></span>(uint16_t, uint16_t) : std::vector&lt;uint8_t&gt;</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#readHoldingRegisters" translate="no">readHoldingRegisters</a></b></span>(uint16_t, uint16_t) : std::vector&lt;uint16_t&gt;</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#readInputRegisters" translate="no">readInputRegisters</a></b></span>(uint16_t, uint16_t) : std::vector&lt;uint16_t&gt;</li>
+<li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#rtsDelay" translate="no">rtsDelay</a></b></span>() const : const std::chrono::milliseconds &amp;</li>
+<li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#setRTSDelay" translate="no">setRTSDelay</a></b></span>(const std::chrono::milliseconds &amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#setSlave" translate="no">setSlave</a></b></span>(uint8_t)</li>
 </ul></td><td class="topAlign"><ul>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#setTimeout" translate="no">setTimeout</a></b></span>(const std::chrono::milliseconds &amp;)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#setUseBigendianCRC16" translate="no">setUseBigendianCRC16</a></b></span>(bool)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#slave" translate="no">slave</a></b></span>() const : uint8_t</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#timeout" translate="no">timeout</a></b></span>() const : const std::chrono::milliseconds &amp;</li>
+<li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#useBigendianCRC16" translate="no">useBigendianCRC16</a></b></span>() const : bool</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#writeMultipleCoils" translate="no">writeMultipleCoils</a></b></span>(uint16_t, uint16_t, std::vector&lt;uint8_t&gt; &amp;&amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#writeMultipleCoils-1" translate="no">writeMultipleCoils</a></b></span>(uint16_t, uint16_t, const std::vector&lt;uint8_t&gt; &amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#writeMultipleRegisters" translate="no">writeMultipleRegisters</a></b></span>(uint16_t, std::vector&lt;uint16_t&gt; &amp;&amp;)</li>

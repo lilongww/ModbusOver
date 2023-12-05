@@ -4,7 +4,7 @@
   <meta charset="utf-8">
 <!-- Master.cpp -->
   <meta name="description" content="Modbus 客户端（主站）接口.">
-  <title>Master Class | ModbusOver 0.1.0</title>
+  <title>Master Class | ModbusOver 0.2.0</title>
   <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
   <script type="text/javascript">
     document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
@@ -26,10 +26,10 @@
     <div class="main-rounded">
         <div class="navigationbar">
         <ul>
-<li><a href="index.html" translate="no">ModbusOver 0.1&#x2e;0</a></li>
+<li><a href="index.html" translate="no">ModbusOver 0.2&#x2e;0</a></li>
 <li><a href="modbusover-module.html" translate="no">ModbusOver</a></li>
 <li>Master</li>
-<li id="buildversion">ModbusOver 0.1.0 Reference Documentation</li>
+<li id="buildversion">ModbusOver 0.2.0 Reference Documentation</li>
     </ul>
     </div>
 </div>
@@ -66,10 +66,14 @@
 <tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint8_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#readDiscreteInputs" translate="no">readDiscreteInputs</a></b>(uint16_t <i>startingAddress</i>, uint16_t <i>quantityOfCoils</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint16_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#readHoldingRegisters" translate="no">readHoldingRegisters</a></b>(uint16_t <i>startingAddress</i>, uint16_t <i>quantityOfRegisters</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint16_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#readInputRegisters" translate="no">readInputRegisters</a></b>(uint16_t <i>startingAddress</i>, uint16_t <i>quantityOfRegisters</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> const std::chrono::milliseconds &amp;</td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#rtsDelay" translate="no">rtsDelay</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#setRTSDelay" translate="no">setRTSDelay</a></b>(const std::chrono::milliseconds &amp;<i>delay</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#setSlave" translate="no">setSlave</a></b>(uint8_t <i>slave</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#setTimeout" translate="no">setTimeout</a></b>(const std::chrono::milliseconds &amp;<i>timeout</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#setUseBigendianCRC16" translate="no">setUseBigendianCRC16</a></b>(bool <i>on</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> uint8_t </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#slave" translate="no">slave</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> const std::chrono::milliseconds &amp;</td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#timeout" translate="no">timeout</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> bool </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#useBigendianCRC16" translate="no">useBigendianCRC16</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#writeMultipleCoils" translate="no">writeMultipleCoils</a></b>(uint16_t <i>startingAddress</i>, uint16_t <i>quantityOfCoils</i>, std::vector&lt;uint8_t&gt; &amp;&amp;<i>states</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#writeMultipleCoils-1" translate="no">writeMultipleCoils</a></b>(uint16_t <i>startingAddress</i>, uint16_t <i>quantityOfCoils</i>, const std::vector&lt;uint8_t&gt; &amp;<i>states</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#writeMultipleRegisters" translate="no">writeMultipleRegisters</a></b>(uint16_t <i>startingAddress</i>, std::vector&lt;uint16_t&gt; &amp;&amp;<i>values</i>)</td></tr>
@@ -123,6 +127,16 @@
 <h3 class="fn" translate="no" id="readInputRegisters"><span class="type">std::vector</span>&lt;<span class="type">uint16_t</span>&gt; Master::<span class="name">readInputRegisters</span>(<span class="type">uint16_t</span> <i>startingAddress</i>, <span class="type">uint16_t</span> <i>quantityOfRegisters</i>)</h3>
 <p>功能码 0x04, 读取从地址 <i translate="no">startingAddress</i> 开始的 <i translate="no">quantityOfRegisters</i> 个输入寄存器，输入寄存器为只读.</p>
 <!-- @@@readInputRegisters -->
+<!-- $$$rtsDelay[overload1]$$$rtsDelay -->
+<h3 class="fn" translate="no" id="rtsDelay">const <span class="type">std::chrono::milliseconds</span> &amp;Master::<span class="name">rtsDelay</span>() const</h3>
+<p>返回RTS delay.</p>
+<p><b>See also </b><a href="modbusover-master.html#setRTSDelay" translate="no">setRTSDelay</a>.</p>
+<!-- @@@rtsDelay -->
+<!-- $$$setRTSDelay[overload1]$$$setRTSDelayconststd::chrono::milliseconds& -->
+<h3 class="fn" translate="no" id="setRTSDelay"><span class="type">void</span> Master::<span class="name">setRTSDelay</span>(const <span class="type">std::chrono::milliseconds</span> &amp;<i>delay</i>)</h3>
+<p>设置RTS <i translate="no">delay</i>.</p>
+<p><b>See also </b><a href="modbusover-master.html#rtsDelay" translate="no">rtsDelay</a>.</p>
+<!-- @@@setRTSDelay -->
 <!-- $$$setSlave[overload1]$$$setSlaveuint8_t -->
 <h3 class="fn" translate="no" id="setSlave"><span class="type">void</span> Master::<span class="name">setSlave</span>(<span class="type">uint8_t</span> <i>slave</i>)</h3>
 <p>设置从机编号 <i translate="no">slave</i>.</p>
@@ -133,6 +147,14 @@
 <p>设置超时时间 <i translate="no">timeout</i>.</p>
 <p><b>See also </b><a href="modbusover-master.html#timeout" translate="no">timeout</a>.</p>
 <!-- @@@setTimeout -->
+<!-- $$$setUseBigendianCRC16[overload1]$$$setUseBigendianCRC16bool -->
+<h3 class="fn" translate="no" id="setUseBigendianCRC16"><span class="type">void</span> Master::<span class="name">setUseBigendianCRC16</span>(<span class="type">bool</span> <i>on</i>)</h3>
+<p>开启此选项 <i translate="no">on</i>, 将在<a href="standard-h.html#ModbusProtocol-enum" translate="no">ModbusRTU</a>中使用MSB在前，LSB在后的CRC16校验码，以应对某些非标准仪器.</p>
+<div class="admonition note">
+<p><b>Note: </b>在标准<a href="standard-h.html#ModbusProtocol-enum" translate="no">ModbusRTU</a>中，CRC16的校验码发送顺序是LSB在前，MSB在后.</p>
+</div>
+<p><b>See also </b><a href="modbusover-master.html#useBigendianCRC16" translate="no">useBigendianCRC16</a>.</p>
+<!-- @@@setUseBigendianCRC16 -->
 <!-- $$$slave[overload1]$$$slave -->
 <h3 class="fn" translate="no" id="slave"><span class="type">uint8_t</span> Master::<span class="name">slave</span>() const</h3>
 <p>返回从机编号.</p>
@@ -143,6 +165,11 @@
 <p>返回超时时间.</p>
 <p><b>See also </b><a href="modbusover-master.html#setTimeout" translate="no">setTimeout</a>.</p>
 <!-- @@@timeout -->
+<!-- $$$useBigendianCRC16[overload1]$$$useBigendianCRC16 -->
+<h3 class="fn" translate="no" id="useBigendianCRC16"><span class="type">bool</span> Master::<span class="name">useBigendianCRC16</span>() const</h3>
+<p>返回在<a href="standard-h.html#ModbusProtocol-enum" translate="no">ModbusRTU</a>中是否使用MSB在前，LSB在后的CRC16校验码.</p>
+<p><b>See also </b><a href="modbusover-master.html#setUseBigendianCRC16" translate="no">setUseBigendianCRC16</a>.</p>
+<!-- @@@useBigendianCRC16 -->
 <!-- $$$writeMultipleCoils[overload1]$$$writeMultipleCoilsuint16_tuint16_tstd::vector<uint8_t>&& -->
 <h3 class="fn" translate="no" id="writeMultipleCoils"><span class="type">void</span> Master::<span class="name">writeMultipleCoils</span>(<span class="type">uint16_t</span> <i>startingAddress</i>, <span class="type">uint16_t</span> <i>quantityOfCoils</i>, <span class="type">std::vector</span>&lt;<span class="type">uint8_t</span>&gt; &amp;&amp;<i>states</i>)</h3>
 <p>功能码 0x0F, 写入从地址 <i translate="no">startingAddress</i> 开始的 <i translate="no">quantityOfCoils</i> 线圈状态 <i translate="no">states</i>.</p>
