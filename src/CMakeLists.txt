@@ -1,3 +1,5 @@
 ﻿add_subdirectory(ModbusOver)
 add_subdirectory(3rd)
-add_subdirectory(Tests)
+if(BUILD_TEST)
+    add_subdirectory(Tests)
+endif()
