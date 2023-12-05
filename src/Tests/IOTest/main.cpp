@@ -8,7 +8,8 @@ TEST(IOTest, bool)
 {
     Master master;
     // master.connect(Address<AddressType::TCP>("127.0.0.1"));
-    master.connect(Address<AddressType::SerialPort>("COM2"));
+    // master.connect(Address<AddressType::SerialPort>("COM2"));
+    master.connect(Address<AddressType::TCP>("127.0.0.1", 502, ModbusProtocol::ModbusRTU));
 
     master.setSlave(0x01);
     {                                          // 离散量输入测试
