@@ -28,7 +28,7 @@ Buffer ModbusTCP::toADU(Buffer pdu) const
     MBAP mbap;
     mbap.transactionIdentifier = const_cast<ModbusTCP*>(this)->m_transactionIdentifier++;
     mbap.protocolIdentifier    = 0; // always 0
-    mbap.length                = sizeof(mbap.unitIdentifier + pdu.size());
+    mbap.length                = static_cast<uint8_t>(sizeof(mbap.unitIdentifier) + pdu.size());
     mbap.unitIdentifier        = m_slave;
     pdu.prepend(mbap.unitIdentifier);
     pdu.prepend(mbap.length);

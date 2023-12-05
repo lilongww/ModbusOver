@@ -2,6 +2,12 @@
 
 project(ModbusOver VERSION "0.1.0")
 
+option(BUILD_TEST "Build test applications." OFF)
+
+if(BUILD_TEST)
+    enable_testing()
+endif()
+
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_DEBUG_POSTFIX "d")
