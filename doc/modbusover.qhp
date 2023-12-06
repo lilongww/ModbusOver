@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QtHelpProject version="1.0">
-    <namespace>com.modbusover.0.2.0</namespace>
+    <namespace>com.modbusover.0.3.0</namespace>
     <virtualFolder>modbusover</virtualFolder>
     <metaData name="version" value=""/>
     <customFilter name="ModbusOver">
@@ -61,6 +61,7 @@
             <keyword name="SlaveMin" id="SlaveMin" ref="standard-h.html#SlaveMin-var"/>
             <keyword name="SlaveReservedMax" id="SlaveReservedMax" ref="standard-h.html#SlaveReservedMax-var"/>
             <keyword name="SlaveReservedMin" id="SlaveReservedMin" ref="standard-h.html#SlaveReservedMin-var"/>
+            <keyword name="asciiLF" id="Master::asciiLF" ref="modbusover-master.html#asciiLF"/>
             <keyword name="close" id="Master::close" ref="modbusover-master.html#close"/>
             <keyword name="code" id="ModbusException::code" ref="modbusover-modbusexception.html#code"/>
             <keyword name="connect" id="Master::connect" ref="modbusover-master.html#connect"/>
@@ -73,6 +74,7 @@
             <keyword name="readHoldingRegisters" id="Master::readHoldingRegisters" ref="modbusover-master.html#readHoldingRegisters"/>
             <keyword name="readInputRegisters" id="Master::readInputRegisters" ref="modbusover-master.html#readInputRegisters"/>
             <keyword name="rtsDelay" id="Master::rtsDelay" ref="modbusover-master.html#rtsDelay"/>
+            <keyword name="setAsciiLF" id="Master::setAsciiLF" ref="modbusover-master.html#setAsciiLF"/>
             <keyword name="setRTSDelay" id="Master::setRTSDelay" ref="modbusover-master.html#setRTSDelay"/>
             <keyword name="setSlave" id="Master::setSlave" ref="modbusover-master.html#setSlave"/>
             <keyword name="setTimeout" id="Master::setTimeout" ref="modbusover-master.html#setTimeout"/>
