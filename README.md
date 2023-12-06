@@ -14,7 +14,7 @@
 
 - [x] Modbus RTU
 - [x] Modbus TCP
-- [ ] Modbus ASCII
+- [x] Modbus ASCII
 
 ### 2.2 通信接口
 
