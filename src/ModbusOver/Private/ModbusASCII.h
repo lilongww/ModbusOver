@@ -18,17 +18,22 @@
 **********************************************************************************/
 #pragma once
 
-#include <chrono>
-#include <cstdint>
+#include "AbstractProtocol.h"
+#include "Buffer.h"
 
 namespace ModbusOver
 {
-struct MasterCommonData
+class ModbusASCII : public AbstractProtocol
 {
-    std::chrono::milliseconds timeout { 5000LL };
-    uint8_t slave { 0xFF };
-    bool useBigendianCRC16 = false;
-    std::chrono::milliseconds rtsDelay { 0LL };
-    char modbusAsciiLF = '\x0A';
+public:
+    inline ModbusASCII(const uint8_t& slave, const char& asciiLF) : AbstractProtocol(slave), m_asciiLF(asciiLF) {}
+    Buffer toADU(Buffer pdu) const override;
+    std::optional<BufferStream> toPDU(FunctionCode expectFunctionCode, Buffer& adu) const override;
+    uint16_t aduMaximum() const override;
+    uint16_t minimumSize() const override;
+    ModbusProtocol proto() const override { return ModbusProtocol::ModbusASCII; }
+
+private:
+    const char& m_asciiLF;
 };
 } // namespace ModbusOver

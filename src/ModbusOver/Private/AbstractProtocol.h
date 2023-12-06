@@ -56,6 +56,9 @@ public:
     };
     inline AbstractProtocol(const uint8_t& slave) : m_slave(slave) {}
     virtual ~AbstractProtocol();
+    virtual ModbusProtocol proto() const = 0;
+    virtual uint16_t aduMaximum() const  = 0;
+
     Buffer requestReadColis(uint16_t startingAddress, uint16_t quantityOfCoils) const;
     bool onResponseReadColis(Buffer& buffer, std::vector<uint8_t>& status) const;
     Buffer requestReadDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils) const;
@@ -72,12 +75,14 @@ public:
     bool onResponseWriteMultipleCoils(Buffer& buffer) const;
     Buffer requestWriteMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values) const;
     bool onResponseWriteMultipleRegisters(Buffer& buffer) const;
-    static std::shared_ptr<AbstractProtocol> create(ModbusProtocol proto, const uint8_t& slave, const bool& useBigendianCRC16);
+    static std::shared_ptr<AbstractProtocol> create(ModbusProtocol proto,
+                                                    const uint8_t& slave,
+                                                    const bool& useBigendianCRC16,
+                                                    const char& asciiLF);
 
 protected:
     virtual Buffer toADU(Buffer pdu) const                                                        = 0;
     virtual std::optional<BufferStream> toPDU(FunctionCode expectFunctionCode, Buffer& adu) const = 0;
-    virtual uint16_t aduMaximum() const                                                           = 0;
     virtual uint16_t minimumSize() const                                                          = 0;
     constexpr static uint8_t toExceptionCode(FunctionCode code) { return static_cast<uint8_t>(code) + ExceptionCodeAddend; }
     constexpr static FunctionCode fromExceptionCode(uint8_t exceptionCode)

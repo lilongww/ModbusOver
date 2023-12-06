@@ -30,6 +30,7 @@ public:
     std::optional<BufferStream> toPDU(FunctionCode expectFunctionCode, Buffer& adu) const override;
     uint16_t aduMaximum() const override;
     uint16_t minimumSize() const override;
+    ModbusProtocol proto() const override { return ModbusProtocol::ModbusTCP; }
 
 private:
     uint16_t m_transactionIdentifier { 0 };

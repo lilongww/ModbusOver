@@ -18,17 +18,16 @@
 **********************************************************************************/
 #pragma once
 
-#include <chrono>
+#include <algorithm>
 #include <cstdint>
+#include <ranges>
+#include <vector>
 
 namespace ModbusOver
 {
-struct MasterCommonData
+inline uint8_t lrc(const uint8_t* data, uint16_t size)
 {
-    std::chrono::milliseconds timeout { 5000LL };
-    uint8_t slave { 0xFF };
-    bool useBigendianCRC16 = false;
-    std::chrono::milliseconds rtsDelay { 0LL };
-    char modbusAsciiLF = '\x0A';
-};
+    auto total = std::ranges::fold_left(std::span(data, size), static_cast<uint8_t>(0), std::plus<uint8_t> {});
+    return static_cast<uint8_t>(-static_cast<int8_t>(total));
+}
 } // namespace ModbusOver

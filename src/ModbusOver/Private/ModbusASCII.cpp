@@ -16,19 +16,47 @@
 **  You should have received a copy of the GNU Lesser General Public License    **
 **  along with ModbusOver.  If not, see <https://www.gnu.org/licenses/>.        **
 **********************************************************************************/
-#pragma once
+#include "ModbusASCII.h"
+#include "BufferStream.h"
+#include "LRC.h"
 
-#include <chrono>
-#include <cstdint>
+#include <format>
 
 namespace ModbusOver
 {
-struct MasterCommonData
+Buffer ModbusASCII::toADU(Buffer pdu) const
 {
-    std::chrono::milliseconds timeout { 5000LL };
-    uint8_t slave { 0xFF };
-    bool useBigendianCRC16 = false;
-    std::chrono::milliseconds rtsDelay { 0LL };
-    char modbusAsciiLF = '\x0A';
-};
+    pdu.prepend(m_slave);
+    pdu.append(lrc(pdu.data().data(), static_cast<uint16_t>(pdu.size())));
+    pdu.encodeASCII();
+    pdu.prepend('\x3a');
+    pdu.append('\x0d');
+    pdu.append(m_asciiLF);
+    return pdu;
+}
+
+std::optional<BufferStream> ModbusASCII::toPDU(FunctionCode expectFunctionCode, Buffer& adu) const
+{
+    if (adu.data().front() != '\x3A')
+        return std::nullopt;
+    adu.decodeASCII(1, adu.size() - 3);
+    BufferStream stream(adu);
+    uint8_t slave, receiveCode;
+    stream >> slave;
+    stream.peak(receiveCode);
+    if (slave != m_slave) // 非请求从机回复
+    {
+        adu.data().clear();
+        return std::nullopt;
+    }
+    checkException(expectFunctionCode, receiveCode, stream);
+    if (lrc(adu.data().data(), static_cast<uint16_t>(adu.size() - 1)) != adu.data().back())
+        throw std::exception("Response data lrc error.");
+    return stream;
+}
+
+uint16_t ModbusASCII::aduMaximum() const { return 513; }
+
+uint16_t ModbusASCII::minimumSize() const { return 9; }
+
 } // namespace ModbusOver

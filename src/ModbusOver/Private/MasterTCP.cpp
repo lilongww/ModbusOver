@@ -30,6 +30,7 @@ struct MasterTCP::Impl
     boost::asio::io_context::work worker { io };
     std::jthread thread;
     std::vector<uint8_t> writeBuffer;
+    boost::asio::streambuf readBuffer;
 };
 
 MasterTCP::MasterTCP(const MasterCommonData& data) : MasterIOBase(data), m_impl(std::make_unique<Impl>())
@@ -74,7 +75,7 @@ void MasterTCP::connect(const Address<AddressType::TCP>& address, const std::chr
     {
         boost::asio::detail::throw_error(*error, "connect");
     }
-    m_protocol = AbstractProtocol::create(address.protocol(), m_data.slave, m_data.useBigendianCRC16);
+    m_protocol = AbstractProtocol::create(address.protocol(), m_data.slave, m_data.useBigendianCRC16, m_data.modbusAsciiLF);
 }
 
 std::vector<uint8_t> MasterTCP::read()
@@ -87,13 +88,28 @@ std::vector<uint8_t> MasterTCP::read()
     m_impl->io.post(
         [=]()
         {
-            m_impl->socket.async_read_some(boost::asio::buffer(*ret),
-                                           [=](const boost::system::error_code& e, std::size_t s)
-                                           {
-                                               *size  = s;
-                                               *error = e;
-                                               mutex->unlock();
-                                           });
+            if (m_protocol->proto() == ModbusProtocol::ModbusASCII)
+            {
+                boost::asio::async_read_until(m_impl->socket,
+                                              m_impl->readBuffer,
+                                              std::string { '\x0D', m_data.modbusAsciiLF },
+                                              [=](const boost::system::error_code& e, std::size_t s)
+                                              {
+                                                  *size  = s;
+                                                  *error = e;
+                                                  mutex->unlock();
+                                              });
+            }
+            else
+            {
+                m_impl->socket.async_read_some(boost::asio::buffer(*ret),
+                                               [=](const boost::system::error_code& e, std::size_t s)
+                                               {
+                                                   *size  = s;
+                                                   *error = e;
+                                                   mutex->unlock();
+                                               });
+            }
         });
 
     if (!mutex->try_lock_for(m_data.timeout))
@@ -106,7 +122,16 @@ std::vector<uint8_t> MasterTCP::read()
         m_impl->socket.close();
         boost::asio::detail::throw_error(*error, "readAllAscii");
     }
-    ret->resize(*size);
+    if (m_protocol->proto() == ModbusProtocol::ModbusASCII)
+    {
+        auto begin = boost::asio::buffer_cast<const uint8_t*>(m_impl->readBuffer.data());
+        *ret       = std::vector<uint8_t>(begin, begin + m_impl->readBuffer.size());
+        m_impl->readBuffer.consume(m_impl->readBuffer.size());
+    }
+    else
+    {
+        ret->resize(*size);
+    }
     return *ret;
 }
 

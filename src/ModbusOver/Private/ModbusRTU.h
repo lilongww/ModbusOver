@@ -32,6 +32,7 @@ public:
     std::optional<BufferStream> toPDU(FunctionCode expectFunctionCode, Buffer& adu) const override;
     uint16_t aduMaximum() const override;
     uint16_t minimumSize() const override;
+    ModbusProtocol proto() const override { return ModbusProtocol::ModbusRTU; }
 
 private:
     const bool& m_useBigendianCRC16;

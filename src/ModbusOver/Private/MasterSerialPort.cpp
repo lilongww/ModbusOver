@@ -59,7 +59,7 @@ void MasterSerialPort::connect(const Address<AddressType::SerialPort>& address, 
     setFlowControl(address.flowControl());
     setParity(address.parity());
     setStopBits(address.stopBits());
-    m_protocol = AbstractProtocol::create(address.protocol(), m_data.slave, m_data.useBigendianCRC16);
+    m_protocol = AbstractProtocol::create(address.protocol(), m_data.slave, m_data.useBigendianCRC16, m_data.modbusAsciiLF);
 }
 
 std::vector<uint8_t> MasterSerialPort::read()
@@ -68,17 +68,32 @@ std::vector<uint8_t> MasterSerialPort::read()
     mutex->lock();
     auto error = std::make_shared<boost::system::error_code>();
     auto size  = std::make_shared<std::size_t>(0);
-    auto ret   = std::make_shared<std::vector<uint8_t>>(260);
+    auto ret   = std::make_shared<std::vector<uint8_t>>(m_protocol->aduMaximum());
     m_impl->io.post(
         [=]()
         {
-            m_impl->serialPort.async_read_some(boost::asio::buffer(*ret),
-                                               [=](const boost::system::error_code& e, std::size_t s)
-                                               {
-                                                   *size  = s;
-                                                   *error = e;
-                                                   mutex->unlock();
-                                               });
+            if (m_protocol->proto() == ModbusProtocol::ModbusASCII)
+            {
+                boost::asio::async_read_until(m_impl->serialPort,
+                                              m_impl->readBuffer,
+                                              std::string { '\x0D', m_data.modbusAsciiLF },
+                                              [=](const boost::system::error_code& e, std::size_t s)
+                                              {
+                                                  *size  = s;
+                                                  *error = e;
+                                                  mutex->unlock();
+                                              });
+            }
+            else
+            {
+                m_impl->serialPort.async_read_some(boost::asio::buffer(*ret),
+                                                   [=](const boost::system::error_code& e, std::size_t s)
+                                                   {
+                                                       *size  = s;
+                                                       *error = e;
+                                                       mutex->unlock();
+                                                   });
+            }
         });
 
     if (!mutex->try_lock_for(m_data.timeout))
@@ -91,7 +106,16 @@ std::vector<uint8_t> MasterSerialPort::read()
         m_impl->serialPort.close();
         boost::asio::detail::throw_error(*error, "readAllAscii");
     }
-    ret->resize(*size);
+    if (m_protocol->proto() == ModbusProtocol::ModbusASCII)
+    {
+        auto begin = boost::asio::buffer_cast<const uint8_t*>(m_impl->readBuffer.data());
+        *ret       = std::vector<uint8_t>(begin, begin + m_impl->readBuffer.size());
+        m_impl->readBuffer.consume(m_impl->readBuffer.size());
+    }
+    else
+    {
+        ret->resize(*size);
+    }
     return *ret;
 }
 

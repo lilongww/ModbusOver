@@ -20,6 +20,7 @@
 #include "../ModbusException.h"
 #include "BufferStream.h"
 #include "Codec.h"
+#include "ModbusASCII.h"
 #include "ModbusRTU.h"
 #include "ModbusTCP.h"
 
@@ -182,7 +183,10 @@ bool AbstractProtocol::onResponseWriteMultipleRegisters(Buffer& buffer) const
     return resp.decode(*stream);
 }
 
-std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto, const uint8_t& slave, const bool& useBigendianCRC16)
+std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto,
+                                                           const uint8_t& slave,
+                                                           const bool& useBigendianCRC16,
+                                                           const char& asciiLF)
 {
     switch (proto)
     {
@@ -190,6 +194,8 @@ std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto,
         return std::make_shared<ModbusRTU>(slave, useBigendianCRC16);
     case ModbusProtocol::ModbusTCP:
         return std::make_shared<ModbusTCP>(slave);
+    case ModbusProtocol::ModbusASCII:
+        return std::make_shared<ModbusASCII>(slave, asciiLF);
     default:
         return nullptr;
     }

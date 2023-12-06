@@ -8,22 +8,22 @@ TEST(IOTest, bool)
 {
     Master master;
     // master.connect(Address<AddressType::TCP>("127.0.0.1"));
-    master.connect(Address<AddressType::SerialPort>("COM2"));
+    master.connect(Address<AddressType::SerialPort>("COM2", ModbusProtocol::ModbusASCII));
     // master.connect(Address<AddressType::TCP>("127.0.0.1", 502, ModbusProtocol::ModbusRTU));
     master.setSlave(0x01);
     {                                          // 离散量输入测试
         for (auto i : std::views::iota(0, 10)) // stress
         {
-            auto ret = master.readDiscreteInputs(0, 9);
+            auto ret = master.readDiscreteInputs(0, 10);
             EXPECT_EQ(ret.size(), 2);
             EXPECT_EQ(ret[0], 0xFF);
-            EXPECT_EQ(ret[1], 0x01);
+            EXPECT_EQ(ret[1], 0x03);
         }
     }
     {                                          // 输入寄存器测试
         for (auto i : std::views::iota(0, 10)) // stress
         {
-            auto ret = master.readInputRegisters(0, 9);
+            auto ret = master.readInputRegisters(0, 10);
             for (auto [i, r] : std::views::zip(std::views::iota(0), ret))
             {
                 EXPECT_EQ(i, r);
