@@ -40,6 +40,8 @@ public:
     void setUseBigendianCRC16(bool on);
     bool useBigendianCRC16() const;
     void setRTSDelay(const std::chrono::milliseconds& delay);
+    void setAsciiLF(char lf);
+    char asciiLF() const;
     const std::chrono::milliseconds& rtsDelay() const;
     std::vector<uint8_t> readCoils(uint16_t startingAddress, uint16_t quantityOfCoils);
     std::vector<uint8_t> readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils);

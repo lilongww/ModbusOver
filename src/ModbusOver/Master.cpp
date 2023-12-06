@@ -116,6 +116,18 @@ bool Master::useBigendianCRC16() const { return m_impl->common.useBigendianCRC16
 void Master::setRTSDelay(const std::chrono::milliseconds& delay) { m_impl->common.rtsDelay = delay; }
 
 /*!
+    \brief      设置ModbusASCII协议自定义LF \a lf.
+    \sa         asciiLF
+*/
+void Master::setAsciiLF(char lf) { m_impl->common.modbusAsciiLF = lf; }
+
+/*!
+    \brief      返回ModbusASCII协议自定义LF
+    \sa         setAsciiLF
+*/
+char Master::asciiLF() const { return m_impl->common.modbusAsciiLF; }
+
+/*!
     \brief      返回RTS delay.
     \sa         setRTSDelay
 */
