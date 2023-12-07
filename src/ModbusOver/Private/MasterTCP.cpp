@@ -76,6 +76,9 @@ void MasterTCP::connect(const Address<AddressType::TCP>& address, const std::chr
         boost::asio::detail::throw_error(*error, "connect");
     }
     m_protocol = AbstractProtocol::create(address.protocol(), m_data.slave, m_data.useBigendianCRC16, m_data.modbusAsciiLF);
+    m_impl->socket.set_option(boost::asio::ip::tcp::no_delay(true), *error);              // TCP-NODELAY
+    m_impl->socket.set_option(boost::asio::ip::tcp::socket::reuse_address(true), *error); // SO-REUSEADDR
+    m_impl->socket.set_option(boost::asio::socket_base::keep_alive(true), *error);        // SO-KEEPALIVE
 }
 
 std::vector<uint8_t> MasterTCP::read()
