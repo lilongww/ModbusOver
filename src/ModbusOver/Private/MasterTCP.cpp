@@ -54,17 +54,12 @@ void MasterTCP::connect(const Address<AddressType::TCP>& address, const std::chr
     auto error = std::make_shared<boost::system::error_code>();
     auto mutex = std::make_shared<std::timed_mutex>();
     mutex->lock();
-    m_impl->io.post(
-        [=]()
-        {
-            m_impl->socket.async_connect(
-                boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(address.ip()), address.port()),
-                [=](const boost::system::error_code& e)
-                {
-                    *error = e;
-                    mutex->unlock();
-                });
-        });
+    m_impl->socket.async_connect(boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(address.ip()), address.port()),
+                                 [=](const boost::system::error_code& e)
+                                 {
+                                     *error = e;
+                                     mutex->unlock();
+                                 });
 
     if (!mutex->try_lock_for(connectTimeout))
     {
@@ -88,32 +83,28 @@ std::vector<uint8_t> MasterTCP::read()
     auto error = std::make_shared<boost::system::error_code>();
     auto size  = std::make_shared<std::size_t>(0);
     auto ret   = std::make_shared<std::vector<uint8_t>>(260);
-    m_impl->io.post(
-        [=]()
-        {
-            if (m_protocol->proto() == ModbusProtocol::ModbusASCII)
-            {
-                boost::asio::async_read_until(m_impl->socket,
-                                              m_impl->readBuffer,
-                                              std::string { '\x0D', m_data.modbusAsciiLF },
-                                              [=](const boost::system::error_code& e, std::size_t s)
-                                              {
-                                                  *size  = s;
-                                                  *error = e;
-                                                  mutex->unlock();
-                                              });
-            }
-            else
-            {
-                m_impl->socket.async_read_some(boost::asio::buffer(*ret),
-                                               [=](const boost::system::error_code& e, std::size_t s)
-                                               {
-                                                   *size  = s;
-                                                   *error = e;
-                                                   mutex->unlock();
-                                               });
-            }
-        });
+    if (m_protocol->proto() == ModbusProtocol::ModbusASCII)
+    {
+        boost::asio::async_read_until(m_impl->socket,
+                                      m_impl->readBuffer,
+                                      std::string { '\x0D', m_data.modbusAsciiLF },
+                                      [=](const boost::system::error_code& e, std::size_t s)
+                                      {
+                                          *size  = s;
+                                          *error = e;
+                                          mutex->unlock();
+                                      });
+    }
+    else
+    {
+        m_impl->socket.async_read_some(boost::asio::buffer(*ret),
+                                       [=](const boost::system::error_code& e, std::size_t s)
+                                       {
+                                           *size  = s;
+                                           *error = e;
+                                           mutex->unlock();
+                                       });
+    }
 
     if (!mutex->try_lock_for(m_data.timeout))
     {
@@ -144,16 +135,12 @@ void MasterTCP::write(std::vector<uint8_t>&& data)
     auto mutex          = std::make_shared<std::timed_mutex>();
     mutex->lock();
     auto error = std::make_shared<boost::system::error_code>();
-    m_impl->io.post(
-        [=]()
-        {
-            m_impl->socket.async_write_some(boost::asio::buffer(m_impl->writeBuffer),
-                                            [=](const boost::system::error_code& e, std::size_t)
-                                            {
-                                                *error = e;
-                                                mutex->unlock();
-                                            });
-        });
+    m_impl->socket.async_write_some(boost::asio::buffer(m_impl->writeBuffer),
+                                    [=](const boost::system::error_code& e, std::size_t)
+                                    {
+                                        *error = e;
+                                        mutex->unlock();
+                                    });
 
     if (!mutex->try_lock_for(m_data.timeout))
     {
