@@ -1,6 +1,6 @@
 ﻿cmake_minimum_required(VERSION 3.27)
 
-project(ModbusOver VERSION "0.3.2")
+project(ModbusOver VERSION "0.3.3")
 
 option(BUILD_TEST "Build test applications." OFF)
 
