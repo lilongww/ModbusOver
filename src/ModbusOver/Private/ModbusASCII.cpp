@@ -50,13 +50,17 @@ std::optional<BufferStream> ModbusASCII::toPDU(FunctionCode expectFunctionCode, 
         return std::nullopt;
     }
     checkException(expectFunctionCode, receiveCode, stream);
-    if (lrc(adu.data().data(), static_cast<uint16_t>(adu.size() - 1)) != adu.data().back())
-        throw std::exception("Response data lrc error.");
     return stream;
 }
 
 uint16_t ModbusASCII::aduMaximum() const { return 513; }
 
 uint16_t ModbusASCII::minimumSize() const { return 9; }
+
+void ModbusASCII::checkTail(BufferStream& stream) const
+{
+    if (lrc(stream.data().data(), static_cast<uint16_t>(stream.data().size() - 1)) != stream.data().back())
+        throw std::exception("Response data lrc error.");
+}
 
 } // namespace ModbusOver

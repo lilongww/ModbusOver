@@ -32,6 +32,7 @@ public:
     uint16_t aduMaximum() const override;
     uint16_t minimumSize() const override;
     ModbusProtocol proto() const override { return ModbusProtocol::ModbusASCII; }
+    void checkTail(BufferStream& stream) const override;
 
 private:
     const char& m_asciiLF;

@@ -31,6 +31,7 @@ public:
     uint16_t aduMaximum() const override;
     uint16_t minimumSize() const override;
     ModbusProtocol proto() const override { return ModbusProtocol::ModbusTCP; }
+    void checkTail(BufferStream& stream) const override {}
 
 private:
     uint16_t m_transactionIdentifier { 0 };

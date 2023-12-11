@@ -47,9 +47,6 @@ std::optional<BufferStream> ModbusRTU::toPDU(FunctionCode expectFunctionCode, Bu
         return std::nullopt;
     }
     checkException(expectFunctionCode, receiveCode, stream);
-    if (crc16(adu.data().data(), static_cast<uint16_t>(adu.size() - sizeof(uint16_t))) !=
-        (m_useBigendianCRC16 ? stream.msbCrc() : stream.lsbCrc()))
-        throw std::exception("Response data crc error.");
     return stream;
 }
 
@@ -57,4 +54,12 @@ uint16_t ModbusRTU::aduMaximum() const { return 256; }
 
 // RTU最小数据包 id + functionCode + crc16 = 4
 uint16_t ModbusRTU::minimumSize() const { return 4; };
+
+void ModbusRTU::checkTail(BufferStream& stream) const
+{
+    if (crc16(stream.data().data(), static_cast<uint16_t>(stream.data().size() - sizeof(uint16_t))) !=
+        (m_useBigendianCRC16 ? stream.msbCrc() : stream.lsbCrc()))
+        throw std::exception("Response data crc error.");
+}
+
 } // namespace ModbusOver

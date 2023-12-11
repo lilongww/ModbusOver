@@ -45,6 +45,7 @@ public:
     {
         std::ranges::reverse_copy(m_data | std::views::drop(m_offset) | std::views::take(sizeof(T)), reinterpret_cast<int8_t*>(&value));
     }
+    inline const std::vector<uint8_t>& data() const { return m_data; };
 
 private:
     const std::vector<uint8_t>& m_data;
