@@ -8,6 +8,7 @@ if(BUILD_TEST)
     enable_testing()
 endif()
 
+set(Boost_NO_WARN_NEW_VERSIONS 1)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_DEBUG_POSTFIX "d")

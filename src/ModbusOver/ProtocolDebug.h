@@ -1,4 +1,4 @@
-﻿/*********************************************************************************
+/*********************************************************************************
 **                                                                              **
 **  Copyright (C) 2023-2024 LiLong                                              **
 **  This file is part of ModbusOver.                                            **
@@ -16,18 +16,6 @@
 **  You should have received a copy of the GNU Lesser General Public License    **
 **  along with ModbusOver.  If not, see <https://www.gnu.org/licenses/>.        **
 **********************************************************************************/
+
 #pragma once
 
-#include <algorithm>
-#include <cstdint>
-#include <ranges>
-#include <vector>
-
-namespace ModbusOver
-{
-inline uint8_t lrc(const uint8_t* data, uint16_t size)
-{
-    auto total = std::ranges::fold_left(std::span(data, size), static_cast<uint8_t>(0), std::plus<uint8_t> {});
-    return static_cast<uint8_t>(-static_cast<int8_t>(total));
-}
-} // namespace ModbusOver

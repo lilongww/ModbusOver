@@ -1,6 +1,6 @@
 ﻿/*********************************************************************************
 **                                                                              **
-**  Copyright (C) 2023 LiLong                                                   **
+**  Copyright (C) 2023-2024 LiLong                                              **
 **  This file is part of ModbusOver.                                            **
 **                                                                              **
 **  ModbusOver is free software: you can redistribute it and/or modify          **
