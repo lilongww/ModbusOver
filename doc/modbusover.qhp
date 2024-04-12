@@ -22,6 +22,9 @@
                     <section ref="modbusover-modbusexception.html" title="ModbusOver::ModbusException Class Reference">
                         <section ref="modbusover-modbusexception-members.html" title="List of all members"/>
                     </section>
+                    <section ref="modbusover-protocoldebug.html" title="ModbusOver::ProtocolDebug Class Reference">
+                        <section ref="modbusover-protocoldebug-members.html" title="List of all members"/>
+                    </section>
                 </section>
             </section>
         </toc>
@@ -56,6 +59,7 @@
             <keyword name="ModbusOver" id="ModbusOver" ref="index.html"/>
             <keyword name="ModbusOver" id="ModbusOver" ref="modbusover.html"/>
             <keyword name="ModbusOver Classes" id="ModbusOver Classes" ref="modbusover-module.html"/>
+            <keyword name="ProtocolDebug" id="ModbusOver::ProtocolDebug" ref="modbusover-protocoldebug.html"/>
             <keyword name="Search Results" id="Search Results" ref="search-results.html"/>
             <keyword name="SlaveMax" id="SlaveMax" ref="standard-h.html#SlaveMax-var"/>
             <keyword name="SlaveMin" id="SlaveMin" ref="standard-h.html#SlaveMin-var"/>
@@ -69,12 +73,15 @@
             <keyword name="fromFloatBADC" id="fromFloatBADC" ref="float-h.html#fromFloatBADC"/>
             <keyword name="fromFloatCDAB" id="fromFloatCDAB" ref="float-h.html#fromFloatCDAB"/>
             <keyword name="fromFloatDCBA" id="fromFloatDCBA" ref="float-h.html#fromFloatDCBA"/>
+            <keyword name="protocolDebug" id="Master::protocolDebug" ref="modbusover-master.html#protocolDebug"/>
             <keyword name="readCoils" id="Master::readCoils" ref="modbusover-master.html#readCoils"/>
             <keyword name="readDiscreteInputs" id="Master::readDiscreteInputs" ref="modbusover-master.html#readDiscreteInputs"/>
             <keyword name="readHoldingRegisters" id="Master::readHoldingRegisters" ref="modbusover-master.html#readHoldingRegisters"/>
             <keyword name="readInputRegisters" id="Master::readInputRegisters" ref="modbusover-master.html#readInputRegisters"/>
             <keyword name="rtsDelay" id="Master::rtsDelay" ref="modbusover-master.html#rtsDelay"/>
+            <keyword name="rx" id="ProtocolDebug::rx" ref="modbusover-protocoldebug.html#rx"/>
             <keyword name="setAsciiLF" id="Master::setAsciiLF" ref="modbusover-master.html#setAsciiLF"/>
+            <keyword name="setProtocolDebug" id="Master::setProtocolDebug" ref="modbusover-master.html#setProtocolDebug"/>
             <keyword name="setRTSDelay" id="Master::setRTSDelay" ref="modbusover-master.html#setRTSDelay"/>
             <keyword name="setSlave" id="Master::setSlave" ref="modbusover-master.html#setSlave"/>
             <keyword name="setTimeout" id="Master::setTimeout" ref="modbusover-master.html#setTimeout"/>
@@ -86,6 +93,7 @@
             <keyword name="toFloatDABC" id="toFloatDABC" ref="float-h.html#toFloatDABC"/>
             <keyword name="toFloatDCBA" id="toFloatDCBA" ref="float-h.html#toFloatDCBA"/>
             <keyword name="toString" id="ModbusException::toString" ref="modbusover-modbusexception.html#toString"/>
+            <keyword name="tx" id="ProtocolDebug::tx" ref="modbusover-protocoldebug.html#tx"/>
             <keyword name="useBigendianCRC16" id="Master::useBigendianCRC16" ref="modbusover-master.html#useBigendianCRC16"/>
             <keyword name="writeMultipleCoils" id="Master::writeMultipleCoils" ref="modbusover-master.html#writeMultipleCoils"/>
             <keyword name="writeMultipleRegisters" id="Master::writeMultipleRegisters" ref="modbusover-master.html#writeMultipleRegisters"/>
@@ -114,6 +122,8 @@
             <file>modbusover-modbusexception-members.html</file>
             <file>modbusover-modbusexception.html</file>
             <file>modbusover-module.html</file>
+            <file>modbusover-protocoldebug-members.html</file>
+            <file>modbusover-protocoldebug.html</file>
             <file>modbusover.html</file>
             <file>search-results.html</file>
             <file>standard-h.html</file>

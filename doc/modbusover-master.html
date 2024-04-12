@@ -26,7 +26,7 @@
     <div class="main-rounded">
         <div class="navigationbar">
         <ul>
-<li><a href="index.html" translate="no">ModbusOver 0.3&#x2e;0</a></li>
+<li><a href="index.html" translate="no">ModbusOver 0.3.0</a></li>
 <li><a href="modbusover-module.html" translate="no">ModbusOver</a></li>
 <li>Master</li>
 <li id="buildversion">ModbusOver 0.3.0 Reference Documentation</li>
@@ -63,12 +63,14 @@
 <tr><td class="memItemLeft rightAlign topAlign"> char </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#asciiLF" translate="no">asciiLF</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#close" translate="no">close</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#connect" translate="no">connect</a></b>(const int &amp;<i>address</i>, const std::chrono::milliseconds &amp;<i>connectTimeout</i> = std::chrono::milliseconds(5000))</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> std::shared_ptr&lt;ProtocolDebug&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#protocolDebug" translate="no">protocolDebug</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint8_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#readCoils" translate="no">readCoils</a></b>(uint16_t <i>startingAddress</i>, uint16_t <i>quantityOfCoils</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint8_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#readDiscreteInputs" translate="no">readDiscreteInputs</a></b>(uint16_t <i>startingAddress</i>, uint16_t <i>quantityOfCoils</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint16_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#readHoldingRegisters" translate="no">readHoldingRegisters</a></b>(uint16_t <i>startingAddress</i>, uint16_t <i>quantityOfRegisters</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint16_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#readInputRegisters" translate="no">readInputRegisters</a></b>(uint16_t <i>startingAddress</i>, uint16_t <i>quantityOfRegisters</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> const std::chrono::milliseconds &amp;</td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#rtsDelay" translate="no">rtsDelay</a></b>() const</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#setAsciiLF" translate="no">setAsciiLF</a></b>(char <i>lf</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#setProtocolDebug" translate="no">setProtocolDebug</a></b>(std::shared_ptr&lt;ProtocolDebug&gt; <i>debug</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#setRTSDelay" translate="no">setRTSDelay</a></b>(const std::chrono::milliseconds &amp;<i>delay</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#setSlave" translate="no">setSlave</a></b>(uint8_t <i>slave</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#setTimeout" translate="no">setTimeout</a></b>(const std::chrono::milliseconds &amp;<i>timeout</i>)</td></tr>
@@ -113,6 +115,11 @@
 <p>连接到地址为 <i translate="no">address</i> 的设备，连接超时时间为 <i translate="no">connectTimeout</i>.</p>
 <p><b>See also </b><a href="modbusover-master.html#close" translate="no">close</a>.</p>
 <!-- @@@connect -->
+<!-- $$$protocolDebug[overload1]$$$protocolDebug -->
+<h3 class="fn" translate="no" id="protocolDebug"><span class="type">std::shared_ptr</span>&lt;<span class="type"><a href="modbusover-protocoldebug.html" translate="no">ProtocolDebug</a></span>&gt; Master::<span class="name">protocolDebug</span>() const</h3>
+<p>返回底层协议调试接口.</p>
+<p><b>See also </b><a href="modbusover-master.html#setProtocolDebug" translate="no">setProtocolDebug</a>.</p>
+<!-- @@@protocolDebug -->
 <!-- $$$readCoils[overload1]$$$readCoilsuint16_tuint16_t -->
 <h3 class="fn" translate="no" id="readCoils"><span class="type">std::vector</span>&lt;<span class="type">uint8_t</span>&gt; Master::<span class="name">readCoils</span>(<span class="type">uint16_t</span> <i>startingAddress</i>, <span class="type">uint16_t</span> <i>quantityOfCoils</i>)</h3>
 <p>功能码 0x01, 读取从地址 <i translate="no">startingAddress</i> 开始的 <i translate="no">quantityOfCoils</i> 个线圈.</p>
@@ -144,6 +151,11 @@
 <p>设置<a href="standard-h.html#ModbusProtocol-enum" translate="no">ModbusASCII</a>协议自定义LF <i translate="no">lf</i>.</p>
 <p><b>See also </b><a href="modbusover-master.html#asciiLF" translate="no">asciiLF</a>.</p>
 <!-- @@@setAsciiLF -->
+<!-- $$$setProtocolDebug[overload1]$$$setProtocolDebugstd::shared_ptr<ProtocolDebug> -->
+<h3 class="fn" translate="no" id="setProtocolDebug"><span class="type">void</span> Master::<span class="name">setProtocolDebug</span>(<span class="type">std::shared_ptr</span>&lt;<span class="type"><a href="modbusover-protocoldebug.html" translate="no">ProtocolDebug</a></span>&gt; <i>debug</i>)</h3>
+<p>设置底层协议调试接口 <i translate="no">debug</i>.</p>
+<p><b>See also </b><a href="modbusover-master.html#protocolDebug" translate="no">protocolDebug</a>.</p>
+<!-- @@@setProtocolDebug -->
 <!-- $$$setRTSDelay[overload1]$$$setRTSDelayconststd::chrono::milliseconds& -->
 <h3 class="fn" translate="no" id="setRTSDelay"><span class="type">void</span> Master::<span class="name">setRTSDelay</span>(const <span class="type">std::chrono::milliseconds</span> &amp;<i>delay</i>)</h3>
 <p>设置RTS <i translate="no">delay</i>.</p>
