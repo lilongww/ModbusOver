@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QtHelpProject version="1.0">
-    <namespace>com.modbusover.0.3.0</namespace>
+    <namespace>com.modbusover.0.4.0</namespace>
     <virtualFolder>modbusover</virtualFolder>
     <metaData name="version" value=""/>
     <customFilter name="ModbusOver">
