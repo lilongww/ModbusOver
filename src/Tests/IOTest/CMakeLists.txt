@@ -1,1 +1,1 @@
-modbusover_add_test(IOTest SOURCES main.cpp PUBLIC_LIBRARIES ModbusOver gtest)
+modbusover_add_test(IOTest SOURCES main.cpp PUBLIC_LIBRARIES ModbusOver)

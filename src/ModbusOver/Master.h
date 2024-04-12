@@ -25,6 +25,7 @@
 
 namespace ModbusOver
 {
+class ProtocolDebug;
 class MODBUSOVER_EXPORT Master
 {
 public:
@@ -53,6 +54,8 @@ public:
     void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, const std::vector<uint8_t>& states);
     void writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values);
     void writeMultipleRegisters(uint16_t startingAddress, const std::vector<uint16_t>& values);
+    void setProtocolDebug(std::shared_ptr<ProtocolDebug> debug);
+    std::shared_ptr<ProtocolDebug> protocolDebug() const;
 
 private:
     struct Impl;

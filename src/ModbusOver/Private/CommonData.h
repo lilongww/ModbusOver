@@ -23,6 +23,7 @@
 
 namespace ModbusOver
 {
+class ProtocolDebug;
 struct MasterCommonData
 {
     std::chrono::milliseconds timeout { 5000LL };
@@ -30,5 +31,6 @@ struct MasterCommonData
     bool useBigendianCRC16 = false;
     std::chrono::milliseconds rtsDelay { 0LL };
     char modbusAsciiLF = '\x0A';
+    std::shared_ptr<ProtocolDebug> protoDebug;
 };
 } // namespace ModbusOver

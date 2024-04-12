@@ -236,6 +236,18 @@ void Master::writeMultipleRegisters(uint16_t startingAddress, const std::vector<
     writeMultipleRegisters(startingAddress, std::vector<uint16_t>(values.begin(), values.end()));
 }
 
+/*!
+    \brief      设置底层协议调试接口 \a debug.
+    \sa         protocolDebug
+*/
+void Master::setProtocolDebug(std::shared_ptr<ProtocolDebug> debug) { m_impl->common.protoDebug = debug; }
+
+/*!
+    \brief      返回底层协议调试接口.
+    \sa         setProtocolDebug
+*/
+std::shared_ptr<ProtocolDebug> Master::protocolDebug() const { return m_impl->common.protoDebug; }
+
 template<>
 MODBUSOVER_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
                                                                          const std::chrono::milliseconds& connectTimeout)
