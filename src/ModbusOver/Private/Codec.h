@@ -329,4 +329,54 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleRegisters>
     using Response =
         Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>::Response<AbstractProtocol::FunctionCode::WriteMultipleRegisters>;
 };
+
+template<>
+struct Codec<AbstractProtocol::FunctionCode::ReportServerID>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReportServerID>
+    class Request : public Common
+    {
+    public:
+        inline Request() : Common(code) {}
+        inline void serialize(Buffer& buffer) const {}
+        inline bool unserialize(BufferStream& stream) { return true; }
+    };
+
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReportServerID>
+    class Response : public Common
+    {
+    public:
+        inline Response() {}
+        inline Response(std::vector<uint8_t>&& data) : Common(code), m_byteCount(static_cast<uint8_t>(data.size())), m_data(std::move(data))
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_byteCount);
+            for (auto data : m_data)
+            {
+                buffer.append(data);
+            }
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 2)
+                return false;
+            stream.peak(m_byteCount);
+            if (stream.size() < m_byteCount)
+                return false;
+            stream >> m_byteCount;
+            m_data.resize(m_byteCount);
+            for (auto& d : m_data)
+            {
+                stream >> d;
+            }
+            return true;
+        }
+        inline operator std::vector<uint8_t>() && { return std::move(m_data); }
+    private:
+        uint8_t m_byteCount;
+        std::vector<uint8_t> m_data;
+    };
+};
 } // namespace ModbusOver

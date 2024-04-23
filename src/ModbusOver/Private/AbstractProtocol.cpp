@@ -199,6 +199,23 @@ bool AbstractProtocol::onResponseWriteMultipleRegisters(Buffer& buffer) const
     return true;
 }
 
+Buffer AbstractProtocol::requestReportServerID() const { return toADU(Codec<FunctionCode::ReportServerID>::Request().encode()); }
+
+bool AbstractProtocol::onRequestReportServerID(Buffer& buffer, std::vector<uint8_t>& data) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::ReportServerID, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::ReportServerID>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    data = std::move(resp);
+    return true;
+}
+
 std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto,
                                                            const uint8_t& slave,
                                                            const bool& useBigendianCRC16,

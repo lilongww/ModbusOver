@@ -237,6 +237,15 @@ void Master::writeMultipleRegisters(uint16_t startingAddress, const std::vector<
 }
 
 /*!
+    \brief      报告从站ID. 功能码 0x11.
+*/
+std::vector<uint8_t> Master::reportServerID()
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->reportServerID();
+}
+
+/*!
     \brief      设置底层协议调试接口 \a debug.
     \sa         protocolDebug
 */

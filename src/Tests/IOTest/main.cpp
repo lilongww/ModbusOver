@@ -9,10 +9,12 @@ TEST(IOTest, bool)
 {
     Master master;
     // master.connect(Address<AddressType::TCP>("127.0.0.1"));
-    master.connect(Address<AddressType::SerialPort>("COM2", ModbusProtocol::ModbusASCII));
+    master.connect(Address<AddressType::SerialPort>("COM2", ModbusProtocol::ModbusRTU));
     // master.connect(Address<AddressType::TCP>("127.0.0.1", 502, ModbusProtocol::ModbusRTU));
     // master.setProtocolDebug(std::make_shared<ProtocolDebug>());
     master.setSlave(0x01);
+    // auto ret = master.reportServerID();
+
     {                                          // 离散量输入测试
         for (auto i : std::views::iota(0, 10)) // stress
         {

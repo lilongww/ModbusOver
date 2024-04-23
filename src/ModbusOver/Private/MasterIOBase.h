@@ -44,6 +44,7 @@ public:
     void writeSingleRegister(uint16_t address, uint16_t value);
     void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states);
     void writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values);
+    std::vector<uint8_t> reportServerID();
 
 protected:
     bool isBroadcast() const { return m_data.slave == Broadcast; }

@@ -129,4 +129,20 @@ void MasterIOBase::writeMultipleRegisters(uint16_t startingAddress, std::vector<
             return;
     }
 }
+
+std::vector<uint8_t> MasterIOBase::reportServerID()
+{
+    std::vector<uint8_t> data;
+    write(m_protocol->requestReportServerID().data());
+    if (isBroadcast())
+        return data;
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestReportServerID(buffer, data))
+            return data;
+    }
+}
+
 } // namespace ModbusOver

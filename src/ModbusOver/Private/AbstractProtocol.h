@@ -75,6 +75,8 @@ public:
     bool onResponseWriteMultipleCoils(Buffer& buffer) const;
     Buffer requestWriteMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values) const;
     bool onResponseWriteMultipleRegisters(Buffer& buffer) const;
+    Buffer requestReportServerID() const;
+    bool onRequestReportServerID(Buffer& buffer, std::vector<uint8_t>& data) const;
     static std::shared_ptr<AbstractProtocol> create(ModbusProtocol proto,
                                                     const uint8_t& slave,
                                                     const bool& useBigendianCRC16,
