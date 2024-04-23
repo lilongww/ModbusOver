@@ -14,7 +14,8 @@ TEST(IOTest, bool)
     // master.setProtocolDebug(std::make_shared<ProtocolDebug>());
     master.setSlave(0x01);
     // auto ret = master.reportServerID();
-    // auto ret = master.readExceptionStatus();
+    // auto ret = master.readExceptionStatus(); // No test
+    // auto ret = master.requestReadFIFOQueue(0); // No test
     {                                          // 离散量输入测试
         for (auto i : std::views::iota(0, 10)) // stress
         {

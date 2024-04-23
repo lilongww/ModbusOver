@@ -79,6 +79,8 @@ public:
     bool onRequestReportServerID(Buffer& buffer, std::vector<uint8_t>& data) const;
     Buffer requestReadExceptionStatus() const;
     bool onRequestReadExceptionStatus(Buffer& buffer, uint8_t& data) const;
+    Buffer requestReadFIFOQueue(uint16_t address) const;
+    bool onRequestReadFIFOQueue(Buffer& buffer, std::vector<uint16_t>& data) const;
     static std::shared_ptr<AbstractProtocol> create(ModbusProtocol proto,
                                                     const uint8_t& slave,
                                                     const bool& useBigendianCRC16,

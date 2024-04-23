@@ -413,4 +413,70 @@ struct Codec<AbstractProtocol::FunctionCode::ReportServerID>
         std::vector<uint8_t> m_data;
     };
 };
+
+template<>
+struct Codec<AbstractProtocol::FunctionCode::ReadFIFOQueue>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadFIFOQueue>
+    class Request : public Common
+    {
+    public:
+        inline Request() {}
+        inline Request(uint16_t address) : Common(code), m_address(address) {}
+        inline void serialize(Buffer& buffer) const { buffer.append(m_address); }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 2)
+                return false;
+            stream >> m_address;
+            return true;
+        }
+
+    private:
+        uint16_t m_address;
+    };
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadFIFOQueue>
+    class Response : public Common
+    {
+    public:
+        inline Response() {}
+        inline Response(std::vector<uint16_t>&& data)
+            : Common(code)
+            , m_byteCount(static_cast<uint16_t>(data.size() * 2))
+            , m_fifoCount(static_cast<uint16_t>(data.size()))
+            , m_data(std::move(data))
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_byteCount);
+            buffer.append(m_fifoCount);
+            for (auto d : m_data)
+                buffer.append(d);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 4)
+                return false;
+            stream.peak(m_byteCount);
+            stream.peak(m_fifoCount);
+            if (m_byteCount != m_fifoCount * 2)
+                return false;
+            if (stream.size() < m_byteCount + 4)
+                return false;
+            stream >> m_byteCount;
+            stream >> m_fifoCount;
+            m_data.resize(m_fifoCount);
+            for (auto& d : m_data)
+                stream >> d;
+            return true;
+        }
+        inline operator std::vector<uint16_t>() && { return std::move(m_data); }
+
+    private:
+        uint16_t m_byteCount;
+        uint16_t m_fifoCount;
+        std::vector<uint16_t> m_data;
+    };
+};
 } // namespace ModbusOver

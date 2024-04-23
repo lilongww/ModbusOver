@@ -46,6 +46,7 @@ public:
     void writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values);
     std::vector<uint8_t> reportServerID();
     uint8_t readExceptionStatus();
+    std::vector<uint16_t> requestReadFIFOQueue(uint16_t address);
 
 protected:
     bool isBroadcast() const { return m_data.slave == Broadcast; }

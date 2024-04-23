@@ -233,6 +233,26 @@ bool AbstractProtocol::onRequestReadExceptionStatus(Buffer& buffer, uint8_t& dat
     return true;
 }
 
+Buffer AbstractProtocol::requestReadFIFOQueue(uint16_t address) const
+{
+    return toADU(Codec<FunctionCode::ReadFIFOQueue>::Request(address).encode());
+}
+
+bool AbstractProtocol::onRequestReadFIFOQueue(Buffer& buffer, std::vector<uint16_t>& data) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::ReadFIFOQueue, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::ReadFIFOQueue>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    data = std::move(resp);
+    return true;
+}
+
 std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto,
                                                            const uint8_t& slave,
                                                            const bool& useBigendianCRC16,

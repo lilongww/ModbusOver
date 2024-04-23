@@ -255,6 +255,15 @@ std::vector<uint8_t> Master::reportServerID()
 }
 
 /*!
+    \brief      读FIFO队列. 功能码 0x18.
+*/
+std::vector<uint16_t> Master::requestReadFIFOQueue(uint16_t address)
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->requestReadFIFOQueue(address);
+}
+
+/*!
     \brief      设置底层协议调试接口 \a debug.
     \sa         protocolDebug
 */

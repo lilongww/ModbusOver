@@ -156,4 +156,17 @@ uint8_t MasterIOBase::readExceptionStatus()
     }
 }
 
+std::vector<uint16_t> MasterIOBase::requestReadFIFOQueue(uint16_t address)
+{
+    std::vector<uint16_t> data;
+    write(m_protocol->requestReadFIFOQueue(address).data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestReadFIFOQueue(buffer, data))
+            return data;
+    }
+}
+
 } // namespace ModbusOver
