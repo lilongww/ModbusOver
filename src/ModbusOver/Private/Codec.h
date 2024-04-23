@@ -210,6 +210,39 @@ struct Codec<AbstractProtocol::FunctionCode::WriteSingleRegister>
 };
 
 template<>
+struct Codec<AbstractProtocol::FunctionCode::ReadExceptionStatus>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadExceptionStatus>
+    class Request : public Common
+    {
+    public:
+        inline Request() : Common(code) {}
+        inline void serialize(Buffer& buffer) const {}
+        inline bool unserialize(BufferStream& stream) { return true; }
+    };
+
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadExceptionStatus>
+    class Response : public Common
+    {
+    public:
+        inline Response() {}
+        inline Response(uint8_t outputData) : Common(code), m_outputData(outputData) {}
+        inline void serialize(Buffer& buffer) const { buffer.append(m_outputData); }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 1)
+                return false;
+            stream >> m_outputData;
+            return true;
+        }
+        inline uint8_t outputData() const { return m_outputData; }
+
+    private:
+        uint8_t m_outputData;
+    };
+};
+
+template<>
 struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>
 {
     template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::WriteMultipleCoils>
@@ -374,6 +407,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReportServerID>
             return true;
         }
         inline operator std::vector<uint8_t>() && { return std::move(m_data); }
+
     private:
         uint8_t m_byteCount;
         std::vector<uint8_t> m_data;

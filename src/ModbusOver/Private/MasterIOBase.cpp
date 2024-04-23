@@ -134,13 +134,24 @@ std::vector<uint8_t> MasterIOBase::reportServerID()
 {
     std::vector<uint8_t> data;
     write(m_protocol->requestReportServerID().data());
-    if (isBroadcast())
-        return data;
     Buffer buffer;
     for (;;)
     {
         buffer.data().append_range(read());
         if (m_protocol->onRequestReportServerID(buffer, data))
+            return data;
+    }
+}
+
+uint8_t MasterIOBase::readExceptionStatus()
+{
+    uint8_t data;
+    write(m_protocol->requestReadExceptionStatus().data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestReadExceptionStatus(buffer, data))
             return data;
     }
 }

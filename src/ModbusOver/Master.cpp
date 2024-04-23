@@ -193,6 +193,15 @@ void Master::writeSingleRegister(uint16_t address, uint16_t value)
 }
 
 /*!
+    \brief      读异常状态. 功能码 0x07.
+*/
+uint8_t Master::readExceptionStatus()
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->readExceptionStatus();
+}
+
+/*!
     \brief      功能码 0x0F, 写入从地址 \a startingAddress 开始的 \a quantityOfCoils 线圈状态 \a states.
     \note       quantityOfCoils表示线圈数量，每个线圈为 1 bit, 所以 \a states 的字节数为 quantityOfCoils / 8 + ((quantityOfCoils % 8) ? 1 :
    0).

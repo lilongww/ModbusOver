@@ -216,6 +216,23 @@ bool AbstractProtocol::onRequestReportServerID(Buffer& buffer, std::vector<uint8
     return true;
 }
 
+Buffer AbstractProtocol::requestReadExceptionStatus() const { return toADU(Codec<FunctionCode::ReadExceptionStatus>::Request().encode()); }
+
+bool AbstractProtocol::onRequestReadExceptionStatus(Buffer& buffer, uint8_t& data) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::ReadExceptionStatus, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::ReadExceptionStatus>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    data = resp.outputData();
+    return true;
+}
+
 std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto,
                                                            const uint8_t& slave,
                                                            const bool& useBigendianCRC16,
