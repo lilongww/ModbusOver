@@ -233,6 +233,24 @@ bool AbstractProtocol::onRequestReadExceptionStatus(Buffer& buffer, uint8_t& dat
     return true;
 }
 
+Buffer AbstractProtocol::requestGetCommEventCounter() const { return toADU(Codec<FunctionCode::GetCommEventCounter>::Request().encode()); }
+
+bool AbstractProtocol::onRequestGetCommEventCounter(Buffer& buffer, uint16_t& status, uint16_t& eventCount) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::GetCommEventCounter, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::GetCommEventCounter>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    status     = resp.status();
+    eventCount = resp.eventCount();
+    return true;
+}
+
 Buffer AbstractProtocol::requestMaskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask) const
 {
     return toADU(Codec<FunctionCode::MaskWriteRegister>::Request(address, andMask, orMask).encode());

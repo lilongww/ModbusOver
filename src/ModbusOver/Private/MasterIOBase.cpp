@@ -156,6 +156,19 @@ uint8_t MasterIOBase::readExceptionStatus()
     }
 }
 
+CommEventCounter MasterIOBase::getCommEventCounter()
+{
+    CommEventCounter cec;
+    write(m_protocol->requestGetCommEventCounter().data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestGetCommEventCounter(buffer, cec.status, cec.eventCount))
+            return cec;
+    }
+}
+
 void MasterIOBase::maskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask)
 {
     uint16_t respAddress, respAndMask, respOrMask;

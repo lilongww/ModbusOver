@@ -56,4 +56,10 @@ enum class ExceptionCode : uint8_t
     GatewayTargetDeviceFailedToRespond = 0x0B
 };
 
+struct CommEventCounter
+{
+    uint16_t status;
+    uint16_t eventCount;
+};
+
 } // namespace ModbusOver

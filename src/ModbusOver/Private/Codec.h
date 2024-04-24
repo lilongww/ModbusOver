@@ -64,6 +64,7 @@ struct Codec
     static_assert(sizeof(code), "Unrealized code");
 };
 
+// 0x01
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadColis>
 {
@@ -134,6 +135,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadColis>
     };
 };
 
+// 0x02
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadDiscreteInputs>
 {
@@ -141,6 +143,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadDiscreteInputs>
     using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response<AbstractProtocol::FunctionCode::ReadDiscreteInputs>;
 };
 
+// 0x03
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadHoldingRegisters>
 {
@@ -148,6 +151,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadHoldingRegisters>
     using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response<AbstractProtocol::FunctionCode::ReadHoldingRegisters>;
 };
 
+// 0x04
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadInputRegisters>
 {
@@ -155,6 +159,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadInputRegisters>
     using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response<AbstractProtocol::FunctionCode::ReadInputRegisters>;
 };
 
+// 0x05
 template<>
 struct Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>
 {
@@ -188,6 +193,7 @@ struct Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>
     using Response = Request<AbstractProtocol::FunctionCode::WriteSingleCoil>;
 };
 
+// 0x06
 template<>
 struct Codec<AbstractProtocol::FunctionCode::WriteSingleRegister>
 {
@@ -209,6 +215,7 @@ struct Codec<AbstractProtocol::FunctionCode::WriteSingleRegister>
     using Response = Request;
 };
 
+// 0x07
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadExceptionStatus>
 {
@@ -242,6 +249,47 @@ struct Codec<AbstractProtocol::FunctionCode::ReadExceptionStatus>
     };
 };
 
+// 0x0B
+template<>
+struct Codec<AbstractProtocol::FunctionCode::GetCommEventCounter>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::GetCommEventCounter>
+    class Request : public Common
+    {
+    public:
+        inline Request() : Common(code) {}
+        inline void serialize(Buffer& buffer) const {}
+        inline bool unserialize(BufferStream& stream) { return true; }
+    };
+
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::GetCommEventCounter>
+    class Response : public Common
+    {
+    public:
+        inline Response() {}
+        inline Response(uint16_t status, uint16_t eventCount) : Common(code) {}
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_status);
+            buffer.append(m_eventCount);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 4)
+                return false;
+            stream >> m_status >> m_eventCount;
+            return true;
+        }
+        inline uint16_t status() const { return m_status; }
+        inline uint16_t eventCount() const { return m_eventCount; }
+
+    private:
+        uint16_t m_status;
+        uint16_t m_eventCount;
+    };
+};
+
+// 0x0F
 template<>
 struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>
 {
@@ -315,6 +363,7 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>
     };
 };
 
+// 0x10
 template<>
 struct Codec<AbstractProtocol::FunctionCode::WriteMultipleRegisters>
 {
@@ -363,6 +412,7 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleRegisters>
         Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>::Response<AbstractProtocol::FunctionCode::WriteMultipleRegisters>;
 };
 
+// 0x11
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReportServerID>
 {
@@ -414,6 +464,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReportServerID>
     };
 };
 
+// 0x16
 template<>
 struct Codec<AbstractProtocol::FunctionCode::MaskWriteRegister>
 {
@@ -452,6 +503,7 @@ struct Codec<AbstractProtocol::FunctionCode::MaskWriteRegister>
     using Response = Request<code>;
 };
 
+// 0x17
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadWriteMultipleRegisters>
 {
@@ -542,6 +594,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadWriteMultipleRegisters>
     };
 };
 
+// 0x18
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadFIFOQueue>
 {
