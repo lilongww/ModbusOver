@@ -199,6 +199,142 @@ bool AbstractProtocol::onResponseWriteMultipleRegisters(Buffer& buffer) const
     return true;
 }
 
+Buffer AbstractProtocol::requestReportServerID() const { return toADU(Codec<FunctionCode::ReportServerID>::Request().encode()); }
+
+bool AbstractProtocol::onRequestReportServerID(Buffer& buffer, std::vector<uint8_t>& data) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::ReportServerID, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::ReportServerID>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    data = std::move(resp);
+    return true;
+}
+
+Buffer AbstractProtocol::requestReadExceptionStatus() const { return toADU(Codec<FunctionCode::ReadExceptionStatus>::Request().encode()); }
+
+bool AbstractProtocol::onRequestReadExceptionStatus(Buffer& buffer, uint8_t& data) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::ReadExceptionStatus, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::ReadExceptionStatus>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    data = resp.outputData();
+    return true;
+}
+
+Buffer AbstractProtocol::requestGetCommEventCounter() const { return toADU(Codec<FunctionCode::GetCommEventCounter>::Request().encode()); }
+
+bool AbstractProtocol::onRequestGetCommEventCounter(Buffer& buffer, uint16_t& status, uint16_t& eventCount) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::GetCommEventCounter, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::GetCommEventCounter>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    status     = resp.status();
+    eventCount = resp.eventCount();
+    return true;
+}
+
+Buffer AbstractProtocol::requestGetCommEventLog() const { return toADU(Codec<FunctionCode::GetCommEventLog>::Request().encode()); }
+
+bool AbstractProtocol::onRequestGetCommEventLog(Buffer& buffer, CommEventLog& log) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::GetCommEventLog, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::GetCommEventLog>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    log = std::move(resp);
+    return true;
+}
+
+Buffer AbstractProtocol::requestMaskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask) const
+{
+    return toADU(Codec<FunctionCode::MaskWriteRegister>::Request(address, andMask, orMask).encode());
+}
+
+bool AbstractProtocol::onRequestMaskWriteRegister(Buffer& buffer, uint16_t& address, uint16_t& andMask, uint16_t& orMask) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::MaskWriteRegister, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::MaskWriteRegister>::Response<FunctionCode::MaskWriteRegister> resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    address = resp.address();
+    andMask = resp.andMask();
+    orMask  = resp.orMask();
+    return true;
+}
+
+Buffer AbstractProtocol::requestReadWriteMultipleRegisters(uint16_t readStartAddress,
+                                                           uint16_t quantityToRead,
+                                                           uint16_t writeStartAddress,
+                                                           std::vector<uint16_t>&& writeData) const
+{
+    return toADU(
+        Codec<FunctionCode::ReadWriteMultipleRegisters>::Request(readStartAddress, quantityToRead, writeStartAddress, std::move(writeData))
+            .encode());
+}
+
+bool AbstractProtocol::onRequestReadWriteMultipleRegisters(Buffer& buffer, std::vector<uint16_t>& data) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::ReadWriteMultipleRegisters, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::ReadWriteMultipleRegisters>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    data = std::move(resp);
+    return true;
+}
+
+Buffer AbstractProtocol::requestReadFIFOQueue(uint16_t address) const
+{
+    return toADU(Codec<FunctionCode::ReadFIFOQueue>::Request(address).encode());
+}
+
+bool AbstractProtocol::onRequestReadFIFOQueue(Buffer& buffer, std::vector<uint16_t>& data) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::ReadFIFOQueue, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::ReadFIFOQueue>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    data = std::move(resp);
+    return true;
+}
+
 std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto,
                                                            const uint8_t& slave,
                                                            const bool& useBigendianCRC16,

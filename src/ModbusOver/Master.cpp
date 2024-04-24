@@ -193,6 +193,33 @@ void Master::writeSingleRegister(uint16_t address, uint16_t value)
 }
 
 /*!
+    \brief      读异常状态. 功能码 0x07.
+*/
+uint8_t Master::readExceptionStatus()
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->readExceptionStatus();
+}
+
+/*!
+    \brief      获得事件计数器. 功能码 0x0B.
+*/
+CommEventCounter Master::getCommEventCounter()
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->getCommEventCounter();
+}
+
+/*!
+    \brief      获得事件记录. 功能码 0x0C.
+*/
+CommEventLog Master::getCommEventLog()
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->getCommEventLog();
+}
+
+/*!
     \brief      功能码 0x0F, 写入从地址 \a startingAddress 开始的 \a quantityOfCoils 线圈状态 \a states.
     \note       quantityOfCoils表示线圈数量，每个线圈为 1 bit, 所以 \a states 的字节数为 quantityOfCoils / 8 + ((quantityOfCoils % 8) ? 1 :
    0).
@@ -234,6 +261,64 @@ void Master::writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16
 void Master::writeMultipleRegisters(uint16_t startingAddress, const std::vector<uint16_t>& values)
 {
     writeMultipleRegisters(startingAddress, std::vector<uint16_t>(values.begin(), values.end()));
+}
+
+/*!
+    \brief      报告从站ID. 功能码 0x11.
+*/
+std::vector<uint8_t> Master::reportServerID()
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->reportServerID();
+}
+
+/*!
+    \brief      掩码写入寄存器.
+                功能码 0x16. 写入寄存器地址 \a address, \a andMask, \a orMask.
+                算法为 Result = (当前寄存器内容 AND \a andMask) OR (\a orMask AND (NOT \a andMask)).
+*/
+void Master::maskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask)
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->maskWriteRegister(address, andMask, orMask);
+}
+
+/*!
+    \brief      读写多个寄存器.
+                功能码 0x17. 读取开始地址 \a readStartAddress, 读取寄存器数量 \a quantityToRead, 写入寄存器开始地址 \a writeStartAddress,
+                写入数据 \a writeData.
+*/
+std::vector<uint16_t> Master::readWriteMultipleRegisters(uint16_t readStartAddress,
+                                                         uint16_t quantityToRead,
+                                                         uint16_t writeStartAddress,
+                                                         std::vector<uint16_t>&& writeData)
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->readWriteMultipleRegisters(readStartAddress, quantityToRead, writeStartAddress, std::move(writeData));
+}
+
+/*!
+    \overload   重载函数.
+                功能码 0x17. 读取开始地址 \a readStartAddress, 读取寄存器数量 \a quantityToRead, 写入寄存器开始地址 \a writeStartAddress,
+                写入数据 \a writeData.
+    \sa         readWriteMultipleRegisters
+*/
+std::vector<uint16_t> Master::readWriteMultipleRegisters(uint16_t readStartAddress,
+                                                         uint16_t quantityToRead,
+                                                         uint16_t writeStartAddress,
+                                                         const std::vector<uint16_t>& writeData)
+{
+    return readWriteMultipleRegisters(
+        readStartAddress, quantityToRead, writeStartAddress, std::vector<uint16_t>(writeData.begin(), writeData.end()));
+}
+
+/*!
+    \brief      读FIFO队列. 功能码 0x18. 从地址 \a address 开始读取.
+*/
+std::vector<uint16_t> Master::requestReadFIFOQueue(uint16_t address)
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->requestReadFIFOQueue(address);
 }
 
 /*!

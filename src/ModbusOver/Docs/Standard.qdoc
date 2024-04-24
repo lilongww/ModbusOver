@@ -97,3 +97,51 @@
                 与网关一起使用。它表示没有从目标设备中获得响应。通常表示设备未在网络中。
     \relates    <Standard.h>
 */
+
+/*!
+    \class      ModbusOver::CommEventCounter
+    \brief      Modbus 通信事件数量.
+    \ingroup    ModbusOver
+    \inmodule   ModbusOver
+    \inheaderfile Standard.h
+*/
+
+/*!
+    \variable   ModbusOver::CommEventCounter::status
+    \brief      状态，如果远程设备仍在处理以前发出的程序命令（存在繁忙条件），则状态字将为0xFFFF。否则，为0x0000.
+*/
+
+/*!
+    \variable   ModbusOver::CommEventCounter::eventCount
+    \brief      事件数量.
+*/
+
+/*!
+    \class      ModbusOver::CommEventLog
+    \brief      Modbus 通信事件日志.
+    \ingroup    ModbusOver
+    \inmodule   ModbusOver
+    \inheaderfile Standard.h
+*/
+
+/*!
+    \variable   ModbusOver::CommEventLog::status
+    \brief      状态，与 ModbusOver::CommEventCounter::status 相同.
+    \sa         ModbusOver::CommEventCounter::status
+*/
+
+/*!
+    \variable   ModbusOver::CommEventLog::eventCount
+    \brief      状态，与 ModbusOver::CommEventCounter::eventCount 相同.
+    \sa         ModbusOver::CommEventCounter::eventCount
+*/
+
+/*!
+    \variable   ModbusOver::CommEventLog::messageCount
+    \brief      消息数量.
+*/
+
+/*!
+    \variable   ModbusOver::CommEventLog::events
+    \brief      事件.
+*/

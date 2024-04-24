@@ -19,6 +19,7 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
 
 namespace ModbusOver
 {
@@ -54,6 +55,20 @@ enum class ExceptionCode : uint8_t
     MemoryParityError                  = 0x08,
     GatewayPathUnavailable             = 0x0A,
     GatewayTargetDeviceFailedToRespond = 0x0B
+};
+
+struct CommEventCounter
+{
+    uint16_t status;
+    uint16_t eventCount;
+};
+
+struct CommEventLog
+{
+    uint16_t status;
+    uint16_t eventCount;
+    uint16_t messageCount;
+    std::vector<uint8_t> events;
 };
 
 } // namespace ModbusOver

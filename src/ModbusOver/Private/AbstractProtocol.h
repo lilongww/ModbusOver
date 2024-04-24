@@ -59,22 +59,55 @@ public:
     virtual ModbusProtocol proto() const = 0;
     virtual uint16_t aduMaximum() const  = 0;
 
+    // 0x01
     Buffer requestReadColis(uint16_t startingAddress, uint16_t quantityOfCoils) const;
     bool onResponseReadColis(Buffer& buffer, std::vector<uint8_t>& status) const;
+    // 0x02
     Buffer requestReadDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils) const;
     bool onResponseReadDiscreteInputs(Buffer& buffer, std::vector<uint8_t>& status) const;
+    // 0x03
     Buffer requestReadHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters) const;
     bool onResponseReadHoldingRegisters(Buffer& buffer, std::vector<uint16_t>& status) const;
+    // 0x04
     Buffer requestReadInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters) const;
     bool onResponseReadInputRegisters(Buffer& buffer, std::vector<uint16_t>& status) const;
+    // 0x05
     Buffer requestWriteSingleCoil(uint16_t address, bool state) const;
     bool onResponseWriteSingleCoil(Buffer& buffer) const;
+    // 0x06
     Buffer requestWriteSingleRegister(uint16_t address, uint16_t value) const;
     bool onResponseWriteSingleRegister(Buffer& buffer) const;
+    // 0x07
+    Buffer requestReadExceptionStatus() const;
+    bool onRequestReadExceptionStatus(Buffer& buffer, uint8_t& data) const;
+    // 0x0B
+    Buffer requestGetCommEventCounter() const;
+    bool onRequestGetCommEventCounter(Buffer& buffer, uint16_t& status, uint16_t& eventCount) const;
+    // 0x0C
+    Buffer requestGetCommEventLog() const;
+    bool onRequestGetCommEventLog(Buffer& buffer, CommEventLog& log) const;
+    // 0x0F
     Buffer requestWriteMultipleCoils(uint16_t startingAddress, uint16_t quantityOfOutputs, std::vector<uint8_t>&& states) const;
     bool onResponseWriteMultipleCoils(Buffer& buffer) const;
+    // 0x10
     Buffer requestWriteMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values) const;
     bool onResponseWriteMultipleRegisters(Buffer& buffer) const;
+    // 0x11
+    Buffer requestReportServerID() const;
+    bool onRequestReportServerID(Buffer& buffer, std::vector<uint8_t>& data) const;
+    // 0x16
+    Buffer requestMaskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask) const;
+    bool onRequestMaskWriteRegister(Buffer& buffer, uint16_t& address, uint16_t& andMask, uint16_t& orMask) const;
+    // 0x17
+    Buffer requestReadWriteMultipleRegisters(uint16_t readStartAddress,
+                                             uint16_t quantityToRead,
+                                             uint16_t writeStartAddress,
+                                             std::vector<uint16_t>&& writeData) const;
+    bool onRequestReadWriteMultipleRegisters(Buffer& buffer, std::vector<uint16_t>& data) const;
+    // 0x18
+    Buffer requestReadFIFOQueue(uint16_t address) const;
+    bool onRequestReadFIFOQueue(Buffer& buffer, std::vector<uint16_t>& data) const;
+
     static std::shared_ptr<AbstractProtocol> create(ModbusProtocol proto,
                                                     const uint8_t& slave,
                                                     const bool& useBigendianCRC16,

@@ -64,6 +64,7 @@ struct Codec
     static_assert(sizeof(code), "Unrealized code");
 };
 
+// 0x01
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadColis>
 {
@@ -134,6 +135,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadColis>
     };
 };
 
+// 0x02
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadDiscreteInputs>
 {
@@ -141,6 +143,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadDiscreteInputs>
     using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response<AbstractProtocol::FunctionCode::ReadDiscreteInputs>;
 };
 
+// 0x03
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadHoldingRegisters>
 {
@@ -148,6 +151,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadHoldingRegisters>
     using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response<AbstractProtocol::FunctionCode::ReadHoldingRegisters>;
 };
 
+// 0x04
 template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadInputRegisters>
 {
@@ -155,6 +159,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadInputRegisters>
     using Response = Codec<AbstractProtocol::FunctionCode::ReadColis>::Response<AbstractProtocol::FunctionCode::ReadInputRegisters>;
 };
 
+// 0x05
 template<>
 struct Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>
 {
@@ -188,6 +193,7 @@ struct Codec<AbstractProtocol::FunctionCode::WriteSingleCoil>
     using Response = Request<AbstractProtocol::FunctionCode::WriteSingleCoil>;
 };
 
+// 0x06
 template<>
 struct Codec<AbstractProtocol::FunctionCode::WriteSingleRegister>
 {
@@ -209,6 +215,148 @@ struct Codec<AbstractProtocol::FunctionCode::WriteSingleRegister>
     using Response = Request;
 };
 
+// 0x07
+template<>
+struct Codec<AbstractProtocol::FunctionCode::ReadExceptionStatus>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadExceptionStatus>
+    class Request : public Common
+    {
+    public:
+        inline Request() : Common(code) {}
+        inline void serialize(Buffer& buffer) const {}
+        inline bool unserialize(BufferStream& stream) { return true; }
+    };
+
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadExceptionStatus>
+    class Response : public Common
+    {
+    public:
+        inline Response() {}
+        inline Response(uint8_t outputData) : Common(code), m_outputData(outputData) {}
+        inline void serialize(Buffer& buffer) const { buffer.append(m_outputData); }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 1)
+                return false;
+            stream >> m_outputData;
+            return true;
+        }
+        inline uint8_t outputData() const { return m_outputData; }
+
+    private:
+        uint8_t m_outputData;
+    };
+};
+
+// 0x0B
+template<>
+struct Codec<AbstractProtocol::FunctionCode::GetCommEventCounter>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::GetCommEventCounter>
+    class Request : public Common
+    {
+    public:
+        inline Request() : Common(code) {}
+        inline void serialize(Buffer& buffer) const {}
+        inline bool unserialize(BufferStream& stream) { return true; }
+    };
+
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::GetCommEventCounter>
+    class Response : public Common
+    {
+    public:
+        inline Response() {}
+        inline Response(uint16_t status, uint16_t eventCount) : Common(code) {}
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_status);
+            buffer.append(m_eventCount);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 4)
+                return false;
+            stream >> m_status >> m_eventCount;
+            return true;
+        }
+        inline uint16_t status() const { return m_status; }
+        inline uint16_t eventCount() const { return m_eventCount; }
+
+    private:
+        uint16_t m_status;
+        uint16_t m_eventCount;
+    };
+};
+
+// 0x0C
+template<>
+struct Codec<AbstractProtocol::FunctionCode::GetCommEventLog>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::GetCommEventLog>
+    class Request : public Common
+    {
+    public:
+        inline Request() : Common(code) {}
+        inline void serialize(Buffer& buffer) const {}
+        inline bool unserialize(BufferStream& stream) { return true; }
+    };
+
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::GetCommEventLog>
+    class Response : public Common
+    {
+    public:
+        inline Response() {}
+        inline Response(uint16_t status, uint16_t eventCount, uint16_t messageCount, std::vector<uint8_t>&& events)
+            : m_byteCount(events.size() + 6)
+            , m_status(status)
+            , m_eventCount(eventCount)
+            , m_messageCount(messageCount)
+            , m_events(std::move(events))
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_byteCount);
+            buffer.append(m_status);
+            buffer.append(m_eventCount);
+            buffer.append(m_messageCount);
+            for (auto d : m_events)
+                buffer.append(d);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 7)
+                return false;
+            stream.peak(m_byteCount);
+            if (stream.size() < 7 + m_byteCount)
+                return false;
+            stream >> m_byteCount >> m_status >> m_eventCount >> m_messageCount;
+            m_events.resize(m_byteCount - 6);
+            for (auto d : m_events)
+                stream >> d;
+            return true;
+        }
+        inline operator CommEventLog() &&
+        {
+            CommEventLog log;
+            log.status       = m_status;
+            log.eventCount   = m_eventCount;
+            log.messageCount = m_messageCount;
+            std::swap(log.events, m_events);
+            return log;
+        }
+
+    private:
+        uint8_t m_byteCount;
+        uint16_t m_status;
+        uint16_t m_eventCount;
+        uint16_t m_messageCount;
+        std::vector<uint8_t> m_events;
+    };
+};
+
+// 0x0F
 template<>
 struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>
 {
@@ -282,6 +430,7 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>
     };
 };
 
+// 0x10
 template<>
 struct Codec<AbstractProtocol::FunctionCode::WriteMultipleRegisters>
 {
@@ -328,5 +477,254 @@ struct Codec<AbstractProtocol::FunctionCode::WriteMultipleRegisters>
     };
     using Response =
         Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>::Response<AbstractProtocol::FunctionCode::WriteMultipleRegisters>;
+};
+
+// 0x11
+template<>
+struct Codec<AbstractProtocol::FunctionCode::ReportServerID>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReportServerID>
+    class Request : public Common
+    {
+    public:
+        inline Request() : Common(code) {}
+        inline void serialize(Buffer& buffer) const {}
+        inline bool unserialize(BufferStream& stream) { return true; }
+    };
+
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReportServerID>
+    class Response : public Common
+    {
+    public:
+        inline Response() {}
+        inline Response(std::vector<uint8_t>&& data) : Common(code), m_byteCount(static_cast<uint8_t>(data.size())), m_data(std::move(data))
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_byteCount);
+            for (auto data : m_data)
+            {
+                buffer.append(data);
+            }
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 2)
+                return false;
+            stream.peak(m_byteCount);
+            if (stream.size() < m_byteCount)
+                return false;
+            stream >> m_byteCount;
+            m_data.resize(m_byteCount);
+            for (auto& d : m_data)
+            {
+                stream >> d;
+            }
+            return true;
+        }
+        inline operator std::vector<uint8_t>() && { return std::move(m_data); }
+
+    private:
+        uint8_t m_byteCount;
+        std::vector<uint8_t> m_data;
+    };
+};
+
+// 0x16
+template<>
+struct Codec<AbstractProtocol::FunctionCode::MaskWriteRegister>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::MaskWriteRegister>
+    class Request : public Common
+    {
+    public:
+        inline Request() {}
+        inline Request(uint16_t address, uint16_t andMask, uint16_t orMask)
+            : Common(code), m_address(address), m_andMask(andMask), m_orMask(orMask)
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_address);
+            buffer.append(m_andMask);
+            buffer.append(m_orMask);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 6)
+                return false;
+            stream >> m_address >> m_andMask >> m_orMask;
+            return true;
+        }
+        inline uint16_t address() const { return m_address; }
+        inline uint16_t andMask() const { return m_andMask; }
+        inline uint16_t orMask() const { return m_orMask; }
+
+    private:
+        uint16_t m_address;
+        uint16_t m_andMask;
+        uint16_t m_orMask;
+    };
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::MaskWriteRegister>
+    using Response = Request<code>;
+};
+
+// 0x17
+template<>
+struct Codec<AbstractProtocol::FunctionCode::ReadWriteMultipleRegisters>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadWriteMultipleRegisters>
+    class Request : public Common
+    {
+    public:
+        inline Request() {}
+        inline Request(uint16_t readStartAddress, uint16_t quantityToRead, uint16_t writeStartAddress, std::vector<uint16_t>&& writeData)
+            : Common(code)
+            , m_readStartAddress(readStartAddress)
+            , m_quantityToRead(quantityToRead)
+            , m_writeStartAddress(writeStartAddress)
+            , m_quantityToWrite(static_cast<uint16_t>(writeData.size()))
+            , m_writeByteCount(static_cast<uint8_t>(writeData.size() * 2))
+            , m_writeData(std::move(writeData))
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_readStartAddress);
+            buffer.append(m_quantityToRead);
+            buffer.append(m_writeStartAddress);
+            buffer.append(m_quantityToWrite);
+            buffer.append(m_writeByteCount);
+            for (auto d : m_writeData)
+                buffer.append(d);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 9)
+                return false;
+            stream.peak(m_writeByteCount, 6);
+            stream.peak(m_writeData, 8);
+            if (m_writeByteCount * 2 != m_quantityToWrite)
+                return false;
+            if (stream.size() < m_writeData + 8)
+                return false;
+            stream >> m_readStartAddress >> m_quantityToRead >> m_writeStartAddress >> m_quantityToWrite >> m_writeByteCount;
+            m_writeData.resize(m_quantityToWrite);
+            for (auto& d : m_writeData)
+                stream >> d;
+            return true;
+        }
+
+    private:
+        uint16_t m_readStartAddress;
+        uint16_t m_quantityToRead;
+        uint16_t m_writeStartAddress;
+        uint16_t m_quantityToWrite;
+        uint8_t m_writeByteCount;
+        std::vector<uint16_t> m_writeData;
+    };
+
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadWriteMultipleRegisters>
+    class Response : public Common
+    {
+    public:
+        inline Response() {}
+        inline Response(std::vector<uint16_t>&& data)
+            : Common(code), m_byteCount(static_cast<uint8_t>(data.size())), m_data(std::move(data))
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_byteCount);
+            for (auto d : m_data)
+                buffer.append(d);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 1)
+                return false;
+            stream.peak(m_byteCount);
+            if (stream.size() < m_byteCount + 1)
+                return false;
+            stream >> m_byteCount;
+            m_data.resize(m_byteCount / 2);
+            for (auto& d : m_data)
+                stream >> d;
+            return true;
+        }
+        inline operator std::vector<uint16_t>() && { return std::move(m_data); }
+
+    private:
+        uint8_t m_byteCount;
+        std::vector<uint16_t> m_data;
+    };
+};
+
+// 0x18
+template<>
+struct Codec<AbstractProtocol::FunctionCode::ReadFIFOQueue>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadFIFOQueue>
+    class Request : public Common
+    {
+    public:
+        inline Request() {}
+        inline Request(uint16_t address) : Common(code), m_address(address) {}
+        inline void serialize(Buffer& buffer) const { buffer.append(m_address); }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 2)
+                return false;
+            stream >> m_address;
+            return true;
+        }
+
+    private:
+        uint16_t m_address;
+    };
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadFIFOQueue>
+    class Response : public Common
+    {
+    public:
+        inline Response() {}
+        inline Response(std::vector<uint16_t>&& data)
+            : Common(code)
+            , m_byteCount(static_cast<uint16_t>(data.size() * 2))
+            , m_fifoCount(static_cast<uint16_t>(data.size()))
+            , m_data(std::move(data))
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_byteCount);
+            buffer.append(m_fifoCount);
+            for (auto d : m_data)
+                buffer.append(d);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 4)
+                return false;
+            stream.peak(m_byteCount);
+            stream.peak(m_fifoCount, sizeof(m_byteCount));
+            if (m_byteCount != m_fifoCount * 2)
+                return false;
+            if (stream.size() < m_byteCount + 4)
+                return false;
+            stream >> m_byteCount;
+            stream >> m_fifoCount;
+            m_data.resize(m_fifoCount);
+            for (auto& d : m_data)
+                stream >> d;
+            return true;
+        }
+        inline operator std::vector<uint16_t>() && { return std::move(m_data); }
+
+    private:
+        uint16_t m_byteCount;
+        uint16_t m_fifoCount;
+        std::vector<uint16_t> m_data;
+    };
 };
 } // namespace ModbusOver

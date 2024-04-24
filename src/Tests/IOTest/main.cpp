@@ -9,10 +9,15 @@ TEST(IOTest, bool)
 {
     Master master;
     // master.connect(Address<AddressType::TCP>("127.0.0.1"));
-    master.connect(Address<AddressType::SerialPort>("COM2", ModbusProtocol::ModbusASCII));
+    master.connect(Address<AddressType::SerialPort>("COM2", ModbusProtocol::ModbusRTU));
     // master.connect(Address<AddressType::TCP>("127.0.0.1", 502, ModbusProtocol::ModbusRTU));
     // master.setProtocolDebug(std::make_shared<ProtocolDebug>());
     master.setSlave(0x01);
+    // auto ret = master.reportServerID(); // PASS
+    // auto ret = master.readExceptionStatus(); // PASS
+    // auto ret = master.requestReadFIFOQueue(0x01); // No test
+    // auto ret = master.getCommEventCounter(); // PASS
+    // auto ret = master.getCommEventLog(); // No test
     {                                          // 离散量输入测试
         for (auto i : std::views::iota(0, 10)) // stress
         {
@@ -64,6 +69,23 @@ TEST(IOTest, bool)
             master.writeSingleCoil(0x01, true);
             auto ret = master.readCoils(0x01, 1);
             EXPECT_EQ(0x01, ret.front());
+        }
+    }
+
+    {
+        for (auto i : std::views::iota(0, 10)) // stress
+        {
+            auto data = std::views::iota(static_cast<uint16_t>(0), static_cast<uint16_t>(10)) | std::ranges::to<std::vector>();
+            auto ret  = master.readWriteMultipleRegisters(0, 10, 0, data);
+            EXPECT_EQ(data, ret);
+        }
+    }
+
+    {
+        for (auto i : std::views::iota(0, 10)) // stress
+        {
+            auto data = std::views::iota(static_cast<uint16_t>(0), static_cast<uint16_t>(10)) | std::ranges::to<std::vector>();
+            master.maskWriteRegister(0, 0x01, 0x02);
         }
     }
 }

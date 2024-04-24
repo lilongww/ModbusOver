@@ -39,12 +39,12 @@
             </function>
         </header>
         <header name="&lt;Standard.h&gt;" href="standard-h.html" status="active" location="Standard.qdoc" filepath="D:/project/ModbusOver/src/ModbusOver/Docs/Standard.qdoc" lineno="1" documented="true" module="ModbusOver" brief="Modbus协议标准定义" title="Standard" fulltitle="&lt;Standard.h&gt; - Standard" subtitle="">
-            <enum name="AddressType" href="standard-h.html#AddressType-enum" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="39" related="12" documented="true" scoped="true">
+            <enum name="AddressType" href="standard-h.html#AddressType-enum" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="40" related="12" documented="true" scoped="true">
                 <value name="TCP" value="0"/>
                 <value name="UDP" value="1"/>
                 <value name="SerialPort" value="2"/>
             </enum>
-            <enum name="ExceptionCode" href="standard-h.html#ExceptionCode-enum" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="46" related="13" documented="true" scoped="true">
+            <enum name="ExceptionCode" href="standard-h.html#ExceptionCode-enum" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="47" related="13" documented="true" scoped="true">
                 <value name="IllegalFunction" value="0x01"/>
                 <value name="IllegalDataAddress" value="0x02"/>
                 <value name="IllegalDataValue" value="0x03"/>
@@ -55,17 +55,17 @@
                 <value name="GatewayPathUnavailable" value="0x0A"/>
                 <value name="GatewayTargetDeviceFailedToRespond" value="0x0B"/>
             </enum>
-            <enum name="ModbusProtocol" href="standard-h.html#ModbusProtocol-enum" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="32" related="14" documented="true" scoped="true">
+            <enum name="ModbusProtocol" href="standard-h.html#ModbusProtocol-enum" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="33" related="14" documented="true" scoped="true">
                 <value name="ModbusTCP" value="0"/>
                 <value name="ModbusRTU" value="1"/>
                 <value name="ModbusASCII" value="2"/>
             </enum>
-            <variable name="Broadcast" href="standard-h.html#Broadcast-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="29" related="15" documented="true" type="const uint8_t" static="false" brief="广播编号"/>
-            <variable name="ExceptionCodeAddend" href="standard-h.html#ExceptionCodeAddend-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="30" related="16" documented="true" type="const uint8_t" static="false" brief="异常附加码，异常码 = 功能码 + 异常附加码"/>
-            <variable name="SlaveMax" href="standard-h.html#SlaveMax-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="26" related="17" documented="true" type="const uint8_t" static="false" brief="最大从机编号"/>
-            <variable name="SlaveMin" href="standard-h.html#SlaveMin-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="25" related="18" documented="true" type="const uint8_t" static="false" brief="最小从机编号"/>
-            <variable name="SlaveReservedMax" href="standard-h.html#SlaveReservedMax-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="28" related="19" documented="true" type="const uint8_t" static="false" brief="最大保留从机编号"/>
-            <variable name="SlaveReservedMin" href="standard-h.html#SlaveReservedMin-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="27" related="20" documented="true" type="const uint8_t" static="false" brief="最小保留从机编号"/>
+            <variable name="Broadcast" href="standard-h.html#Broadcast-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="30" related="15" documented="true" type="const uint8_t" static="false" brief="广播编号"/>
+            <variable name="ExceptionCodeAddend" href="standard-h.html#ExceptionCodeAddend-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="31" related="16" documented="true" type="const uint8_t" static="false" brief="异常附加码，异常码 = 功能码 + 异常附加码"/>
+            <variable name="SlaveMax" href="standard-h.html#SlaveMax-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="27" related="17" documented="true" type="const uint8_t" static="false" brief="最大从机编号"/>
+            <variable name="SlaveMin" href="standard-h.html#SlaveMin-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="26" related="18" documented="true" type="const uint8_t" static="false" brief="最小从机编号"/>
+            <variable name="SlaveReservedMax" href="standard-h.html#SlaveReservedMax-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="29" related="19" documented="true" type="const uint8_t" static="false" brief="最大保留从机编号"/>
+            <variable name="SlaveReservedMin" href="standard-h.html#SlaveReservedMin-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="28" related="20" documented="true" type="const uint8_t" static="false" brief="最小保留从机编号"/>
         </header>
         <header name="&lt;Version.h&gt;" href="version-h.html" status="active" location="Version.qdoc" filepath="D:/project/ModbusOver/src/ModbusOver/Docs/Version.qdoc" lineno="1" documented="true" module="ModbusOver" brief="ModbusOver版本宏标识，供编程版本判断" title="Version" fulltitle="&lt;Version.h&gt; - Version" subtitle="">
             <function name="MODBUSOVER_VERSION" href="version-h.html#MODBUSOVER_VERSION" status="active" access="public" location="Version.qdoc" filepath="D:/project/ModbusOver/src/ModbusOver/Docs/Version.qdoc" lineno="29" documented="true" related="0" meta="macrowithoutparams" signature="MODBUSOVER_VERSION"/>
@@ -174,6 +174,16 @@
                 <parameter type="const uint16_t *" name="src" default=""/>
             </function>
             <class name="Address" fullname="ModbusOver::Address" href="modbusover-address.html" status="active" access="public" location="Address.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Address.h" lineno="28" documented="true" module="ModbusOver" brief="Modbus连接地址定义"/>
+            <struct name="CommEventCounter" fullname="ModbusOver::CommEventCounter" href="modbusover-commeventcounter.html" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="60" documented="true" groups="ModbusOver" module="ModbusOver" brief="Modbus 通信事件数量">
+                <variable name="eventCount" fullname="ModbusOver::CommEventCounter::eventCount" href="modbusover-commeventcounter.html#eventCount-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="63" documented="true" type="uint16_t" static="false" brief="事件数量"/>
+                <variable name="status" fullname="ModbusOver::CommEventCounter::status" href="modbusover-commeventcounter.html#status-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="62" documented="true" type="uint16_t" static="false" brief="状态，如果远程设备仍在处理以前发出的程序命令（存在繁忙条件），则状态字将为0xFFFF。否则，为0x0000"/>
+            </struct>
+            <struct name="CommEventLog" fullname="ModbusOver::CommEventLog" href="modbusover-commeventlog.html" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="66" documented="true" groups="ModbusOver" module="ModbusOver" brief="Modbus 通信事件日志">
+                <variable name="eventCount" fullname="ModbusOver::CommEventLog::eventCount" href="modbusover-commeventlog.html#eventCount-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="69" documented="true" type="uint16_t" static="false" brief="状态，与 ModbusOver::CommEventCounter::eventCount 相同"/>
+                <variable name="events" fullname="ModbusOver::CommEventLog::events" href="modbusover-commeventlog.html#events-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="71" documented="true" type="std::vector&lt;uint8_t&gt;" static="false" brief="事件"/>
+                <variable name="messageCount" fullname="ModbusOver::CommEventLog::messageCount" href="modbusover-commeventlog.html#messageCount-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="70" documented="true" type="uint16_t" static="false" brief="消息数量"/>
+                <variable name="status" fullname="ModbusOver::CommEventLog::status" href="modbusover-commeventlog.html#status-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="68" documented="true" type="uint16_t" static="false" brief="状态，与 ModbusOver::CommEventCounter::status 相同"/>
+            </struct>
             <class name="Master" fullname="ModbusOver::Master" href="modbusover-master.html" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="29" documented="true" groups="ModbusOver" module="ModbusOver" brief="Modbus 客户端（主站）接口">
                 <function name="Master" fullname="ModbusOver::Master::Master" href="modbusover-master.html#Master" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="32" documented="true" meta="constructor" brief="构造函数" signature="Master()"/>
                 <function name="asciiLF" fullname="ModbusOver::Master::asciiLF" href="modbusover-master.html#asciiLF" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="45" documented="true" meta="plain" const="true" type="char" brief="返回ModbusASCII协议自定义LF" signature="char asciiLF() const"/>
@@ -182,7 +192,14 @@
                     <parameter type="const int &amp;" name="address" default=""/>
                     <parameter type="const std::chrono::milliseconds &amp;" name="connectTimeout" default="std::chrono::milliseconds(5000)"/>
                 </function>
-                <function name="protocolDebug" fullname="ModbusOver::Master::protocolDebug" href="modbusover-master.html#protocolDebug" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="58" documented="true" meta="plain" const="true" type="std::shared_ptr&lt;ProtocolDebug&gt;" brief="返回底层协议调试接口" signature="std::shared_ptr&lt;ProtocolDebug&gt; protocolDebug() const"/>
+                <function name="getCommEventCounter" fullname="ModbusOver::Master::getCommEventCounter" href="modbusover-master.html#getCommEventCounter" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="54" documented="true" meta="plain" type="ModbusOver::CommEventCounter" brief="获得事件计数器. 功能码 0x0B" signature="ModbusOver::CommEventCounter getCommEventCounter()"/>
+                <function name="getCommEventLog" fullname="ModbusOver::Master::getCommEventLog" href="modbusover-master.html#getCommEventLog" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="55" documented="true" meta="plain" type="ModbusOver::CommEventLog" brief="获得事件记录. 功能码 0x0C" signature="ModbusOver::CommEventLog getCommEventLog()"/>
+                <function name="maskWriteRegister" fullname="ModbusOver::Master::maskWriteRegister" href="modbusover-master.html#maskWriteRegister" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="61" documented="true" meta="plain" type="void" brief="掩码写入寄存器. 功能码 0x16. 写入寄存器地址 address, andMask, orMask. 算法为 Result = (当前寄存器内容 AND andMask) OR (orMask AND (NOT andMask))" signature="void maskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask)">
+                    <parameter type="uint16_t" name="address" default=""/>
+                    <parameter type="uint16_t" name="andMask" default=""/>
+                    <parameter type="uint16_t" name="orMask" default=""/>
+                </function>
+                <function name="protocolDebug" fullname="ModbusOver::Master::protocolDebug" href="modbusover-master.html#protocolDebug" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="72" documented="true" meta="plain" const="true" type="std::shared_ptr&lt;ProtocolDebug&gt;" brief="返回底层协议调试接口" signature="std::shared_ptr&lt;ProtocolDebug&gt; protocolDebug() const"/>
                 <function name="readCoils" fullname="ModbusOver::Master::readCoils" href="modbusover-master.html#readCoils" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="47" documented="true" meta="plain" type="std::vector&lt;uint8_t&gt;" brief="功能码 0x01, 读取从地址 startingAddress 开始的 quantityOfCoils 个线圈" signature="std::vector&lt;uint8_t&gt; readCoils(uint16_t startingAddress, uint16_t quantityOfCoils)">
                     <parameter type="uint16_t" name="startingAddress" default=""/>
                     <parameter type="uint16_t" name="quantityOfCoils" default=""/>
@@ -191,6 +208,7 @@
                     <parameter type="uint16_t" name="startingAddress" default=""/>
                     <parameter type="uint16_t" name="quantityOfCoils" default=""/>
                 </function>
+                <function name="readExceptionStatus" fullname="ModbusOver::Master::readExceptionStatus" href="modbusover-master.html#readExceptionStatus" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="53" documented="true" meta="plain" type="uint8_t" brief="读异常状态. 功能码 0x07" signature="uint8_t readExceptionStatus()"/>
                 <function name="readHoldingRegisters" fullname="ModbusOver::Master::readHoldingRegisters" href="modbusover-master.html#readHoldingRegisters" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="49" documented="true" meta="plain" type="std::vector&lt;uint16_t&gt;" brief="功能码 0x03, 读取从地址 startingAddress 开始的 quantityOfRegisters 个保持寄存器" signature="std::vector&lt;uint16_t&gt; readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters)">
                     <parameter type="uint16_t" name="startingAddress" default=""/>
                     <parameter type="uint16_t" name="quantityOfRegisters" default=""/>
@@ -199,11 +217,27 @@
                     <parameter type="uint16_t" name="startingAddress" default=""/>
                     <parameter type="uint16_t" name="quantityOfRegisters" default=""/>
                 </function>
+                <function name="readWriteMultipleRegisters" fullname="ModbusOver::Master::readWriteMultipleRegisters" href="modbusover-master.html#readWriteMultipleRegisters" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="62" documented="true" meta="plain" type="std::vector&lt;uint16_t&gt;" brief="读写多个寄存器. 功能码 0x17. 读取开始地址 readStartAddress, 读取寄存器数量 quantityToRead, 写入寄存器开始地址 writeStartAddress, 写入数据 writeData" signature="std::vector&lt;uint16_t&gt; readWriteMultipleRegisters(uint16_t readStartAddress, uint16_t quantityToRead, uint16_t writeStartAddress, std::vector&lt;uint16_t&gt; &amp;&amp;writeData)">
+                    <parameter type="uint16_t" name="readStartAddress" default=""/>
+                    <parameter type="uint16_t" name="quantityToRead" default=""/>
+                    <parameter type="uint16_t" name="writeStartAddress" default=""/>
+                    <parameter type="std::vector&lt;uint16_t&gt; &amp;&amp;" name="writeData" default=""/>
+                </function>
+                <function name="readWriteMultipleRegisters" fullname="ModbusOver::Master::readWriteMultipleRegisters" href="modbusover-master.html#readWriteMultipleRegisters-1" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="66" documented="true" meta="plain" overload="true" overload-number="1" type="std::vector&lt;uint16_t&gt;" signature="std::vector&lt;uint16_t&gt; readWriteMultipleRegisters(uint16_t readStartAddress, uint16_t quantityToRead, uint16_t writeStartAddress, const std::vector&lt;uint16_t&gt; &amp;writeData)">
+                    <parameter type="uint16_t" name="readStartAddress" default=""/>
+                    <parameter type="uint16_t" name="quantityToRead" default=""/>
+                    <parameter type="uint16_t" name="writeStartAddress" default=""/>
+                    <parameter type="const std::vector&lt;uint16_t&gt; &amp;" name="writeData" default=""/>
+                </function>
+                <function name="reportServerID" fullname="ModbusOver::Master::reportServerID" href="modbusover-master.html#reportServerID" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="60" documented="true" meta="plain" type="std::vector&lt;uint8_t&gt;" brief="报告从站ID. 功能码 0x11" signature="std::vector&lt;uint8_t&gt; reportServerID()"/>
+                <function name="requestReadFIFOQueue" fullname="ModbusOver::Master::requestReadFIFOQueue" href="modbusover-master.html#requestReadFIFOQueue" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="70" documented="true" meta="plain" type="std::vector&lt;uint16_t&gt;" brief="读FIFO队列. 功能码 0x18. 从地址 address 开始读取" signature="std::vector&lt;uint16_t&gt; requestReadFIFOQueue(uint16_t address)">
+                    <parameter type="uint16_t" name="address" default=""/>
+                </function>
                 <function name="rtsDelay" fullname="ModbusOver::Master::rtsDelay" href="modbusover-master.html#rtsDelay" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="46" documented="true" meta="plain" const="true" type="const std::chrono::milliseconds &amp;" brief="返回RTS delay" signature="const std::chrono::milliseconds &amp; rtsDelay() const"/>
                 <function name="setAsciiLF" fullname="ModbusOver::Master::setAsciiLF" href="modbusover-master.html#setAsciiLF" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="44" documented="true" meta="plain" type="void" brief="设置ModbusASCII协议自定义LF lf" signature="void setAsciiLF(char lf)">
                     <parameter type="char" name="lf" default=""/>
                 </function>
-                <function name="setProtocolDebug" fullname="ModbusOver::Master::setProtocolDebug" href="modbusover-master.html#setProtocolDebug" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="57" documented="true" meta="plain" type="void" brief="设置底层协议调试接口 debug" signature="void setProtocolDebug(std::shared_ptr&lt;ProtocolDebug&gt; debug)">
+                <function name="setProtocolDebug" fullname="ModbusOver::Master::setProtocolDebug" href="modbusover-master.html#setProtocolDebug" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="71" documented="true" meta="plain" type="void" brief="设置底层协议调试接口 debug" signature="void setProtocolDebug(std::shared_ptr&lt;ProtocolDebug&gt; debug)">
                     <parameter type="std::shared_ptr&lt;ProtocolDebug&gt;" name="debug" default=""/>
                 </function>
                 <function name="setRTSDelay" fullname="ModbusOver::Master::setRTSDelay" href="modbusover-master.html#setRTSDelay" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="43" documented="true" meta="plain" type="void" brief="设置RTS delay" signature="void setRTSDelay(const std::chrono::milliseconds &amp;delay)">
@@ -221,21 +255,21 @@
                 <function name="slave" fullname="ModbusOver::Master::slave" href="modbusover-master.html#slave" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="40" documented="true" meta="plain" const="true" type="uint8_t" brief="返回从机编号" signature="uint8_t slave() const"/>
                 <function name="timeout" fullname="ModbusOver::Master::timeout" href="modbusover-master.html#timeout" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="38" documented="true" meta="plain" const="true" type="const std::chrono::milliseconds &amp;" brief="返回超时时间" signature="const std::chrono::milliseconds &amp; timeout() const"/>
                 <function name="useBigendianCRC16" fullname="ModbusOver::Master::useBigendianCRC16" href="modbusover-master.html#useBigendianCRC16" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="42" documented="true" meta="plain" const="true" type="bool" brief="返回在ModbusRTU中是否使用MSB在前，LSB在后的CRC16校验码" signature="bool useBigendianCRC16() const"/>
-                <function name="writeMultipleCoils" fullname="ModbusOver::Master::writeMultipleCoils" href="modbusover-master.html#writeMultipleCoils" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="53" documented="true" meta="plain" type="void" brief="功能码 0x0F, 写入从地址 startingAddress 开始的 quantityOfCoils 线圈状态 states" signature="void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector&lt;uint8_t&gt; &amp;&amp;states)">
+                <function name="writeMultipleCoils" fullname="ModbusOver::Master::writeMultipleCoils" href="modbusover-master.html#writeMultipleCoils" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="56" documented="true" meta="plain" type="void" brief="功能码 0x0F, 写入从地址 startingAddress 开始的 quantityOfCoils 线圈状态 states" signature="void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector&lt;uint8_t&gt; &amp;&amp;states)">
                     <parameter type="uint16_t" name="startingAddress" default=""/>
                     <parameter type="uint16_t" name="quantityOfCoils" default=""/>
                     <parameter type="std::vector&lt;uint8_t&gt; &amp;&amp;" name="states" default=""/>
                 </function>
-                <function name="writeMultipleCoils" fullname="ModbusOver::Master::writeMultipleCoils" href="modbusover-master.html#writeMultipleCoils-1" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="54" documented="true" meta="plain" overload="true" overload-number="1" type="void" signature="void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, const std::vector&lt;uint8_t&gt; &amp;states)">
+                <function name="writeMultipleCoils" fullname="ModbusOver::Master::writeMultipleCoils" href="modbusover-master.html#writeMultipleCoils-1" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="57" documented="true" meta="plain" overload="true" overload-number="1" type="void" signature="void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, const std::vector&lt;uint8_t&gt; &amp;states)">
                     <parameter type="uint16_t" name="startingAddress" default=""/>
                     <parameter type="uint16_t" name="quantityOfCoils" default=""/>
                     <parameter type="const std::vector&lt;uint8_t&gt; &amp;" name="states" default=""/>
                 </function>
-                <function name="writeMultipleRegisters" fullname="ModbusOver::Master::writeMultipleRegisters" href="modbusover-master.html#writeMultipleRegisters" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="55" documented="true" meta="plain" type="void" brief="功能码 0x10, 写入从地址 startingAddress 开始的 values 个数的保持寄存器状态" signature="void writeMultipleRegisters(uint16_t startingAddress, std::vector&lt;uint16_t&gt; &amp;&amp;values)">
+                <function name="writeMultipleRegisters" fullname="ModbusOver::Master::writeMultipleRegisters" href="modbusover-master.html#writeMultipleRegisters" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="58" documented="true" meta="plain" type="void" brief="功能码 0x10, 写入从地址 startingAddress 开始的 values 个数的保持寄存器状态" signature="void writeMultipleRegisters(uint16_t startingAddress, std::vector&lt;uint16_t&gt; &amp;&amp;values)">
                     <parameter type="uint16_t" name="startingAddress" default=""/>
                     <parameter type="std::vector&lt;uint16_t&gt; &amp;&amp;" name="values" default=""/>
                 </function>
-                <function name="writeMultipleRegisters" fullname="ModbusOver::Master::writeMultipleRegisters" href="modbusover-master.html#writeMultipleRegisters-1" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="56" documented="true" meta="plain" overload="true" overload-number="1" type="void" signature="void writeMultipleRegisters(uint16_t startingAddress, const std::vector&lt;uint16_t&gt; &amp;values)">
+                <function name="writeMultipleRegisters" fullname="ModbusOver::Master::writeMultipleRegisters" href="modbusover-master.html#writeMultipleRegisters-1" status="active" access="public" location="Master.h" filepath="D:/project/ModbusOver/src/ModbusOver/Master.h" lineno="59" documented="true" meta="plain" overload="true" overload-number="1" type="void" signature="void writeMultipleRegisters(uint16_t startingAddress, const std::vector&lt;uint16_t&gt; &amp;values)">
                     <parameter type="uint16_t" name="startingAddress" default=""/>
                     <parameter type="const std::vector&lt;uint16_t&gt; &amp;" name="values" default=""/>
                 </function>
@@ -266,12 +300,12 @@
                     <parameter type="const std::vector&lt;uint8_t&gt; &amp;" name="data" default=""/>
                 </function>
             </class>
-            <enum name="AddressType" href="standard-h.html#AddressType-enum" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="39" related="12" documented="true" scoped="true">
+            <enum name="AddressType" href="standard-h.html#AddressType-enum" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="40" related="12" documented="true" scoped="true">
                 <value name="TCP" value="0"/>
                 <value name="UDP" value="1"/>
                 <value name="SerialPort" value="2"/>
             </enum>
-            <enum name="ExceptionCode" href="standard-h.html#ExceptionCode-enum" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="46" related="13" documented="true" scoped="true">
+            <enum name="ExceptionCode" href="standard-h.html#ExceptionCode-enum" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="47" related="13" documented="true" scoped="true">
                 <value name="IllegalFunction" value="0x01"/>
                 <value name="IllegalDataAddress" value="0x02"/>
                 <value name="IllegalDataValue" value="0x03"/>
@@ -282,17 +316,17 @@
                 <value name="GatewayPathUnavailable" value="0x0A"/>
                 <value name="GatewayTargetDeviceFailedToRespond" value="0x0B"/>
             </enum>
-            <enum name="ModbusProtocol" href="standard-h.html#ModbusProtocol-enum" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="32" related="14" documented="true" scoped="true">
+            <enum name="ModbusProtocol" href="standard-h.html#ModbusProtocol-enum" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="33" related="14" documented="true" scoped="true">
                 <value name="ModbusTCP" value="0"/>
                 <value name="ModbusRTU" value="1"/>
                 <value name="ModbusASCII" value="2"/>
             </enum>
-            <variable name="Broadcast" href="standard-h.html#Broadcast-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="29" related="15" documented="true" type="const uint8_t" static="false" brief="广播编号"/>
-            <variable name="ExceptionCodeAddend" href="standard-h.html#ExceptionCodeAddend-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="30" related="16" documented="true" type="const uint8_t" static="false" brief="异常附加码，异常码 = 功能码 + 异常附加码"/>
-            <variable name="SlaveMax" href="standard-h.html#SlaveMax-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="26" related="17" documented="true" type="const uint8_t" static="false" brief="最大从机编号"/>
-            <variable name="SlaveMin" href="standard-h.html#SlaveMin-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="25" related="18" documented="true" type="const uint8_t" static="false" brief="最小从机编号"/>
-            <variable name="SlaveReservedMax" href="standard-h.html#SlaveReservedMax-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="28" related="19" documented="true" type="const uint8_t" static="false" brief="最大保留从机编号"/>
-            <variable name="SlaveReservedMin" href="standard-h.html#SlaveReservedMin-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="27" related="20" documented="true" type="const uint8_t" static="false" brief="最小保留从机编号"/>
+            <variable name="Broadcast" href="standard-h.html#Broadcast-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="30" related="15" documented="true" type="const uint8_t" static="false" brief="广播编号"/>
+            <variable name="ExceptionCodeAddend" href="standard-h.html#ExceptionCodeAddend-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="31" related="16" documented="true" type="const uint8_t" static="false" brief="异常附加码，异常码 = 功能码 + 异常附加码"/>
+            <variable name="SlaveMax" href="standard-h.html#SlaveMax-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="27" related="17" documented="true" type="const uint8_t" static="false" brief="最大从机编号"/>
+            <variable name="SlaveMin" href="standard-h.html#SlaveMin-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="26" related="18" documented="true" type="const uint8_t" static="false" brief="最小从机编号"/>
+            <variable name="SlaveReservedMax" href="standard-h.html#SlaveReservedMax-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="29" related="19" documented="true" type="const uint8_t" static="false" brief="最大保留从机编号"/>
+            <variable name="SlaveReservedMin" href="standard-h.html#SlaveReservedMin-var" status="active" access="public" location="Standard.h" filepath="D:/project/ModbusOver/src/ModbusOver/Private/../Standard.h" lineno="28" related="20" documented="true" type="const uint8_t" static="false" brief="最小保留从机编号"/>
         </namespace>
         <page name="index.html" href="index.html" status="active" location="index.qdoc" filepath="D:/project/ModbusOverDocument/src/index.qdoc" lineno="20" documented="true" subtype="page" title="ModbusOver" fulltitle="ModbusOver" subtitle=""/>
         <page name="ftp://ftp.qt-project.org/pub/qt/solutions/lgpl/qtmotifextension-2.7_1-opensource.tar.gz" href="ftp://ftp.qt-project.org/pub/qt/solutions/lgpl/qtmotifextension-2.7_1-opensource.tar.gz" status="active" location="external-resources.qdoc" filepath="C:/Qt/6.6.3/msvc2019_64/doc/global/externalsites/external-resources.qdoc" lineno="495" documented="true" subtype="externalpage" title="Motif Extension" fulltitle="Motif Extension" subtitle=""/>

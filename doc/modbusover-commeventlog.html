@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- Standard.qdoc -->
+  <meta name="description" content="Modbus 通信事件日志.">
+  <title>CommEventLog Struct | ModbusOver 0.5.0</title>
+  <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
+  <script type="text/javascript">
+    document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
+    // loading style sheet breaks anchors that were jumped to before
+    // so force jumping to anchor again
+    setTimeout(function() {
+        var anchor = location.hash;
+        // need to jump to different anchor first (e.g. none)
+        location.hash = "#";
+        setTimeout(function() {
+            location.hash = anchor;
+        }, 0);
+    }, 0);
+  </script>
+</head>
+<body>
+<div class="header" id="qtdocheader">
+    <div class="main">
+    <div class="main-rounded">
+        <div class="navigationbar">
+        <ul>
+<li><a href="index.html" translate="no">ModbusOver 0.5.0</a></li>
+<li><a href="modbusover-module.html" translate="no">ModbusOver</a></li>
+<li>CommEventLog</li>
+<li id="buildversion">ModbusOver 0.5.0 Reference Documentation</li>
+    </ul>
+    </div>
+</div>
+<div class="content">
+<div class="line">
+<div class="content mainContent">
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-variables">Public Variables</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">CommEventLog Struct</h1>
+<span class="small-subtitle" translate="no">struct <a href="modbusover-module.html" translate="no">ModbusOver</a>::CommEventLog</span>
+<!-- $$$CommEventLog-brief -->
+<p>Modbus 通信事件日志. <a href="#details">More...</a></p>
+<!-- @@@CommEventLog -->
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">  <span class="preprocessor">#include &lt;Standard.h&gt;</span></td></tr>
+</table></div>
+<ul>
+<li><a href="modbusover-commeventlog-members.html">List of all members, including inherited members</a></li>
+</ul>
+<h2 id="public-variables">Public Variables</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> uint16_t </td><td class="memItemRight bottomAlign"><b><a href="modbusover-commeventlog.html#eventCount-var" translate="no">eventCount</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint8_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-commeventlog.html#events-var" translate="no">events</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> uint16_t </td><td class="memItemRight bottomAlign"><b><a href="modbusover-commeventlog.html#messageCount-var" translate="no">messageCount</a></b></td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> uint16_t </td><td class="memItemRight bottomAlign"><b><a href="modbusover-commeventlog.html#status-var" translate="no">status</a></b></td></tr>
+</table></div>
+<!-- $$$CommEventLog-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+</div>
+<!-- @@@CommEventLog -->
+<div class="vars">
+<h2>Member Variable Documentation</h2>
+<!-- $$$eventCount -->
+<h3 class="fn" translate="no" id="eventCount-var"><span class="type">uint16_t</span> CommEventLog::<span class="name">eventCount</span></h3>
+<p>状态，与 <a href="modbusover-commeventcounter.html#eventCount-var" translate="no">ModbusOver::CommEventCounter::eventCount</a> 相同.</p>
+<p><b>See also </b><a href="index.html" translate="no">ModbusOver::CommEventCounter::eventCount</a>.</p>
+<!-- @@@eventCount -->
+<!-- $$$events -->
+<h3 class="fn" translate="no" id="events-var"><span class="type">std::vector</span>&lt;<span class="type">uint8_t</span>&gt; CommEventLog::<span class="name">events</span></h3>
+<p>事件.</p>
+<!-- @@@events -->
+<!-- $$$messageCount -->
+<h3 class="fn" translate="no" id="messageCount-var"><span class="type">uint16_t</span> CommEventLog::<span class="name">messageCount</span></h3>
+<p>消息数量.</p>
+<!-- @@@messageCount -->
+<!-- $$$status -->
+<h3 class="fn" translate="no" id="status-var"><span class="type">uint16_t</span> CommEventLog::<span class="name">status</span></h3>
+<p>状态，与 <a href="modbusover-commeventcounter.html#status-var" translate="no">ModbusOver::CommEventCounter::status</a> 相同.</p>
+<p><b>See also </b><a href="index.html" translate="no">ModbusOver::CommEventCounter::status</a>.</p>
+<!-- @@@status -->
+</div>
+        </div>
+       </div>
+   </div>
+   </div>
+</div>
+<div class="footer">
+   <p>
+   <acronym title="Copyright">&copy;</acronym> ModbusOver
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<br/>    The documentation provided herein is licensed under the terms of the    <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</a> as published by the Free Software Foundation.<br/> </div>
+</body>
+</html>

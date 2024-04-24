@@ -1,6 +1,6 @@
 ﻿cmake_minimum_required(VERSION 3.27)
 
-project(ModbusOver VERSION "0.4.0")
+project(ModbusOver VERSION "0.5.0")
 
 option(BUILD_TEST "Build test applications." OFF)
 
@@ -25,7 +25,7 @@ else()
 endif(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
 
 if(MSVC) 
-  add_compile_options(/W3 /wd4251 /wd4996 /utf-8)
+  add_compile_options(/W3 /wd4251 /wd4996 /utf-8 /D_WIN32_WINNT=0x0601)
   if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.12.25835)
     set(CMAKE_CXX20_STANDARD_COMPILE_OPTION "-std:c++latest")
     set(CMAKE_CXX20_EXTENSION_COMPILE_OPTION "-std:c++latest")

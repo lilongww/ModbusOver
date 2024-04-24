@@ -41,9 +41,10 @@ public:
     inline uint16_t msbCrc() const { return std::byteswap(*reinterpret_cast<const uint16_t*>(&m_data.at(m_data.size() - 2))); }
     inline uint16_t lsbCrc() const { return *reinterpret_cast<const uint16_t*>(&m_data.at(m_data.size() - 2)); }
     template<typename T>
-    inline void peak(T& value)
+    inline void peak(T& value, std::ptrdiff_t offset = 0)
     {
-        std::ranges::reverse_copy(m_data | std::views::drop(m_offset) | std::views::take(sizeof(T)), reinterpret_cast<int8_t*>(&value));
+        std::ranges::reverse_copy(m_data | std::views::drop(m_offset + offset) | std::views::take(sizeof(T)),
+                                  reinterpret_cast<int8_t*>(&value));
     }
     inline const std::vector<uint8_t>& data() const { return m_data; };
 

@@ -129,4 +129,102 @@ void MasterIOBase::writeMultipleRegisters(uint16_t startingAddress, std::vector<
             return;
     }
 }
+
+std::vector<uint8_t> MasterIOBase::reportServerID()
+{
+    std::vector<uint8_t> data;
+    write(m_protocol->requestReportServerID().data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestReportServerID(buffer, data))
+            return data;
+    }
+}
+
+uint8_t MasterIOBase::readExceptionStatus()
+{
+    uint8_t data;
+    write(m_protocol->requestReadExceptionStatus().data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestReadExceptionStatus(buffer, data))
+            return data;
+    }
+}
+
+CommEventCounter MasterIOBase::getCommEventCounter()
+{
+    CommEventCounter cec;
+    write(m_protocol->requestGetCommEventCounter().data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestGetCommEventCounter(buffer, cec.status, cec.eventCount))
+            return cec;
+    }
+}
+
+CommEventLog MasterIOBase::getCommEventLog()
+{
+    CommEventLog log;
+    write(m_protocol->requestGetCommEventLog().data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestGetCommEventLog(buffer, log))
+            return log;
+    }
+}
+
+void MasterIOBase::maskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask)
+{
+    uint16_t respAddress, respAndMask, respOrMask;
+    write(m_protocol->requestMaskWriteRegister(address, andMask, orMask).data());
+    if (isBroadcast())
+        return;
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestMaskWriteRegister(buffer, respAddress, respAndMask, respOrMask) && respAddress == address &&
+            respAndMask == andMask && respOrMask == orMask)
+            return;
+    }
+}
+
+std::vector<uint16_t> MasterIOBase::readWriteMultipleRegisters(uint16_t readStartAddress,
+                                                               uint16_t quantityToRead,
+                                                               uint16_t writeStartAddress,
+                                                               std::vector<uint16_t>&& writeData)
+{
+    std::vector<uint16_t> data;
+    write(m_protocol->requestReadWriteMultipleRegisters(readStartAddress, quantityToRead, writeStartAddress, std::move(writeData)).data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestReadWriteMultipleRegisters(buffer, data))
+            return data;
+    }
+}
+
+std::vector<uint16_t> MasterIOBase::requestReadFIFOQueue(uint16_t address)
+{
+    std::vector<uint16_t> data;
+    write(m_protocol->requestReadFIFOQueue(address).data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestReadFIFOQueue(buffer, data))
+            return data;
+    }
+}
+
 } // namespace ModbusOver
