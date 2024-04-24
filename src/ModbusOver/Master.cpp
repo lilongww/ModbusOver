@@ -313,7 +313,7 @@ std::vector<uint16_t> Master::readWriteMultipleRegisters(uint16_t readStartAddre
 }
 
 /*!
-    \brief      读FIFO队列. 功能码 0x18.
+    \brief      读FIFO队列. 功能码 0x18. 从地址 \a address 开始读取.
 */
 std::vector<uint16_t> Master::requestReadFIFOQueue(uint16_t address)
 {

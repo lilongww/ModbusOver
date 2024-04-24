@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QtHelpProject version="1.0">
-    <namespace>com.modbusover.0.4.0</namespace>
+    <namespace>com.modbusover.0.5.0</namespace>
     <virtualFolder>modbusover</virtualFolder>
     <metaData name="version" value=""/>
     <customFilter name="ModbusOver">
@@ -49,6 +49,8 @@
             <keyword name="&lt;Standard.h&gt;::UDP" id="&lt;Standard.h&gt;::UDP" ref="standard-h.html#AddressType-enum"/>
             <keyword name="Address" id="ModbusOver::Address" ref="modbusover-address.html"/>
             <keyword name="Broadcast" id="Broadcast" ref="standard-h.html#Broadcast-var"/>
+            <keyword name="CommEventCounter" id="ModbusOver::CommEventCounter" ref="modbusover-commeventcounter.html"/>
+            <keyword name="CommEventLog" id="ModbusOver::CommEventLog" ref="modbusover-commeventlog.html"/>
             <keyword name="ExceptionCodeAddend" id="ExceptionCodeAddend" ref="standard-h.html#ExceptionCodeAddend-var"/>
             <keyword name="MODBUSOVER_VERSION" id="MODBUSOVER_VERSION" ref="version-h.html#MODBUSOVER_VERSION"/>
             <keyword name="MODBUSOVER_VERSION_MAJOR" id="MODBUSOVER_VERSION_MAJOR" ref="version-h.html#MODBUSOVER_VERSION_MAJOR"/>
@@ -69,15 +71,26 @@
             <keyword name="close" id="Master::close" ref="modbusover-master.html#close"/>
             <keyword name="code" id="ModbusException::code" ref="modbusover-modbusexception.html#code"/>
             <keyword name="connect" id="Master::connect" ref="modbusover-master.html#connect"/>
+            <keyword name="eventCount" id="CommEventCounter::eventCount" ref="modbusover-commeventcounter.html#eventCount-var"/>
+            <keyword name="eventCount" id="CommEventLog::eventCount" ref="modbusover-commeventlog.html#eventCount-var"/>
+            <keyword name="events" id="CommEventLog::events" ref="modbusover-commeventlog.html#events-var"/>
             <keyword name="fromFloatABCD" id="fromFloatABCD" ref="float-h.html#fromFloatABCD"/>
             <keyword name="fromFloatBADC" id="fromFloatBADC" ref="float-h.html#fromFloatBADC"/>
             <keyword name="fromFloatCDAB" id="fromFloatCDAB" ref="float-h.html#fromFloatCDAB"/>
             <keyword name="fromFloatDCBA" id="fromFloatDCBA" ref="float-h.html#fromFloatDCBA"/>
+            <keyword name="getCommEventCounter" id="Master::getCommEventCounter" ref="modbusover-master.html#getCommEventCounter"/>
+            <keyword name="getCommEventLog" id="Master::getCommEventLog" ref="modbusover-master.html#getCommEventLog"/>
+            <keyword name="maskWriteRegister" id="Master::maskWriteRegister" ref="modbusover-master.html#maskWriteRegister"/>
+            <keyword name="messageCount" id="CommEventLog::messageCount" ref="modbusover-commeventlog.html#messageCount-var"/>
             <keyword name="protocolDebug" id="Master::protocolDebug" ref="modbusover-master.html#protocolDebug"/>
             <keyword name="readCoils" id="Master::readCoils" ref="modbusover-master.html#readCoils"/>
             <keyword name="readDiscreteInputs" id="Master::readDiscreteInputs" ref="modbusover-master.html#readDiscreteInputs"/>
+            <keyword name="readExceptionStatus" id="Master::readExceptionStatus" ref="modbusover-master.html#readExceptionStatus"/>
             <keyword name="readHoldingRegisters" id="Master::readHoldingRegisters" ref="modbusover-master.html#readHoldingRegisters"/>
             <keyword name="readInputRegisters" id="Master::readInputRegisters" ref="modbusover-master.html#readInputRegisters"/>
+            <keyword name="readWriteMultipleRegisters" id="Master::readWriteMultipleRegisters" ref="modbusover-master.html#readWriteMultipleRegisters"/>
+            <keyword name="reportServerID" id="Master::reportServerID" ref="modbusover-master.html#reportServerID"/>
+            <keyword name="requestReadFIFOQueue" id="Master::requestReadFIFOQueue" ref="modbusover-master.html#requestReadFIFOQueue"/>
             <keyword name="rtsDelay" id="Master::rtsDelay" ref="modbusover-master.html#rtsDelay"/>
             <keyword name="rx" id="ProtocolDebug::rx" ref="modbusover-protocoldebug.html#rx"/>
             <keyword name="setAsciiLF" id="Master::setAsciiLF" ref="modbusover-master.html#setAsciiLF"/>
@@ -87,6 +100,8 @@
             <keyword name="setTimeout" id="Master::setTimeout" ref="modbusover-master.html#setTimeout"/>
             <keyword name="setUseBigendianCRC16" id="Master::setUseBigendianCRC16" ref="modbusover-master.html#setUseBigendianCRC16"/>
             <keyword name="slave" id="Master::slave" ref="modbusover-master.html#slave"/>
+            <keyword name="status" id="CommEventCounter::status" ref="modbusover-commeventcounter.html#status-var"/>
+            <keyword name="status" id="CommEventLog::status" ref="modbusover-commeventlog.html#status-var"/>
             <keyword name="timeout" id="Master::timeout" ref="modbusover-master.html#timeout"/>
             <keyword name="toFloatABCD" id="toFloatABCD" ref="float-h.html#toFloatABCD"/>
             <keyword name="toFloatCDAB" id="toFloatCDAB" ref="float-h.html#toFloatCDAB"/>
@@ -117,6 +132,10 @@
             <file>images/logo.png</file>
             <file>index.html</file>
             <file>modbusover-address.html</file>
+            <file>modbusover-commeventcounter-members.html</file>
+            <file>modbusover-commeventcounter.html</file>
+            <file>modbusover-commeventlog-members.html</file>
+            <file>modbusover-commeventlog.html</file>
             <file>modbusover-master-members.html</file>
             <file>modbusover-master.html</file>
             <file>modbusover-modbusexception-members.html</file>
