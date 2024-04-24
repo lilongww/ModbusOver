@@ -156,6 +156,22 @@ uint8_t MasterIOBase::readExceptionStatus()
     }
 }
 
+std::vector<uint16_t> MasterIOBase::readWriteMultipleRegisters(uint16_t readStartAddress,
+                                                               uint16_t quantityToRead,
+                                                               uint16_t writeStartAddress,
+                                                               std::vector<uint16_t>&& writeData)
+{
+    std::vector<uint16_t> data;
+    write(m_protocol->requestReadWriteMultipleRegisters(readStartAddress, quantityToRead, writeStartAddress, std::move(writeData)).data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestReadWriteMultipleRegisters(buffer, data))
+            return data;
+    }
+}
+
 std::vector<uint16_t> MasterIOBase::requestReadFIFOQueue(uint16_t address)
 {
     std::vector<uint16_t> data;

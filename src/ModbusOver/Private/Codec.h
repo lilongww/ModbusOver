@@ -415,6 +415,96 @@ struct Codec<AbstractProtocol::FunctionCode::ReportServerID>
 };
 
 template<>
+struct Codec<AbstractProtocol::FunctionCode::ReadWriteMultipleRegisters>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadWriteMultipleRegisters>
+    class Request : public Common
+    {
+    public:
+        inline Request() {}
+        inline Request(uint16_t readStartAddress, uint16_t quantityToRead, uint16_t writeStartAddress, std::vector<uint16_t>&& writeData)
+            : Common(code)
+            , m_readStartAddress(readStartAddress)
+            , m_quantityToRead(quantityToRead)
+            , m_writeStartAddress(writeStartAddress)
+            , m_quantityToWrite(static_cast<uint16_t>(writeData.size()))
+            , m_writeByteCount(static_cast<uint8_t>(writeData.size() * 2))
+            , m_writeData(std::move(writeData))
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_readStartAddress);
+            buffer.append(m_quantityToRead);
+            buffer.append(m_writeStartAddress);
+            buffer.append(m_quantityToWrite);
+            buffer.append(m_writeByteCount);
+            for (auto d : m_writeData)
+                buffer.append(d);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 9)
+                return false;
+            stream.peak(m_writeByteCount, 6);
+            stream.peak(m_writeData, 8);
+            if (m_writeByteCount * 2 != m_quantityToWrite)
+                return false;
+            if (stream.size() < m_writeData + 8)
+                return false;
+            stream >> m_readStartAddress >> m_quantityToRead >> m_writeStartAddress >> m_quantityToWrite >> m_writeByteCount;
+            m_writeData.resize(m_quantityToWrite);
+            for (auto& d : m_writeData)
+                stream >> d;
+            return true;
+        }
+
+    private:
+        uint16_t m_readStartAddress;
+        uint16_t m_quantityToRead;
+        uint16_t m_writeStartAddress;
+        uint16_t m_quantityToWrite;
+        uint8_t m_writeByteCount;
+        std::vector<uint16_t> m_writeData;
+    };
+
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadWriteMultipleRegisters>
+    class Response : public Common
+    {
+    public:
+        inline Response() {}
+        inline Response(std::vector<uint16_t>&& data)
+            : Common(code), m_byteCount(static_cast<uint8_t>(data.size())), m_data(std::move(data))
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_byteCount);
+            for (auto d : m_data)
+                buffer.append(d);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 1)
+                return false;
+            stream.peak(m_byteCount);
+            if (stream.size() < m_byteCount + 1)
+                return false;
+            stream >> m_byteCount;
+            m_data.resize(m_byteCount / 2);
+            for (auto& d : m_data)
+                stream >> d;
+            return true;
+        }
+        inline operator std::vector<uint16_t>() && { return std::move(m_data); }
+
+    private:
+        uint8_t m_byteCount;
+        std::vector<uint16_t> m_data;
+    };
+};
+
+template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadFIFOQueue>
 {
     template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadFIFOQueue>
@@ -459,7 +549,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadFIFOQueue>
             if (stream.size() < 4)
                 return false;
             stream.peak(m_byteCount);
-            stream.peak(m_fifoCount);
+            stream.peak(m_fifoCount, sizeof(m_byteCount));
             if (m_byteCount != m_fifoCount * 2)
                 return false;
             if (stream.size() < m_byteCount + 4)

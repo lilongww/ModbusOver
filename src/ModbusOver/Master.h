@@ -56,6 +56,14 @@ public:
     void writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values);
     void writeMultipleRegisters(uint16_t startingAddress, const std::vector<uint16_t>& values);
     std::vector<uint8_t> reportServerID();
+    std::vector<uint16_t> readWriteMultipleRegisters(uint16_t readStartAddress,
+                                                     uint16_t quantityToRead,
+                                                     uint16_t writeStartAddress,
+                                                     std::vector<uint16_t>&& writeData);
+    std::vector<uint16_t> readWriteMultipleRegisters(uint16_t readStartAddress,
+                                                     uint16_t quantityToRead,
+                                                     uint16_t writeStartAddress,
+                                                     const std::vector<uint16_t>& writeData);
     std::vector<uint16_t> requestReadFIFOQueue(uint16_t address);
     void setProtocolDebug(std::shared_ptr<ProtocolDebug> debug);
     std::shared_ptr<ProtocolDebug> protocolDebug() const;

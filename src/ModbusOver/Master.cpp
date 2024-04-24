@@ -255,6 +255,35 @@ std::vector<uint8_t> Master::reportServerID()
 }
 
 /*!
+    \brief      读写多个寄存器.
+                功能码 0x17. 读取开始地址 \a readStartAddress, 读取寄存器数量 \a quantityToRead, 写入寄存器开始地址 \a writeStartAddress,
+                写入数据 \a writeData.
+*/
+std::vector<uint16_t> Master::readWriteMultipleRegisters(uint16_t readStartAddress,
+                                                         uint16_t quantityToRead,
+                                                         uint16_t writeStartAddress,
+                                                         std::vector<uint16_t>&& writeData)
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->readWriteMultipleRegisters(readStartAddress, quantityToRead, writeStartAddress, std::move(writeData));
+}
+
+/*!
+    \overload   重载函数.
+                功能码 0x17. 读取开始地址 \a readStartAddress, 读取寄存器数量 \a quantityToRead, 写入寄存器开始地址 \a writeStartAddress,
+                写入数据 \a writeData.
+    \sa         readWriteMultipleRegisters
+*/
+std::vector<uint16_t> Master::readWriteMultipleRegisters(uint16_t readStartAddress,
+                                                         uint16_t quantityToRead,
+                                                         uint16_t writeStartAddress,
+                                                         const std::vector<uint16_t>& writeData)
+{
+    return readWriteMultipleRegisters(
+        readStartAddress, quantityToRead, writeStartAddress, std::vector<uint16_t>(writeData.begin(), writeData.end()));
+}
+
+/*!
     \brief      读FIFO队列. 功能码 0x18.
 */
 std::vector<uint16_t> Master::requestReadFIFOQueue(uint16_t address)

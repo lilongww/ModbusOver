@@ -46,6 +46,10 @@ public:
     void writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values);
     std::vector<uint8_t> reportServerID();
     uint8_t readExceptionStatus();
+    std::vector<uint16_t> readWriteMultipleRegisters(uint16_t readStartAddress,
+                                                     uint16_t quantityToRead,
+                                                     uint16_t writeStartAddress,
+                                                     std::vector<uint16_t>&& writeData);
     std::vector<uint16_t> requestReadFIFOQueue(uint16_t address);
 
 protected:

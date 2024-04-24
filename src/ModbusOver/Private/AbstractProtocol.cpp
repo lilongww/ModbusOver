@@ -233,6 +233,31 @@ bool AbstractProtocol::onRequestReadExceptionStatus(Buffer& buffer, uint8_t& dat
     return true;
 }
 
+Buffer AbstractProtocol::requestReadWriteMultipleRegisters(uint16_t readStartAddress,
+                                                           uint16_t quantityToRead,
+                                                           uint16_t writeStartAddress,
+                                                           std::vector<uint16_t>&& writeData) const
+{
+    return toADU(
+        Codec<FunctionCode::ReadWriteMultipleRegisters>::Request(readStartAddress, quantityToRead, writeStartAddress, std::move(writeData))
+            .encode());
+}
+
+bool AbstractProtocol::onRequestReadWriteMultipleRegisters(Buffer& buffer, std::vector<uint16_t>& data) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::ReadWriteMultipleRegisters, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::ReadWriteMultipleRegisters>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    data = std::move(resp);
+    return true;
+}
+
 Buffer AbstractProtocol::requestReadFIFOQueue(uint16_t address) const
 {
     return toADU(Codec<FunctionCode::ReadFIFOQueue>::Request(address).encode());
