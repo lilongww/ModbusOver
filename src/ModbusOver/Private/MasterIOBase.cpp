@@ -156,6 +156,22 @@ uint8_t MasterIOBase::readExceptionStatus()
     }
 }
 
+void MasterIOBase::maskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask)
+{
+    uint16_t respAddress, respAndMask, respOrMask;
+    write(m_protocol->requestMaskWriteRegister(address, andMask, orMask).data());
+    if (isBroadcast())
+        return;
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestMaskWriteRegister(buffer, respAddress, respAndMask, respOrMask) && respAddress == address &&
+            respAndMask == andMask && respOrMask == orMask)
+            return;
+    }
+}
+
 std::vector<uint16_t> MasterIOBase::readWriteMultipleRegisters(uint16_t readStartAddress,
                                                                uint16_t quantityToRead,
                                                                uint16_t writeStartAddress,

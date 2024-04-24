@@ -78,6 +78,14 @@ TEST(IOTest, bool)
             EXPECT_EQ(data, ret);
         }
     }
+
+    {
+        for (auto i : std::views::iota(0, 10)) // stress
+        {
+            auto data = std::views::iota(static_cast<uint16_t>(0), static_cast<uint16_t>(10)) | std::ranges::to<std::vector>();
+            master.maskWriteRegister(0, 0x01, 0x02);
+        }
+    }
 }
 
 int main(int argc, char* argv[])

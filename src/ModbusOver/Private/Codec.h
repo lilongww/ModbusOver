@@ -415,6 +415,44 @@ struct Codec<AbstractProtocol::FunctionCode::ReportServerID>
 };
 
 template<>
+struct Codec<AbstractProtocol::FunctionCode::MaskWriteRegister>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::MaskWriteRegister>
+    class Request : public Common
+    {
+    public:
+        inline Request() {}
+        inline Request(uint16_t address, uint16_t andMask, uint16_t orMask)
+            : Common(code), m_address(address), m_andMask(andMask), m_orMask(orMask)
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_address);
+            buffer.append(m_andMask);
+            buffer.append(m_orMask);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 6)
+                return false;
+            stream >> m_address >> m_andMask >> m_orMask;
+            return true;
+        }
+        inline uint16_t address() const { return m_address; }
+        inline uint16_t andMask() const { return m_andMask; }
+        inline uint16_t orMask() const { return m_orMask; }
+
+    private:
+        uint16_t m_address;
+        uint16_t m_andMask;
+        uint16_t m_orMask;
+    };
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::MaskWriteRegister>
+    using Response = Request<code>;
+};
+
+template<>
 struct Codec<AbstractProtocol::FunctionCode::ReadWriteMultipleRegisters>
 {
     template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadWriteMultipleRegisters>

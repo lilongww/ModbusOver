@@ -79,6 +79,8 @@ public:
     bool onRequestReportServerID(Buffer& buffer, std::vector<uint8_t>& data) const;
     Buffer requestReadExceptionStatus() const;
     bool onRequestReadExceptionStatus(Buffer& buffer, uint8_t& data) const;
+    Buffer requestMaskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask) const;
+    bool onRequestMaskWriteRegister(Buffer& buffer, uint16_t& address, uint16_t& andMask, uint16_t& orMask) const;
     Buffer requestReadWriteMultipleRegisters(uint16_t readStartAddress,
                                              uint16_t quantityToRead,
                                              uint16_t writeStartAddress,

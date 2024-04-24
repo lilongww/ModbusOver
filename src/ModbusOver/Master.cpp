@@ -255,6 +255,17 @@ std::vector<uint8_t> Master::reportServerID()
 }
 
 /*!
+    \brief      掩码写入寄存器.
+                功能码 0x16. 写入寄存器地址 \a address, \a andMask, \a orMask.
+                算法为 Result = (当前寄存器内容 AND \a andMask) OR (\a orMask AND (NOT \a andMask)).
+*/
+void Master::maskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask)
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->maskWriteRegister(address, andMask, orMask);
+}
+
+/*!
     \brief      读写多个寄存器.
                 功能码 0x17. 读取开始地址 \a readStartAddress, 读取寄存器数量 \a quantityToRead, 写入寄存器开始地址 \a writeStartAddress,
                 写入数据 \a writeData.

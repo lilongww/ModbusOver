@@ -233,6 +233,28 @@ bool AbstractProtocol::onRequestReadExceptionStatus(Buffer& buffer, uint8_t& dat
     return true;
 }
 
+Buffer AbstractProtocol::requestMaskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask) const
+{
+    return toADU(Codec<FunctionCode::MaskWriteRegister>::Request(address, andMask, orMask).encode());
+}
+
+bool AbstractProtocol::onRequestMaskWriteRegister(Buffer& buffer, uint16_t& address, uint16_t& andMask, uint16_t& orMask) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::MaskWriteRegister, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::MaskWriteRegister>::Response<FunctionCode::MaskWriteRegister> resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    address = resp.address();
+    andMask = resp.andMask();
+    orMask  = resp.orMask();
+    return true;
+}
+
 Buffer AbstractProtocol::requestReadWriteMultipleRegisters(uint16_t readStartAddress,
                                                            uint16_t quantityToRead,
                                                            uint16_t writeStartAddress,

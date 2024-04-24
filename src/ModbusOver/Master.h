@@ -56,6 +56,7 @@ public:
     void writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values);
     void writeMultipleRegisters(uint16_t startingAddress, const std::vector<uint16_t>& values);
     std::vector<uint8_t> reportServerID();
+    void maskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask);
     std::vector<uint16_t> readWriteMultipleRegisters(uint16_t readStartAddress,
                                                      uint16_t quantityToRead,
                                                      uint16_t writeStartAddress,
