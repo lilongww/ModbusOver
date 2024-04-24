@@ -19,6 +19,7 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
 
 namespace ModbusOver
 {
@@ -60,6 +61,14 @@ struct CommEventCounter
 {
     uint16_t status;
     uint16_t eventCount;
+};
+
+struct CommEventLog
+{
+    uint16_t status;
+    uint16_t eventCount;
+    uint16_t messageCount;
+    std::vector<uint8_t> events;
 };
 
 } // namespace ModbusOver

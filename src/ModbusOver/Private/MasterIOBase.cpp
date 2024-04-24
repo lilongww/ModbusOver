@@ -169,6 +169,19 @@ CommEventCounter MasterIOBase::getCommEventCounter()
     }
 }
 
+CommEventLog MasterIOBase::getCommEventLog()
+{
+    CommEventLog log;
+    write(m_protocol->requestGetCommEventLog().data());
+    Buffer buffer;
+    for (;;)
+    {
+        buffer.data().append_range(read());
+        if (m_protocol->onRequestGetCommEventLog(buffer, log))
+            return log;
+    }
+}
+
 void MasterIOBase::maskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask)
 {
     uint16_t respAddress, respAndMask, respOrMask;

@@ -52,6 +52,7 @@ public:
     void writeSingleRegister(uint16_t address, uint16_t value);
     uint8_t readExceptionStatus();
     CommEventCounter getCommEventCounter();
+    CommEventLog getCommEventLog();
     void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states);
     void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, const std::vector<uint8_t>& states);
     void writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values);

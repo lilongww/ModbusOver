@@ -211,6 +211,15 @@ CommEventCounter Master::getCommEventCounter()
 }
 
 /*!
+    \brief      获得事件记录. 功能码 0x0C.
+*/
+CommEventLog Master::getCommEventLog()
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->getCommEventLog();
+}
+
+/*!
     \brief      功能码 0x0F, 写入从地址 \a startingAddress 开始的 \a quantityOfCoils 线圈状态 \a states.
     \note       quantityOfCoils表示线圈数量，每个线圈为 1 bit, 所以 \a states 的字节数为 quantityOfCoils / 8 + ((quantityOfCoils % 8) ? 1 :
    0).

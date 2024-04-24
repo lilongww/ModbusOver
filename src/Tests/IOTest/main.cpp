@@ -17,6 +17,7 @@ TEST(IOTest, bool)
     // auto ret = master.readExceptionStatus(); // PASS
     // auto ret = master.requestReadFIFOQueue(0x01); // No test
     // auto ret = master.getCommEventCounter(); // PASS
+    // auto ret = master.getCommEventLog(); // No test
     {                                          // 离散量输入测试
         for (auto i : std::views::iota(0, 10)) // stress
         {

@@ -52,6 +52,8 @@ public:
     uint8_t readExceptionStatus();
     // 0x0B
     CommEventCounter getCommEventCounter();
+    // 0x0C
+    CommEventLog getCommEventLog();
     // 0x0F
     void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states);
     // x010

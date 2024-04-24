@@ -289,6 +289,73 @@ struct Codec<AbstractProtocol::FunctionCode::GetCommEventCounter>
     };
 };
 
+// 0x0C
+template<>
+struct Codec<AbstractProtocol::FunctionCode::GetCommEventLog>
+{
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::GetCommEventLog>
+    class Request : public Common
+    {
+    public:
+        inline Request() : Common(code) {}
+        inline void serialize(Buffer& buffer) const {}
+        inline bool unserialize(BufferStream& stream) { return true; }
+    };
+
+    template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::GetCommEventLog>
+    class Response : public Common
+    {
+    public:
+        inline Response() {}
+        inline Response(uint16_t status, uint16_t eventCount, uint16_t messageCount, std::vector<uint8_t>&& events)
+            : m_byteCount(events.size() + 6)
+            , m_status(status)
+            , m_eventCount(eventCount)
+            , m_messageCount(messageCount)
+            , m_events(std::move(events))
+        {
+        }
+        inline void serialize(Buffer& buffer) const
+        {
+            buffer.append(m_byteCount);
+            buffer.append(m_status);
+            buffer.append(m_eventCount);
+            buffer.append(m_messageCount);
+            for (auto d : m_events)
+                buffer.append(d);
+        }
+        inline bool unserialize(BufferStream& stream)
+        {
+            if (stream.size() < 7)
+                return false;
+            stream.peak(m_byteCount);
+            if (stream.size() < 7 + m_byteCount)
+                return false;
+            stream >> m_byteCount >> m_status >> m_eventCount >> m_messageCount;
+            m_events.resize(m_byteCount - 6);
+            for (auto d : m_events)
+                stream >> d;
+            return true;
+        }
+        inline operator CommEventLog() &&
+        {
+            CommEventLog log;
+            log.status       = m_status;
+            log.eventCount   = m_eventCount;
+            log.messageCount = m_messageCount;
+            std::swap(log.events, m_events);
+            return log;
+        }
+
+    private:
+        uint8_t m_byteCount;
+        uint16_t m_status;
+        uint16_t m_eventCount;
+        uint16_t m_messageCount;
+        std::vector<uint8_t> m_events;
+    };
+};
+
 // 0x0F
 template<>
 struct Codec<AbstractProtocol::FunctionCode::WriteMultipleCoils>

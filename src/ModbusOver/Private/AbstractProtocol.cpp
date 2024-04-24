@@ -251,6 +251,23 @@ bool AbstractProtocol::onRequestGetCommEventCounter(Buffer& buffer, uint16_t& st
     return true;
 }
 
+Buffer AbstractProtocol::requestGetCommEventLog() const { return toADU(Codec<FunctionCode::GetCommEventLog>::Request().encode()); }
+
+bool AbstractProtocol::onRequestGetCommEventLog(Buffer& buffer, CommEventLog& log) const
+{
+    if (buffer.size() < minimumSize())
+        return false;
+    auto stream = toPDU(FunctionCode::GetCommEventLog, buffer);
+    if (!stream)
+        return false;
+    Codec<FunctionCode::GetCommEventLog>::Response resp;
+    if (!resp.decode(*stream))
+        return false;
+    checkTail(*stream);
+    log = std::move(resp);
+    return true;
+}
+
 Buffer AbstractProtocol::requestMaskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask) const
 {
     return toADU(Codec<FunctionCode::MaskWriteRegister>::Request(address, andMask, orMask).encode());

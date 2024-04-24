@@ -83,6 +83,9 @@ public:
     // 0x0B
     Buffer requestGetCommEventCounter() const;
     bool onRequestGetCommEventCounter(Buffer& buffer, uint16_t& status, uint16_t& eventCount) const;
+    // 0x0C
+    Buffer requestGetCommEventLog() const;
+    bool onRequestGetCommEventLog(Buffer& buffer, CommEventLog& log) const;
     // 0x0F
     Buffer requestWriteMultipleCoils(uint16_t startingAddress, uint16_t quantityOfOutputs, std::vector<uint8_t>&& states) const;
     bool onResponseWriteMultipleCoils(Buffer& buffer) const;
