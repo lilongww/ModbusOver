@@ -55,11 +55,14 @@ uint16_t ModbusRTU::aduMaximum() const { return 256; }
 // RTU最小数据包 id + functionCode + crc16 = 4
 uint16_t ModbusRTU::minimumSize() const { return 4; };
 
-void ModbusRTU::checkTail(BufferStream& stream) const
+bool ModbusRTU::checkTail(BufferStream& stream) const
 {
+    if (stream.size() < 2)
+        return false;
     if (crc16(stream.data().data(), static_cast<uint16_t>(stream.data().size() - sizeof(uint16_t))) !=
         (m_useBigendianCRC16 ? stream.msbCrc() : stream.lsbCrc()))
         throw std::exception("Response data crc error.");
+    return true;
 }
 
 } // namespace ModbusOver

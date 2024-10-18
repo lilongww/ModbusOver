@@ -224,8 +224,8 @@ struct Codec<AbstractProtocol::FunctionCode::ReadExceptionStatus>
     {
     public:
         inline Request() : Common(code) {}
-        inline void serialize(Buffer& buffer) const {}
-        inline bool unserialize(BufferStream& stream) { return true; }
+        inline void serialize(Buffer&) const {}
+        inline bool unserialize(BufferStream&) { return true; }
     };
 
     template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReadExceptionStatus>
@@ -258,8 +258,8 @@ struct Codec<AbstractProtocol::FunctionCode::GetCommEventCounter>
     {
     public:
         inline Request() : Common(code) {}
-        inline void serialize(Buffer& buffer) const {}
-        inline bool unserialize(BufferStream& stream) { return true; }
+        inline void serialize(Buffer&) const {}
+        inline bool unserialize(BufferStream&) { return true; }
     };
 
     template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::GetCommEventCounter>
@@ -298,8 +298,8 @@ struct Codec<AbstractProtocol::FunctionCode::GetCommEventLog>
     {
     public:
         inline Request() : Common(code) {}
-        inline void serialize(Buffer& buffer) const {}
-        inline bool unserialize(BufferStream& stream) { return true; }
+        inline void serialize(Buffer&) const {}
+        inline bool unserialize(BufferStream&) { return true; }
     };
 
     template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::GetCommEventLog>
@@ -488,8 +488,8 @@ struct Codec<AbstractProtocol::FunctionCode::ReportServerID>
     {
     public:
         inline Request() : Common(code) {}
-        inline void serialize(Buffer& buffer) const {}
-        inline bool unserialize(BufferStream& stream) { return true; }
+        inline void serialize(Buffer&) const {}
+        inline bool unserialize(BufferStream&) { return true; }
     };
 
     template<AbstractProtocol::FunctionCode code = AbstractProtocol::FunctionCode::ReportServerID>

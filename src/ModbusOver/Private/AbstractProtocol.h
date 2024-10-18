@@ -117,7 +117,7 @@ protected:
     virtual Buffer toADU(Buffer pdu) const                                                        = 0;
     virtual std::optional<BufferStream> toPDU(FunctionCode expectFunctionCode, Buffer& adu) const = 0;
     virtual uint16_t minimumSize() const                                                          = 0;
-    virtual void checkTail(BufferStream& stream) const                                            = 0;
+    [[nodiscard]] virtual bool checkTail(BufferStream& stream) const                              = 0;
     constexpr static uint8_t toExceptionCode(FunctionCode code) { return static_cast<uint8_t>(code) + ExceptionCodeAddend; }
     constexpr static FunctionCode fromExceptionCode(uint8_t exceptionCode)
     {

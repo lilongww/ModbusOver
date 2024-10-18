@@ -52,7 +52,7 @@ MasterSerialPort::~MasterSerialPort()
     }
 }
 
-void MasterSerialPort::connect(const Address<AddressType::SerialPort>& address, const std::chrono::milliseconds& connectTimeout)
+void MasterSerialPort::connect(const Address<AddressType::SerialPort>& address, const std::chrono::milliseconds&)
 {
     m_impl->serialPort.open(address.portName());
     setBaudRate(address.baudRate());

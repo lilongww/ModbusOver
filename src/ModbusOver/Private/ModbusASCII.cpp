@@ -57,10 +57,13 @@ uint16_t ModbusASCII::aduMaximum() const { return 513; }
 
 uint16_t ModbusASCII::minimumSize() const { return 9; }
 
-void ModbusASCII::checkTail(BufferStream& stream) const
+bool ModbusASCII::checkTail(BufferStream& stream) const
 {
+    if (stream.size() < 1)
+        return false;
     if (lrc(stream.data().data(), static_cast<uint16_t>(stream.data().size() - 1)) != stream.data().back())
         throw std::exception("Response data lrc error.");
+    return true;
 }
 
 } // namespace ModbusOver

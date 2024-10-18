@@ -51,8 +51,7 @@ bool AbstractProtocol::onResponseReadColis(Buffer& buffer, std::vector<uint8_t>&
     if (!resp.decode(*stream))
         return false;
     status = std::move(resp).coilStatus();
-    checkTail(*stream);
-    return true;
+    return checkTail(*stream);
 }
 
 Buffer AbstractProtocol::requestReadDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils) const
@@ -70,9 +69,11 @@ bool AbstractProtocol::onResponseReadDiscreteInputs(Buffer& buffer, std::vector<
     Codec<FunctionCode::ReadDiscreteInputs>::Response resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
+    auto ret = checkTail(*stream);
+    if (!ret)
+        return ret;
     status = std::move(resp).coilStatus();
-    return true;
+    return ret;
 }
 
 Buffer AbstractProtocol::requestReadHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters) const
@@ -90,11 +91,13 @@ bool AbstractProtocol::onResponseReadHoldingRegisters(Buffer& buffer, std::vecto
     Codec<FunctionCode::ReadHoldingRegisters>::Response resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
+    auto ret = checkTail(*stream);
+    if (!ret)
+        return ret;
     status.resize(resp.coilStatus().size() / 2);
     std::memcpy(status.data(), resp.coilStatus().data(), resp.coilStatus().size());
     std::ranges::transform(status, status.begin(), [](auto state) { return std::byteswap(state); });
-    return true;
+    return ret;
 }
 
 Buffer AbstractProtocol::requestReadInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters) const
@@ -112,11 +115,13 @@ bool AbstractProtocol::onResponseReadInputRegisters(Buffer& buffer, std::vector<
     Codec<FunctionCode::ReadInputRegisters>::Response resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
+    auto ret = checkTail(*stream);
+    if (!ret)
+        return ret;
     status.resize(resp.coilStatus().size() / 2);
     std::memcpy(status.data(), resp.coilStatus().data(), resp.coilStatus().size());
     std::ranges::transform(status, status.begin(), [](auto state) { return std::byteswap(state); });
-    return true;
+    return ret;
 }
 
 Buffer AbstractProtocol::requestWriteSingleCoil(uint16_t address, bool state) const
@@ -134,8 +139,7 @@ bool AbstractProtocol::onResponseWriteSingleCoil(Buffer& buffer) const
     Codec<FunctionCode::WriteSingleCoil>::Response resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
-    return true;
+    return checkTail(*stream);
 }
 
 Buffer AbstractProtocol::requestWriteSingleRegister(uint16_t address, uint16_t value) const
@@ -153,8 +157,7 @@ bool AbstractProtocol::onResponseWriteSingleRegister(Buffer& buffer) const
     Codec<FunctionCode::WriteSingleRegister>::Response resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
-    return true;
+    return checkTail(*stream);
 }
 
 Buffer AbstractProtocol::requestWriteMultipleCoils(uint16_t startingAddress,
@@ -174,8 +177,7 @@ bool AbstractProtocol::onResponseWriteMultipleCoils(Buffer& buffer) const
     Codec<FunctionCode::WriteMultipleCoils>::Response resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
-    return true;
+    return checkTail(*stream);
 }
 
 Buffer AbstractProtocol::requestWriteMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values) const
@@ -195,8 +197,7 @@ bool AbstractProtocol::onResponseWriteMultipleRegisters(Buffer& buffer) const
     Codec<FunctionCode::WriteMultipleRegisters>::Response resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
-    return true;
+    return checkTail(*stream);
 }
 
 Buffer AbstractProtocol::requestReportServerID() const { return toADU(Codec<FunctionCode::ReportServerID>::Request().encode()); }
@@ -211,9 +212,11 @@ bool AbstractProtocol::onRequestReportServerID(Buffer& buffer, std::vector<uint8
     Codec<FunctionCode::ReportServerID>::Response resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
+    auto ret = checkTail(*stream);
+    if (!ret)
+        return ret;
     data = std::move(resp);
-    return true;
+    return ret;
 }
 
 Buffer AbstractProtocol::requestReadExceptionStatus() const { return toADU(Codec<FunctionCode::ReadExceptionStatus>::Request().encode()); }
@@ -228,9 +231,11 @@ bool AbstractProtocol::onRequestReadExceptionStatus(Buffer& buffer, uint8_t& dat
     Codec<FunctionCode::ReadExceptionStatus>::Response resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
+    auto ret = checkTail(*stream);
+    if (!ret)
+        return ret;
     data = resp.outputData();
-    return true;
+    return ret;
 }
 
 Buffer AbstractProtocol::requestGetCommEventCounter() const { return toADU(Codec<FunctionCode::GetCommEventCounter>::Request().encode()); }
@@ -245,10 +250,12 @@ bool AbstractProtocol::onRequestGetCommEventCounter(Buffer& buffer, uint16_t& st
     Codec<FunctionCode::GetCommEventCounter>::Response resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
+    auto ret = checkTail(*stream);
+    if (!ret)
+        return ret;
     status     = resp.status();
     eventCount = resp.eventCount();
-    return true;
+    return ret;
 }
 
 Buffer AbstractProtocol::requestGetCommEventLog() const { return toADU(Codec<FunctionCode::GetCommEventLog>::Request().encode()); }
@@ -263,9 +270,11 @@ bool AbstractProtocol::onRequestGetCommEventLog(Buffer& buffer, CommEventLog& lo
     Codec<FunctionCode::GetCommEventLog>::Response resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
+    auto ret = checkTail(*stream);
+    if (!ret)
+        return ret;
     log = std::move(resp);
-    return true;
+    return ret;
 }
 
 Buffer AbstractProtocol::requestMaskWriteRegister(uint16_t address, uint16_t andMask, uint16_t orMask) const
@@ -283,11 +292,13 @@ bool AbstractProtocol::onRequestMaskWriteRegister(Buffer& buffer, uint16_t& addr
     Codec<FunctionCode::MaskWriteRegister>::Response<FunctionCode::MaskWriteRegister> resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
+    auto ret = checkTail(*stream);
+    if (!ret)
+        return ret;
     address = resp.address();
     andMask = resp.andMask();
     orMask  = resp.orMask();
-    return true;
+    return ret;
 }
 
 Buffer AbstractProtocol::requestReadWriteMultipleRegisters(uint16_t readStartAddress,
@@ -310,9 +321,11 @@ bool AbstractProtocol::onRequestReadWriteMultipleRegisters(Buffer& buffer, std::
     Codec<FunctionCode::ReadWriteMultipleRegisters>::Response resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
+    auto ret = checkTail(*stream);
+    if (!ret)
+        return ret;
     data = std::move(resp);
-    return true;
+    return ret;
 }
 
 Buffer AbstractProtocol::requestReadFIFOQueue(uint16_t address) const
@@ -330,9 +343,11 @@ bool AbstractProtocol::onRequestReadFIFOQueue(Buffer& buffer, std::vector<uint16
     Codec<FunctionCode::ReadFIFOQueue>::Response resp;
     if (!resp.decode(*stream))
         return false;
-    checkTail(*stream);
+    auto ret = checkTail(*stream);
+    if (!ret)
+        return ret;
     data = std::move(resp);
-    return true;
+    return ret;
 }
 
 std::shared_ptr<AbstractProtocol> AbstractProtocol::create(ModbusProtocol proto,

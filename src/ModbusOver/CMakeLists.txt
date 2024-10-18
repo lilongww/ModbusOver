@@ -43,5 +43,9 @@ add_library(${TARGET_NAME} ${MODBUSOVER_OPT}
 if(NOT BUILD_MODBUSOVER_STATIC)
     target_link_libraries(${TARGET_NAME} PUBLIC Setupapi PRIVATE Boost::system)
 endif()
+target_compile_options(${TARGET_NAME} PRIVATE
+  $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+  $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
+)
 set_target_properties(${TARGET_NAME} PROPERTIES PUBLIC_HEADER "${HEADERS}")
 export_install_target(${TARGET_NAME} ${INSTALL_INCLUDEDIR} ${INSTALL_LIBRARYDIR} ${INSTALL_BINDIR})
