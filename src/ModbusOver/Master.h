@@ -44,8 +44,8 @@ public:
     void setAsciiLF(char lf);
     char asciiLF() const;
     const std::chrono::milliseconds& rtsDelay() const;
-    std::vector<uint8_t> readCoils(uint16_t startingAddress, uint16_t quantityOfCoils);
-    std::vector<uint8_t> readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils);
+    std::vector<bool> readCoils(uint16_t startingAddress, uint16_t quantityOfCoils);
+    std::vector<bool> readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils);
     std::vector<uint16_t> readHoldingRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters);
     std::vector<uint16_t> readInputRegisters(uint16_t startingAddress, uint16_t quantityOfRegisters);
     void writeSingleCoil(uint16_t address, bool on);
@@ -53,8 +53,7 @@ public:
     uint8_t readExceptionStatus();
     CommEventCounter getCommEventCounter();
     CommEventLog getCommEventLog();
-    void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states);
-    void writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, const std::vector<uint8_t>& states);
+    void writeMultipleCoils(uint16_t startingAddress, const std::vector<bool>& states);
     void writeMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values);
     void writeMultipleRegisters(uint16_t startingAddress, const std::vector<uint16_t>& values);
     std::vector<uint8_t> reportServerID();

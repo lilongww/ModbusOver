@@ -21,6 +21,11 @@
 #include "Private/MasterSerialPort.h"
 #include "Private/MasterTCP.h"
 
+#include <boost/dynamic_bitset.hpp>
+
+#include <cassert>
+#include <ranges>
+
 namespace ModbusOver
 {
 inline void throwUnconnected(const std::shared_ptr<MasterIOBase>& ptr)
@@ -138,19 +143,33 @@ const std::chrono::milliseconds& Master::rtsDelay() const { return m_impl->commo
     \note       quantityOfCoils表示线圈数量，每个线圈为 1 bit, 所以返回的字节数为 quantityOfCoils / 8 + ((quantityOfCoils % 8) ? 1 : 0).
     \sa         writeSingleCoil, writeMultipleCoils
 */
-std::vector<uint8_t> Master::readCoils(uint16_t startingAddress, uint16_t quantityOfCoils)
+std::vector<bool> Master::readCoils(uint16_t startingAddress, uint16_t quantityOfCoils)
 {
     throwUnconnected(m_impl->iobase);
-    return m_impl->iobase->readCoils(startingAddress, quantityOfCoils);
+    auto datas = m_impl->iobase->readCoils(startingAddress, quantityOfCoils);
+    boost::dynamic_bitset<uint8_t> bitset(datas.begin(), datas.end());
+    std::vector<bool> ret;
+    for (auto i : std::views::iota(static_cast<uint16_t>(0), quantityOfCoils))
+    {
+        ret.push_back(bitset.at(i));
+    }
+    return ret;
 }
 
 /*!
     \brief      功能码 0x02, 读取从地址 \a startingAddress 开始的 \a quantityOfCoils 个离散量输入（线圈），离散量输入为只读.
 */
-std::vector<uint8_t> Master::readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils)
+std::vector<bool> Master::readDiscreteInputs(uint16_t startingAddress, uint16_t quantityOfCoils)
 {
     throwUnconnected(m_impl->iobase);
-    return m_impl->iobase->readDiscreteInputs(startingAddress, quantityOfCoils);
+    auto datas = m_impl->iobase->readDiscreteInputs(startingAddress, quantityOfCoils);
+    boost::dynamic_bitset<uint8_t> bitset(datas.begin(), datas.end());
+    std::vector<bool> ret;
+    for (auto i : std::views::iota(static_cast<uint16_t>(0), quantityOfCoils))
+    {
+        ret.push_back(bitset.at(i));
+    }
+    return ret;
 }
 
 /*!
@@ -220,27 +239,20 @@ CommEventLog Master::getCommEventLog()
 }
 
 /*!
-    \brief      功能码 0x0F, 写入从地址 \a startingAddress 开始的 \a quantityOfCoils 线圈状态 \a states.
-    \note       quantityOfCoils表示线圈数量，每个线圈为 1 bit, 所以 \a states 的字节数为 quantityOfCoils / 8 + ((quantityOfCoils % 8) ? 1 :
-   0).
+    \brief      功能码 0x0F, 写入从地址 \a startingAddress 开始的多个线圈状态 \a states.
     \sa         writeSingleCoil, readCoils
 */
-void Master::writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, std::vector<uint8_t>&& states)
+void Master::writeMultipleCoils(uint16_t startingAddress, const std::vector<bool>& states)
 {
-    throwUnconnected(m_impl->iobase);
-    m_impl->iobase->writeMultipleCoils(startingAddress, quantityOfCoils, std::move(states));
-}
-
-/*!
-    \overload   重载函数。
-                功能码 0x0F, 写入从地址 \a startingAddress 开始的 \a quantityOfCoils 线圈状态 \a states.
-    \note       quantityOfCoils表示线圈数量，每个线圈为 1 bit, 所以 \a states 的字节数为 quantityOfCoils / 8 + ((quantityOfCoils % 8) ? 1 :
-   0).
-    \sa         writeMultipleCoils
-*/
-void Master::writeMultipleCoils(uint16_t startingAddress, uint16_t quantityOfCoils, const std::vector<uint8_t>& states)
-{
-    writeMultipleCoils(startingAddress, quantityOfCoils, std::vector<uint8_t>(states.begin(), states.end()));
+    assert(!states.empty() && states.size() <= std::numeric_limits<uint16_t>::max());
+    boost::dynamic_bitset<uint8_t> bitset;
+    for (auto state : states)
+    {
+        bitset.push_back(state);
+    }
+    std::vector<uint8_t> datas(bitset.num_blocks());
+    boost::to_block_range(bitset, datas.begin());
+    m_impl->iobase->writeMultipleCoils(startingAddress, static_cast<uint16_t>(states.size()), std::move(datas));
 }
 
 /*!
