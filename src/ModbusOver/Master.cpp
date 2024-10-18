@@ -140,7 +140,6 @@ const std::chrono::milliseconds& Master::rtsDelay() const { return m_impl->commo
 
 /*!
     \brief      功能码 0x01, 读取从地址 \a startingAddress 开始的 \a quantityOfCoils 个线圈.
-    \note       quantityOfCoils表示线圈数量，每个线圈为 1 bit, 所以返回的字节数为 quantityOfCoils / 8 + ((quantityOfCoils % 8) ? 1 : 0).
     \sa         writeSingleCoil, writeMultipleCoils
 */
 std::vector<bool> Master::readCoils(uint16_t startingAddress, uint16_t quantityOfCoils)
