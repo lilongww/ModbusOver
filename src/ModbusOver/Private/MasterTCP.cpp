@@ -127,8 +127,6 @@ std::vector<uint8_t> MasterTCP::read()
     {
         ret->resize(*size);
     }
-    if (m_data.protoDebug)
-        m_data.protoDebug->rx(*ret);
     return *ret;
 }
 
@@ -155,8 +153,6 @@ void MasterTCP::write(std::vector<uint8_t>&& data)
         m_impl->socket.close();
         boost::asio::detail::throw_error(*error, "send");
     }
-    if (m_data.protoDebug)
-        m_data.protoDebug->tx(m_impl->writeBuffer);
 }
 
 void MasterTCP::close() noexcept

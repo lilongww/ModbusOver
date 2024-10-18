@@ -31,6 +31,9 @@ class MasterIOBase
 {
 public:
     MasterIOBase(const MasterCommonData& data) : m_data(data) {}
+    std::vector<uint8_t> readData();
+    void writeData(std::vector<uint8_t>&& data);
+
     virtual ~MasterIOBase() noexcept                = default;
     virtual std::vector<uint8_t> read()             = 0;
     virtual void write(std::vector<uint8_t>&& data) = 0;
@@ -73,8 +76,13 @@ public:
 protected:
     bool isBroadcast() const { return m_data.slave == Broadcast; }
 
+private:
+    void finishDebugRx();
+    void finishDebugTx();
+
 protected:
     const MasterCommonData& m_data;
+    std::vector<uint8_t> m_debugData;
     std::shared_ptr<AbstractProtocol> m_protocol;
 };
 } // namespace ModbusOver

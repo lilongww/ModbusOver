@@ -113,8 +113,6 @@ std::vector<uint8_t> MasterSerialPort::read()
     {
         ret->resize(*size);
     }
-    if (m_data.protoDebug)
-        m_data.protoDebug->rx(*ret);
     return *ret;
 }
 
@@ -152,8 +150,6 @@ void MasterSerialPort::write(std::vector<uint8_t>&& data)
         m_impl->serialPort.close();
         boost::asio::detail::throw_error(*error, "send");
     }
-    if (m_data.protoDebug)
-        m_data.protoDebug->tx(m_impl->writeBuffer);
 }
 
 void MasterSerialPort::close() noexcept
