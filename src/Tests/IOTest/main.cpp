@@ -22,9 +22,9 @@ TEST(IOTest, bool)
         for (auto i : std::views::iota(0, 10)) // stress
         {
             auto ret = master.readDiscreteInputs(0, 10);
-            EXPECT_EQ(ret.size(), 2);
-            EXPECT_EQ(ret[0], 0xFF);
-            EXPECT_EQ(ret[1], 0x03);
+            EXPECT_EQ(ret.size(), 10);
+            for (auto j : std::views::iota(0, 10))
+                EXPECT_EQ(ret[i], true);
         }
     }
     {                                          // 输入寄存器测试
@@ -40,8 +40,8 @@ TEST(IOTest, bool)
     {
         for (auto i : std::views::iota(0, 10)) // stress
         {
-            std::vector<uint8_t> data { 0xFF, 0x03 };
-            master.writeMultipleCoils(0, 10, data);
+            std::vector<bool> data { true, true, true, true, true, true, true, true, true, true };
+            master.writeMultipleCoils(0, data);
             auto ret = master.readCoils(0, 10);
             EXPECT_EQ(data, ret);
         }
