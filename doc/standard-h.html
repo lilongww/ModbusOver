@@ -4,7 +4,7 @@
   <meta charset="utf-8">
 <!-- Standard.qdoc -->
   <meta name="description" content="Modbus协议标准定义.">
-  <title>&lt;Standard.h&gt; - Standard | ModbusOver 0.5.0</title>
+  <title>&lt;Standard.h&gt; - Standard | ModbusOver 0.7.0</title>
   <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
   <script type="text/javascript">
     document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
@@ -26,9 +26,9 @@
     <div class="main-rounded">
         <div class="navigationbar">
         <ul>
-<li><a href="index.html" translate="no">ModbusOver 0.5.0</a></li>
+<li><a href="index.html">ModbusOver 0.7.0</a></li>
 <li>&lt;Standard.h&gt; - Standard</li>
-<li id="buildversion">ModbusOver 0.5.0 Reference Documentation</li>
+<li id="buildversion">ModbusOver 0.7.0 Reference Documentation</li>
     </ul>
     </div>
 </div>
@@ -44,92 +44,14 @@
 <!-- $$$<Standard.h>-brief -->
 <p>Modbus协议标准定义. <a href="#details">More...</a></p>
 <!-- @@@<Standard.h> -->
-<div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign">  <span class="preprocessor">#include &lt;Standard.h&gt;</span></td></tr>
-</table></div>
-<h2 id="types">Types</h2>
-<div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> enum class </td><td class="memItemRight bottomAlign"><b><a href="standard-h.html#AddressType-enum" translate="no">AddressType</a></b> { TCP, UDP, SerialPort }</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> enum class </td><td class="memItemRight bottomAlign"><b><a href="standard-h.html#ExceptionCode-enum" translate="no">ExceptionCode</a></b> { IllegalFunction, IllegalDataAddress, IllegalDataValue, ServerDeviceFailure, Acknowledge, &hellip;, GatewayTargetDeviceFailedToRespond }</td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> enum class </td><td class="memItemRight bottomAlign"><b><a href="standard-h.html#ModbusProtocol-enum" translate="no">ModbusProtocol</a></b> { ModbusTCP, ModbusRTU, ModbusASCII }</td></tr>
-</table></div>
-<h2 id="variables">Variables</h2>
-<div class="table"><table class="alignedsummary" translate="no">
-<tr><td class="memItemLeft rightAlign topAlign"> const uint8_t </td><td class="memItemRight bottomAlign"><b><a href="standard-h.html#Broadcast-var" translate="no">Broadcast</a></b></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> const uint8_t </td><td class="memItemRight bottomAlign"><b><a href="standard-h.html#ExceptionCodeAddend-var" translate="no">ExceptionCodeAddend</a></b></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> const uint8_t </td><td class="memItemRight bottomAlign"><b><a href="standard-h.html#SlaveMax-var" translate="no">SlaveMax</a></b></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> const uint8_t </td><td class="memItemRight bottomAlign"><b><a href="standard-h.html#SlaveMin-var" translate="no">SlaveMin</a></b></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> const uint8_t </td><td class="memItemRight bottomAlign"><b><a href="standard-h.html#SlaveReservedMax-var" translate="no">SlaveReservedMax</a></b></td></tr>
-<tr><td class="memItemLeft rightAlign topAlign"> const uint8_t </td><td class="memItemRight bottomAlign"><b><a href="standard-h.html#SlaveReservedMin-var" translate="no">SlaveReservedMin</a></b></td></tr>
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;Standard.h&gt;</code></td></tr>
 </table></div>
 <!-- $$$<Standard.h>-description -->
 <div class="descr">
 <h2 id="details">Detailed Description</h2>
 </div>
 <!-- @@@<Standard.h> -->
-<div class="types">
-<h2>Type Documentation</h2>
-<!-- $$$AddressType$$$TCP$$$UDP$$$SerialPort -->
-<h3 class="fn" translate="no" id="AddressType-enum">enum class <span class="name">AddressType</span></h3>
-<p>连接地址类型.</p>
-<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td class="topAlign"><code translate="no">AddressType::TCP</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">TCP连接.</td></tr>
-<tr><td class="topAlign"><code translate="no">AddressType::UDP</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">UDP连接.</td></tr>
-<tr><td class="topAlign"><code translate="no">AddressType::SerialPort</code></td><td class="topAlign tblval"><code translate="no">2</code></td><td class="topAlign">串口连接.</td></tr>
-</table></div>
-<!-- @@@AddressType -->
-<!-- $$$ExceptionCode$$$IllegalFunction$$$IllegalDataAddress$$$IllegalDataValue$$$ServerDeviceFailure$$$Acknowledge$$$ServerDeviceBusy$$$MemoryParityError$$$GatewayPathUnavailable$$$GatewayTargetDeviceFailedToRespond -->
-<h3 class="fn" translate="no" id="ExceptionCode-enum">enum class <span class="name">ExceptionCode</span></h3>
-<p>Modbus异常码.</p>
-<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td class="topAlign"><code translate="no">ExceptionCode::IllegalFunction</code></td><td class="topAlign tblval"><code translate="no">0x01</code></td><td class="topAlign">非法功能，对于服务器(或从站)来说，询问中接收到的功能码是不允许的操作。 这也许是因为功能码仅适用于新设备而在被选单元中没有实现； 还可能表示服务器(或从站)在错误状态中处理这种请求， 例如：因为它是未配置的，并且正被要求返回寄存器值。</td></tr>
-<tr><td class="topAlign"><code translate="no">ExceptionCode::IllegalDataAddress</code></td><td class="topAlign tblval"><code translate="no">0x02</code></td><td class="topAlign">对于服务器(或从站)来说，询问中接收到的数据地址是不允许的地址。 特别是，奇存器编号和传输长度的组合是无效的。对于带有100个寄存器的控制器来说， PDU赋值第一个寄存器为0，最后一个为99。 如果起始寄存器编号96和寄存器数量为4的请求被处理， 那么这个请求会成功操作于寄存器96、97、98和99； 而如果起始寄存器编号96和存器数量为5的请求被处理，那么将产生异常码02“非法数据地址”， 因为它试图作用于寄存器96、97、98、99和100，而寄存器100是不存在的。</td></tr>
-<tr><td class="topAlign"><code translate="no">ExceptionCode::IllegalDataValue</code></td><td class="topAlign tblval"><code translate="no">0x03</code></td><td class="topAlign">对于服务器(或从站)来说，询问数据字段中包含的是不允许的值。它表示组合请求中剩余部分结构方面的错误， 例如：隐含长度不正确。它决不表示寄存器中被提交存储的数据项有一个应用程序期望之外的值。 因为 Modbus 协议并不知道任何特殊寄存器的任何特殊值的具体含义。</td></tr>
-<tr><td class="topAlign"><code translate="no">ExceptionCode::ServerDeviceFailure</code></td><td class="topAlign tblval"><code translate="no">0x04</code></td><td class="topAlign">当服务器(或从站)正在试图执行所请求的操作时，产生不可恢复的差错。</td></tr>
-<tr><td class="topAlign"><code translate="no">ExceptionCode::Acknowledge</code></td><td class="topAlign tblval"><code translate="no">0x05</code></td><td class="topAlign">与编命令一起使用。服务器(或从站)已经接受请求，并且正在进行处理， 但是需要较长的处理时间。返回这个响应以防止在客户机(或主站)中发生超时错误。 客户机(或主站)可以继续发送轮询程序完成报文来确定是否完成处理。</td></tr>
-<tr><td class="topAlign"><code translate="no">ExceptionCode::ServerDeviceBusy</code></td><td class="topAlign tblval"><code translate="no">0x06</code></td><td class="topAlign">与编命令一起使用。服务器(或从站)正在处理较长时间的程序命令。当服务器(或从站)空闲时，客户机(或主站)应该稍后重新传送报文。</td></tr>
-<tr><td class="topAlign"><code translate="no">ExceptionCode::MemoryParityError</code></td><td class="topAlign tblval"><code translate="no">0x08</code></td><td class="topAlign">与功能码20、21和引用类型6一起使用，以指示扩展文件区不能通过一致性校验； 服务器(或从站)试图读记录文件，但是在存储器中发现一个奇偶校验错误。 客户机(或主站)可以重新发送请求，但可能需要在服务器(或从站)设备上提供这种服务。</td></tr>
-<tr><td class="topAlign"><code translate="no">ExceptionCode::GatewayPathUnavailable</code></td><td class="topAlign tblval"><code translate="no">0x0A</code></td><td class="topAlign">与网关一起使用。它表示网关不能为处理请求分配输人端口至输出端口的内部通信路径。通常表示网关配置错误或过载。</td></tr>
-<tr><td class="topAlign"><code translate="no">ExceptionCode::GatewayTargetDeviceFailedToRespond</code></td><td class="topAlign tblval"><code translate="no">0x0B</code></td><td class="topAlign">与网关一起使用。它表示没有从目标设备中获得响应。通常表示设备未在网络中。</td></tr>
-</table></div>
-<!-- @@@ExceptionCode -->
-<!-- $$$ModbusProtocol$$$ModbusTCP$$$ModbusRTU$$$ModbusASCII -->
-<h3 class="fn" translate="no" id="ModbusProtocol-enum">enum class <span class="name">ModbusProtocol</span></h3>
-<p>Modbus协议类型.</p>
-<div class="table"><table class="valuelist"><tr valign="top" class="odd"><th class="tblConst">Constant</th><th class="tblval">Value</th><th class="tbldscr">Description</th></tr>
-<tr><td class="topAlign"><code translate="no">ModbusProtocol::ModbusTCP</code></td><td class="topAlign tblval"><code translate="no">0</code></td><td class="topAlign">ModbusTCP协议.</td></tr>
-<tr><td class="topAlign"><code translate="no">ModbusProtocol::ModbusRTU</code></td><td class="topAlign tblval"><code translate="no">1</code></td><td class="topAlign">ModbusRTU协议.</td></tr>
-<tr><td class="topAlign"><code translate="no">ModbusProtocol::ModbusASCII</code></td><td class="topAlign tblval"><code translate="no">2</code></td><td class="topAlign">ModbusASCII协议.</td></tr>
-</table></div>
-<!-- @@@ModbusProtocol -->
-</div>
-<div class="vars">
-<h2>Variable Documentation</h2>
-<!-- $$$Broadcast -->
-<h3 class="fn" translate="no" id="Broadcast-var">const <span class="type">uint8_t</span> <span class="name">Broadcast</span></h3>
-<p>广播编号.</p>
-<!-- @@@Broadcast -->
-<!-- $$$ExceptionCodeAddend -->
-<h3 class="fn" translate="no" id="ExceptionCodeAddend-var">const <span class="type">uint8_t</span> <span class="name">ExceptionCodeAddend</span></h3>
-<p>异常附加码，异常码 = 功能码 + 异常附加码.</p>
-<!-- @@@ExceptionCodeAddend -->
-<!-- $$$SlaveMax -->
-<h3 class="fn" translate="no" id="SlaveMax-var">const <span class="type">uint8_t</span> <span class="name">SlaveMax</span></h3>
-<p>最大从机编号.</p>
-<!-- @@@SlaveMax -->
-<!-- $$$SlaveMin -->
-<h3 class="fn" translate="no" id="SlaveMin-var">const <span class="type">uint8_t</span> <span class="name">SlaveMin</span></h3>
-<p>最小从机编号.</p>
-<!-- @@@SlaveMin -->
-<!-- $$$SlaveReservedMax -->
-<h3 class="fn" translate="no" id="SlaveReservedMax-var">const <span class="type">uint8_t</span> <span class="name">SlaveReservedMax</span></h3>
-<p>最大保留从机编号.</p>
-<!-- @@@SlaveReservedMax -->
-<!-- $$$SlaveReservedMin -->
-<h3 class="fn" translate="no" id="SlaveReservedMin-var">const <span class="type">uint8_t</span> <span class="name">SlaveReservedMin</span></h3>
-<p>最小保留从机编号.</p>
-<!-- @@@SlaveReservedMin -->
-</div>
         </div>
        </div>
    </div>
