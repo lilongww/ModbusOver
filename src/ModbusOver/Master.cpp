@@ -68,6 +68,11 @@ Master::Master() : m_impl(std::make_unique<Impl>()) {}
 Master::~Master() {}
 
 /*!
+    \brief      返回设备是否已连接.
+*/
+bool Master::connected() const { return m_impl->iobase ? m_impl->iobase->connected() : false; }
+
+/*!
     \brief      关闭连接.
     \sa         connect
 */
