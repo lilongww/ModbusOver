@@ -70,6 +70,8 @@ public:
     std::vector<uint16_t> requestReadFIFOQueue(uint16_t address);
     void setProtocolDebug(std::shared_ptr<ProtocolDebug> debug);
     std::shared_ptr<ProtocolDebug> protocolDebug() const;
+    void writeRawData(const std::vector<uint8_t>& data);
+    std::vector<uint8_t> readRawData();
 
 private:
     struct Impl;

@@ -349,6 +349,28 @@ void Master::setProtocolDebug(std::shared_ptr<ProtocolDebug> debug) { m_impl->co
 */
 std::shared_ptr<ProtocolDebug> Master::protocolDebug() const { return m_impl->common.protoDebug; }
 
+/*!
+    \brief      发送原始数据 \a data.
+    \note       该函数仅用于调试，使用时请确保数据格式正确.
+    \sa         readRawData
+*/
+void Master::writeRawData(const std::vector<uint8_t>& data)
+{
+    throwUnconnected(m_impl->iobase);
+    m_impl->iobase->writeData(std::vector<uint8_t>(data));
+}
+
+/*!
+    \brief      读取原始数据.
+    \note       该函数仅用于调试，因为收到的响应不会根据初始请求进行检查，函数可用于接收库未处理的请求.
+    \sa         writeRawData
+*/
+std::vector<uint8_t> Master::readRawData()
+{
+    throwUnconnected(m_impl->iobase);
+    return m_impl->iobase->readData();
+}
+
 template<>
 MODBUSOVER_EXPORT void Master::connect<Address<AddressType::SerialPort>>(const Address<AddressType::SerialPort>& address,
                                                                          const std::chrono::milliseconds& connectTimeout)

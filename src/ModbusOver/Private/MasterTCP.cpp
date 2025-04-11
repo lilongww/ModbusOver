@@ -28,7 +28,7 @@ struct MasterTCP::Impl
 {
     boost::asio::io_context io;
     boost::asio::ip::tcp::socket socket { io };
-    boost::asio::io_context::work worker { io };
+    boost::asio::executor_work_guard<boost::asio::io_context::executor_type> work { boost::asio::make_work_guard(io) };
     std::jthread thread;
     std::vector<uint8_t> writeBuffer;
     boost::asio::streambuf readBuffer;
@@ -55,7 +55,7 @@ void MasterTCP::connect(const Address<AddressType::TCP>& address, const std::chr
     auto error = std::make_shared<boost::system::error_code>();
     auto mutex = std::make_shared<std::timed_mutex>();
     mutex->lock();
-    m_impl->socket.async_connect(boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(address.ip()), address.port()),
+    m_impl->socket.async_connect(boost::asio::ip::tcp::endpoint(boost::asio::ip::make_address(address.ip()), address.port()),
                                  [=](const boost::system::error_code& e)
                                  {
                                      *error = e;
@@ -119,7 +119,7 @@ std::vector<uint8_t> MasterTCP::read()
     }
     if (m_protocol->proto() == ModbusProtocol::ModbusASCII)
     {
-        auto begin = boost::asio::buffer_cast<const uint8_t*>(m_impl->readBuffer.data());
+        auto begin = reinterpret_cast<const uint8_t*>(m_impl->readBuffer.data().data());
         *ret       = std::vector<uint8_t>(begin, begin + m_impl->readBuffer.size());
         m_impl->readBuffer.consume(m_impl->readBuffer.size());
     }

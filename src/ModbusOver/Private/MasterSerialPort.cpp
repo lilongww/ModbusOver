@@ -28,7 +28,7 @@ struct MasterSerialPort::Impl
 {
     boost::asio::io_context io;
     boost::asio::serial_port serialPort { io };
-    boost::asio::io_context::work worker { io };
+    boost::asio::executor_work_guard<boost::asio::io_context::executor_type> work { boost::asio::make_work_guard(io) };
     std::jthread thread;
     std::vector<uint8_t> writeBuffer;
     boost::asio::streambuf readBuffer;
@@ -105,7 +105,7 @@ std::vector<uint8_t> MasterSerialPort::read()
     }
     if (m_protocol->proto() == ModbusProtocol::ModbusASCII)
     {
-        auto begin = boost::asio::buffer_cast<const uint8_t*>(m_impl->readBuffer.data());
+        auto begin = reinterpret_cast<const uint8_t*>(m_impl->readBuffer.data().data());
         *ret       = std::vector<uint8_t>(begin, begin + m_impl->readBuffer.size());
         m_impl->readBuffer.consume(m_impl->readBuffer.size());
     }
