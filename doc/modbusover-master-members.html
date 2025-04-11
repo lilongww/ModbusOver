@@ -4,7 +4,7 @@
   <meta charset="utf-8">
 <!-- Master.cpp -->
   <meta name="description" content="Modbus 客户端（主站）接口.">
-  <title>List of All Members for Master | ModbusOver 0.7.0</title>
+  <title>List of All Members for Master | ModbusOver 0.8.0</title>
   <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
   <script type="text/javascript">
     document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
@@ -26,10 +26,10 @@
     <div class="main-rounded">
         <div class="navigationbar">
         <ul>
-<li><a href="index.html">ModbusOver 0.7.0</a></li>
+<li><a href="index.html">ModbusOver 0.8.0</a></li>
 <li><a href="modbusover-module.html" translate="no">ModbusOver</a></li>
 <li>Master</li>
-<li id="buildversion">ModbusOver 0.7.0 Reference Documentation</li>
+<li id="buildversion">ModbusOver 0.8.0 Reference Documentation</li>
     </ul>
     </div>
 </div>
@@ -56,6 +56,7 @@
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#readExceptionStatus" translate="no">readExceptionStatus</a></b></span>() : uint8_t</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#readHoldingRegisters" translate="no">readHoldingRegisters</a></b></span>(uint16_t, uint16_t) : std::vector&lt;uint16_t&gt;</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#readInputRegisters" translate="no">readInputRegisters</a></b></span>(uint16_t, uint16_t) : std::vector&lt;uint16_t&gt;</li>
+<li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#readRawData" translate="no">readRawData</a></b></span>() : std::vector&lt;uint8_t&gt;</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#readWriteMultipleRegisters" translate="no">readWriteMultipleRegisters</a></b></span>(uint16_t, uint16_t, uint16_t, std::vector&lt;uint16_t&gt; &amp;&amp;) : std::vector&lt;uint16_t&gt;</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#readWriteMultipleRegisters-1" translate="no">readWriteMultipleRegisters</a></b></span>(uint16_t, uint16_t, uint16_t, const std::vector&lt;uint16_t&gt; &amp;) : std::vector&lt;uint16_t&gt;</li>
 </ul></td><td class="topAlign"><ul>
@@ -74,6 +75,7 @@
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#writeMultipleCoils" translate="no">writeMultipleCoils</a></b></span>(uint16_t, const std::vector&lt;bool&gt; &amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#writeMultipleRegisters" translate="no">writeMultipleRegisters</a></b></span>(uint16_t, std::vector&lt;uint16_t&gt; &amp;&amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#writeMultipleRegisters-1" translate="no">writeMultipleRegisters</a></b></span>(uint16_t, const std::vector&lt;uint16_t&gt; &amp;)</li>
+<li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#writeRawData" translate="no">writeRawData</a></b></span>(const std::vector&lt;uint8_t&gt; &amp;)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#writeSingleCoil" translate="no">writeSingleCoil</a></b></span>(uint16_t, bool)</li>
 <li class="fn" translate="no"><span class="name"><b><a href="modbusover-master.html#writeSingleRegister" translate="no">writeSingleRegister</a></b></span>(uint16_t, uint16_t)</li>
 </ul>

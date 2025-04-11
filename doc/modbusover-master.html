@@ -4,7 +4,7 @@
   <meta charset="utf-8">
 <!-- Master.cpp -->
   <meta name="description" content="Modbus 客户端（主站）接口.">
-  <title>Master Class | ModbusOver 0.7.0</title>
+  <title>Master Class | ModbusOver 0.8.0</title>
   <link rel="stylesheet" type="text/css" href="style/offline-simple.css" />
   <script type="text/javascript">
     document.getElementsByTagName("link").item(0).setAttribute("href", "style/offline.css");
@@ -26,10 +26,10 @@
     <div class="main-rounded">
         <div class="navigationbar">
         <ul>
-<li><a href="index.html">ModbusOver 0.7.0</a></li>
+<li><a href="index.html">ModbusOver 0.8.0</a></li>
 <li><a href="modbusover-module.html" translate="no">ModbusOver</a></li>
 <li>Master</li>
-<li id="buildversion">ModbusOver 0.7.0 Reference Documentation</li>
+<li id="buildversion">ModbusOver 0.8.0 Reference Documentation</li>
     </ul>
     </div>
 </div>
@@ -73,6 +73,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> uint8_t </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#readExceptionStatus" translate="no">readExceptionStatus</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint16_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#readHoldingRegisters" translate="no">readHoldingRegisters</a></b>(uint16_t <i>startingAddress</i>, uint16_t <i>quantityOfRegisters</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint16_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#readInputRegisters" translate="no">readInputRegisters</a></b>(uint16_t <i>startingAddress</i>, uint16_t <i>quantityOfRegisters</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint8_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#readRawData" translate="no">readRawData</a></b>()</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint16_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#readWriteMultipleRegisters" translate="no">readWriteMultipleRegisters</a></b>(uint16_t <i>readStartAddress</i>, uint16_t <i>quantityToRead</i>, uint16_t <i>writeStartAddress</i>, std::vector&lt;uint16_t&gt; &amp;&amp;<i>writeData</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint16_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#readWriteMultipleRegisters-1" translate="no">readWriteMultipleRegisters</a></b>(uint16_t <i>readStartAddress</i>, uint16_t <i>quantityToRead</i>, uint16_t <i>writeStartAddress</i>, const std::vector&lt;uint16_t&gt; &amp;<i>writeData</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> std::vector&lt;uint8_t&gt; </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#reportServerID" translate="no">reportServerID</a></b>()</td></tr>
@@ -90,6 +91,7 @@
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#writeMultipleCoils" translate="no">writeMultipleCoils</a></b>(uint16_t <i>startingAddress</i>, const std::vector&lt;bool&gt; &amp;<i>states</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#writeMultipleRegisters" translate="no">writeMultipleRegisters</a></b>(uint16_t <i>startingAddress</i>, std::vector&lt;uint16_t&gt; &amp;&amp;<i>values</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#writeMultipleRegisters-1" translate="no">writeMultipleRegisters</a></b>(uint16_t <i>startingAddress</i>, const std::vector&lt;uint16_t&gt; &amp;<i>values</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#writeRawData" translate="no">writeRawData</a></b>(const std::vector&lt;uint8_t&gt; &amp;<i>data</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#writeSingleCoil" translate="no">writeSingleCoil</a></b>(uint16_t <i>address</i>, bool <i>on</i>)</td></tr>
 <tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="modbusover-master.html#writeSingleRegister" translate="no">writeSingleRegister</a></b>(uint16_t <i>address</i>, uint16_t <i>value</i>)</td></tr>
 </table></div>
@@ -110,7 +112,7 @@
 <!-- @@@~Master -->
 <!-- $$$asciiLF[overload1]$$$asciiLF -->
 <h3 class="fn" translate="no" id="asciiLF"><span class="type">char</span> Master::<span class="name">asciiLF</span>() const</h3>
-<p>返回<a href="modbusover.html#ModbusProtocol-enum" translate="no">ModbusASCII</a>协议自定义LF</p>
+<p>返回<a href="standard-h.html#ModbusProtocol-enum" translate="no">ModbusASCII</a>协议自定义LF</p>
 <p><b>See also </b><a href="modbusover-master.html#setAsciiLF" translate="no">setAsciiLF</a>.</p>
 <!-- @@@asciiLF -->
 <!-- $$$close[overload1]$$$close -->
@@ -166,6 +168,14 @@
 <h3 class="fn" translate="no" id="readInputRegisters"><span class="type">std::vector</span>&lt;<span class="type">uint16_t</span>&gt; Master::<span class="name">readInputRegisters</span>(<span class="type">uint16_t</span> <i>startingAddress</i>, <span class="type">uint16_t</span> <i>quantityOfRegisters</i>)</h3>
 <p>功能码 0x04, 读取从地址 <i translate="no">startingAddress</i> 开始的 <i translate="no">quantityOfRegisters</i> 个输入寄存器，输入寄存器为只读.</p>
 <!-- @@@readInputRegisters -->
+<!-- $$$readRawData[overload1]$$$readRawData -->
+<h3 class="fn" translate="no" id="readRawData"><span class="type">std::vector</span>&lt;<span class="type">uint8_t</span>&gt; Master::<span class="name">readRawData</span>()</h3>
+<p>读取原始数据.</p>
+<div class="admonition note">
+<p><b>Note: </b>该函数仅用于调试，因为收到的响应不会根据初始请求进行检查，函数可用于接收库未处理的请求.</p>
+</div>
+<p><b>See also </b><a href="modbusover-master.html#writeRawData" translate="no">writeRawData</a>.</p>
+<!-- @@@readRawData -->
 <!-- $$$readWriteMultipleRegisters[overload1]$$$readWriteMultipleRegistersuint16_tuint16_tuint16_tstd::vector<uint16_t>&& -->
 <h3 class="fn" translate="no" id="readWriteMultipleRegisters"><span class="type">std::vector</span>&lt;<span class="type">uint16_t</span>&gt; Master::<span class="name">readWriteMultipleRegisters</span>(<span class="type">uint16_t</span> <i>readStartAddress</i>, <span class="type">uint16_t</span> <i>quantityToRead</i>, <span class="type">uint16_t</span> <i>writeStartAddress</i>, <span class="type">std::vector</span>&lt;<span class="type">uint16_t</span>&gt; &amp;&amp;<i>writeData</i>)</h3>
 <p>读写多个寄存器. 功能码 0x17. 读取开始地址 <i translate="no">readStartAddress</i>, 读取寄存器数量 <i translate="no">quantityToRead</i>, 写入寄存器开始地址 <i translate="no">writeStartAddress</i>, 写入数据 <i translate="no">writeData</i>.</p>
@@ -191,7 +201,7 @@
 <!-- @@@rtsDelay -->
 <!-- $$$setAsciiLF[overload1]$$$setAsciiLFchar -->
 <h3 class="fn" translate="no" id="setAsciiLF"><span class="type">void</span> Master::<span class="name">setAsciiLF</span>(<span class="type">char</span> <i>lf</i>)</h3>
-<p>设置<a href="modbusover.html#ModbusProtocol-enum" translate="no">ModbusASCII</a>协议自定义LF <i translate="no">lf</i>.</p>
+<p>设置<a href="standard-h.html#ModbusProtocol-enum" translate="no">ModbusASCII</a>协议自定义LF <i translate="no">lf</i>.</p>
 <p><b>See also </b><a href="modbusover-master.html#asciiLF" translate="no">asciiLF</a>.</p>
 <!-- @@@setAsciiLF -->
 <!-- $$$setProtocolDebug[overload1]$$$setProtocolDebugstd::shared_ptr<ModbusOver::ProtocolDebug> -->
@@ -216,9 +226,9 @@
 <!-- @@@setTimeout -->
 <!-- $$$setUseBigendianCRC16[overload1]$$$setUseBigendianCRC16bool -->
 <h3 class="fn" translate="no" id="setUseBigendianCRC16"><span class="type">void</span> Master::<span class="name">setUseBigendianCRC16</span>(<span class="type">bool</span> <i>on</i>)</h3>
-<p>开启此选项 <i translate="no">on</i>, 将在<a href="modbusover.html#ModbusProtocol-enum" translate="no">ModbusRTU</a>中使用MSB在前，LSB在后的CRC16校验码，以应对某些非标准仪器.</p>
+<p>开启此选项 <i translate="no">on</i>, 将在<a href="standard-h.html#ModbusProtocol-enum" translate="no">ModbusRTU</a>中使用MSB在前，LSB在后的CRC16校验码，以应对某些非标准仪器.</p>
 <div class="admonition note">
-<p><b>Note: </b>在标准<a href="modbusover.html#ModbusProtocol-enum" translate="no">ModbusRTU</a>中，CRC16的校验码发送顺序是LSB在前，MSB在后.</p>
+<p><b>Note: </b>在标准<a href="standard-h.html#ModbusProtocol-enum" translate="no">ModbusRTU</a>中，CRC16的校验码发送顺序是LSB在前，MSB在后.</p>
 </div>
 <p><b>See also </b><a href="modbusover-master.html#useBigendianCRC16" translate="no">useBigendianCRC16</a>.</p>
 <!-- @@@setUseBigendianCRC16 -->
@@ -234,7 +244,7 @@
 <!-- @@@timeout -->
 <!-- $$$useBigendianCRC16[overload1]$$$useBigendianCRC16 -->
 <h3 class="fn" translate="no" id="useBigendianCRC16"><span class="type">bool</span> Master::<span class="name">useBigendianCRC16</span>() const</h3>
-<p>返回在<a href="modbusover.html#ModbusProtocol-enum" translate="no">ModbusRTU</a>中是否使用MSB在前，LSB在后的CRC16校验码.</p>
+<p>返回在<a href="standard-h.html#ModbusProtocol-enum" translate="no">ModbusRTU</a>中是否使用MSB在前，LSB在后的CRC16校验码.</p>
 <p><b>See also </b><a href="modbusover-master.html#setUseBigendianCRC16" translate="no">setUseBigendianCRC16</a>.</p>
 <!-- @@@useBigendianCRC16 -->
 <!-- $$$writeMultipleCoils[overload1]$$$writeMultipleCoilsuint16_tconststd::vector<bool>& -->
@@ -253,6 +263,14 @@
 <p>功能码 0x10, 写入从地址 <i translate="no">startingAddress</i> 开始的 <i translate="no">values</i> 个数的保持寄存器状态.</p>
 <p><b>See also </b><a href="modbusover-master.html#writeMultipleRegisters" translate="no">writeMultipleRegisters</a>.</p>
 <!-- @@@writeMultipleRegisters -->
+<!-- $$$writeRawData[overload1]$$$writeRawDataconststd::vector<uint8_t>& -->
+<h3 class="fn" translate="no" id="writeRawData"><span class="type">void</span> Master::<span class="name">writeRawData</span>(const <span class="type">std::vector</span>&lt;<span class="type">uint8_t</span>&gt; &amp;<i>data</i>)</h3>
+<p>发送原始数据 <i translate="no">data</i>.</p>
+<div class="admonition note">
+<p><b>Note: </b>该函数仅用于调试，使用时请确保数据格式正确.</p>
+</div>
+<p><b>See also </b><a href="modbusover-master.html#readRawData" translate="no">readRawData</a>.</p>
+<!-- @@@writeRawData -->
 <!-- $$$writeSingleCoil[overload1]$$$writeSingleCoiluint16_tbool -->
 <h3 class="fn" translate="no" id="writeSingleCoil"><span class="type">void</span> Master::<span class="name">writeSingleCoil</span>(<span class="type">uint16_t</span> <i>address</i>, <span class="type">bool</span> <i>on</i>)</h3>
 <p>功能码 0x05, 写位于地址 <i translate="no">address</i> 的单个线圈状态 <i translate="no">on</i>.</p>

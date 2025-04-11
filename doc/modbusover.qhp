@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QtHelpProject version="1.0">
-    <namespace>com.modbusover.0.7.0</namespace>
+    <namespace>com.modbusover.0.8.0</namespace>
     <virtualFolder>modbusover</virtualFolder>
     <metaData name="version" value=""/>
     <customFilter name="ModbusOver">
@@ -29,11 +29,29 @@
             </section>
         </toc>
         <keywords>
+            <keyword name="&lt;Standard.h&gt;::Acknowledge" id="&lt;Standard.h&gt;::Acknowledge" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::AddressType" id="AddressType" ref="standard-h.html#AddressType-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ExceptionCode" id="ExceptionCode" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::GatewayPathUnavailable" id="&lt;Standard.h&gt;::GatewayPathUnavailable" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::GatewayTargetDeviceFailedToRespond" id="&lt;Standard.h&gt;::GatewayTargetDeviceFailedToRespond" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::IllegalDataAddress" id="&lt;Standard.h&gt;::IllegalDataAddress" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::IllegalDataValue" id="&lt;Standard.h&gt;::IllegalDataValue" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::IllegalFunction" id="&lt;Standard.h&gt;::IllegalFunction" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::MemoryParityError" id="&lt;Standard.h&gt;::MemoryParityError" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ModbusASCII" id="&lt;Standard.h&gt;::ModbusASCII" ref="standard-h.html#ModbusProtocol-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ModbusProtocol" id="ModbusProtocol" ref="standard-h.html#ModbusProtocol-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ModbusRTU" id="&lt;Standard.h&gt;::ModbusRTU" ref="standard-h.html#ModbusProtocol-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ModbusTCP" id="&lt;Standard.h&gt;::ModbusTCP" ref="standard-h.html#ModbusProtocol-enum"/>
+            <keyword name="&lt;Standard.h&gt;::SerialPort" id="&lt;Standard.h&gt;::SerialPort" ref="standard-h.html#AddressType-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ServerDeviceBusy" id="&lt;Standard.h&gt;::ServerDeviceBusy" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::ServerDeviceFailure" id="&lt;Standard.h&gt;::ServerDeviceFailure" ref="standard-h.html#ExceptionCode-enum"/>
+            <keyword name="&lt;Standard.h&gt;::TCP" id="&lt;Standard.h&gt;::TCP" ref="standard-h.html#AddressType-enum"/>
+            <keyword name="&lt;Standard.h&gt;::UDP" id="&lt;Standard.h&gt;::UDP" ref="standard-h.html#AddressType-enum"/>
             <keyword name="Address" id="ModbusOver::Address" ref="modbusover-address.html"/>
-            <keyword name="Broadcast" id="ModbusOver::Broadcast" ref="modbusover.html#Broadcast-var"/>
+            <keyword name="Broadcast" id="Broadcast" ref="standard-h.html#Broadcast-var"/>
             <keyword name="CommEventCounter" id="ModbusOver::CommEventCounter" ref="modbusover-commeventcounter.html"/>
             <keyword name="CommEventLog" id="ModbusOver::CommEventLog" ref="modbusover-commeventlog.html"/>
-            <keyword name="ExceptionCodeAddend" id="ModbusOver::ExceptionCodeAddend" ref="modbusover.html#ExceptionCodeAddend-var"/>
+            <keyword name="ExceptionCodeAddend" id="ExceptionCodeAddend" ref="standard-h.html#ExceptionCodeAddend-var"/>
             <keyword name="MODBUSOVER_VERSION" id="MODBUSOVER_VERSION" ref="version-h.html#MODBUSOVER_VERSION"/>
             <keyword name="MODBUSOVER_VERSION_MAJOR" id="MODBUSOVER_VERSION_MAJOR" ref="version-h.html#MODBUSOVER_VERSION_MAJOR"/>
             <keyword name="MODBUSOVER_VERSION_MICRO" id="MODBUSOVER_VERSION_MICRO" ref="version-h.html#MODBUSOVER_VERSION_MICRO"/>
@@ -43,30 +61,12 @@
             <keyword name="ModbusOver" id="ModbusOver" ref="index.html"/>
             <keyword name="ModbusOver" id="ModbusOver" ref="modbusover.html"/>
             <keyword name="ModbusOver Classes" id="ModbusOver Classes" ref="modbusover-module.html"/>
-            <keyword name="ModbusOver::Acknowledge" id="ModbusOver::Acknowledge" ref="modbusover.html#ExceptionCode-enum"/>
-            <keyword name="ModbusOver::AddressType" id="ModbusOver::AddressType" ref="modbusover.html#AddressType-enum"/>
-            <keyword name="ModbusOver::ExceptionCode" id="ModbusOver::ExceptionCode" ref="modbusover.html#ExceptionCode-enum"/>
-            <keyword name="ModbusOver::GatewayPathUnavailable" id="ModbusOver::GatewayPathUnavailable" ref="modbusover.html#ExceptionCode-enum"/>
-            <keyword name="ModbusOver::GatewayTargetDeviceFailedToRespond" id="ModbusOver::GatewayTargetDeviceFailedToRespond" ref="modbusover.html#ExceptionCode-enum"/>
-            <keyword name="ModbusOver::IllegalDataAddress" id="ModbusOver::IllegalDataAddress" ref="modbusover.html#ExceptionCode-enum"/>
-            <keyword name="ModbusOver::IllegalDataValue" id="ModbusOver::IllegalDataValue" ref="modbusover.html#ExceptionCode-enum"/>
-            <keyword name="ModbusOver::IllegalFunction" id="ModbusOver::IllegalFunction" ref="modbusover.html#ExceptionCode-enum"/>
-            <keyword name="ModbusOver::MemoryParityError" id="ModbusOver::MemoryParityError" ref="modbusover.html#ExceptionCode-enum"/>
-            <keyword name="ModbusOver::ModbusASCII" id="ModbusOver::ModbusASCII" ref="modbusover.html#ModbusProtocol-enum"/>
-            <keyword name="ModbusOver::ModbusProtocol" id="ModbusOver::ModbusProtocol" ref="modbusover.html#ModbusProtocol-enum"/>
-            <keyword name="ModbusOver::ModbusRTU" id="ModbusOver::ModbusRTU" ref="modbusover.html#ModbusProtocol-enum"/>
-            <keyword name="ModbusOver::ModbusTCP" id="ModbusOver::ModbusTCP" ref="modbusover.html#ModbusProtocol-enum"/>
-            <keyword name="ModbusOver::SerialPort" id="ModbusOver::SerialPort" ref="modbusover.html#AddressType-enum"/>
-            <keyword name="ModbusOver::ServerDeviceBusy" id="ModbusOver::ServerDeviceBusy" ref="modbusover.html#ExceptionCode-enum"/>
-            <keyword name="ModbusOver::ServerDeviceFailure" id="ModbusOver::ServerDeviceFailure" ref="modbusover.html#ExceptionCode-enum"/>
-            <keyword name="ModbusOver::TCP" id="ModbusOver::TCP" ref="modbusover.html#AddressType-enum"/>
-            <keyword name="ModbusOver::UDP" id="ModbusOver::UDP" ref="modbusover.html#AddressType-enum"/>
             <keyword name="ProtocolDebug" id="ModbusOver::ProtocolDebug" ref="modbusover-protocoldebug.html"/>
             <keyword name="Search Results" id="Search Results" ref="search-results.html"/>
-            <keyword name="SlaveMax" id="ModbusOver::SlaveMax" ref="modbusover.html#SlaveMax-var"/>
-            <keyword name="SlaveMin" id="ModbusOver::SlaveMin" ref="modbusover.html#SlaveMin-var"/>
-            <keyword name="SlaveReservedMax" id="ModbusOver::SlaveReservedMax" ref="modbusover.html#SlaveReservedMax-var"/>
-            <keyword name="SlaveReservedMin" id="ModbusOver::SlaveReservedMin" ref="modbusover.html#SlaveReservedMin-var"/>
+            <keyword name="SlaveMax" id="SlaveMax" ref="standard-h.html#SlaveMax-var"/>
+            <keyword name="SlaveMin" id="SlaveMin" ref="standard-h.html#SlaveMin-var"/>
+            <keyword name="SlaveReservedMax" id="SlaveReservedMax" ref="standard-h.html#SlaveReservedMax-var"/>
+            <keyword name="SlaveReservedMin" id="SlaveReservedMin" ref="standard-h.html#SlaveReservedMin-var"/>
             <keyword name="asciiLF" id="Master::asciiLF" ref="modbusover-master.html#asciiLF"/>
             <keyword name="close" id="Master::close" ref="modbusover-master.html#close"/>
             <keyword name="code" id="ModbusException::code" ref="modbusover-modbusexception.html#code"/>
@@ -75,10 +75,10 @@
             <keyword name="eventCount" id="CommEventCounter::eventCount" ref="modbusover-commeventcounter.html#eventCount-var"/>
             <keyword name="eventCount" id="CommEventLog::eventCount" ref="modbusover-commeventlog.html#eventCount-var"/>
             <keyword name="events" id="CommEventLog::events" ref="modbusover-commeventlog.html#events-var"/>
-            <keyword name="fromFloatABCD" id="ModbusOver::fromFloatABCD" ref="modbusover.html#fromFloatABCD"/>
-            <keyword name="fromFloatBADC" id="ModbusOver::fromFloatBADC" ref="modbusover.html#fromFloatBADC"/>
-            <keyword name="fromFloatCDAB" id="ModbusOver::fromFloatCDAB" ref="modbusover.html#fromFloatCDAB"/>
-            <keyword name="fromFloatDCBA" id="ModbusOver::fromFloatDCBA" ref="modbusover.html#fromFloatDCBA"/>
+            <keyword name="fromFloatABCD" id="fromFloatABCD" ref="float-h.html#fromFloatABCD"/>
+            <keyword name="fromFloatBADC" id="fromFloatBADC" ref="float-h.html#fromFloatBADC"/>
+            <keyword name="fromFloatCDAB" id="fromFloatCDAB" ref="float-h.html#fromFloatCDAB"/>
+            <keyword name="fromFloatDCBA" id="fromFloatDCBA" ref="float-h.html#fromFloatDCBA"/>
             <keyword name="getCommEventCounter" id="Master::getCommEventCounter" ref="modbusover-master.html#getCommEventCounter"/>
             <keyword name="getCommEventLog" id="Master::getCommEventLog" ref="modbusover-master.html#getCommEventLog"/>
             <keyword name="maskWriteRegister" id="Master::maskWriteRegister" ref="modbusover-master.html#maskWriteRegister"/>
@@ -89,6 +89,7 @@
             <keyword name="readExceptionStatus" id="Master::readExceptionStatus" ref="modbusover-master.html#readExceptionStatus"/>
             <keyword name="readHoldingRegisters" id="Master::readHoldingRegisters" ref="modbusover-master.html#readHoldingRegisters"/>
             <keyword name="readInputRegisters" id="Master::readInputRegisters" ref="modbusover-master.html#readInputRegisters"/>
+            <keyword name="readRawData" id="Master::readRawData" ref="modbusover-master.html#readRawData"/>
             <keyword name="readWriteMultipleRegisters" id="Master::readWriteMultipleRegisters" ref="modbusover-master.html#readWriteMultipleRegisters"/>
             <keyword name="reportServerID" id="Master::reportServerID" ref="modbusover-master.html#reportServerID"/>
             <keyword name="requestReadFIFOQueue" id="Master::requestReadFIFOQueue" ref="modbusover-master.html#requestReadFIFOQueue"/>
@@ -104,15 +105,16 @@
             <keyword name="status" id="CommEventCounter::status" ref="modbusover-commeventcounter.html#status-var"/>
             <keyword name="status" id="CommEventLog::status" ref="modbusover-commeventlog.html#status-var"/>
             <keyword name="timeout" id="Master::timeout" ref="modbusover-master.html#timeout"/>
-            <keyword name="toFloatABCD" id="ModbusOver::toFloatABCD" ref="modbusover.html#toFloatABCD"/>
-            <keyword name="toFloatCDAB" id="ModbusOver::toFloatCDAB" ref="modbusover.html#toFloatCDAB"/>
-            <keyword name="toFloatDABC" id="ModbusOver::toFloatDABC" ref="modbusover.html#toFloatDABC"/>
-            <keyword name="toFloatDCBA" id="ModbusOver::toFloatDCBA" ref="modbusover.html#toFloatDCBA"/>
+            <keyword name="toFloatABCD" id="toFloatABCD" ref="float-h.html#toFloatABCD"/>
+            <keyword name="toFloatCDAB" id="toFloatCDAB" ref="float-h.html#toFloatCDAB"/>
+            <keyword name="toFloatDABC" id="toFloatDABC" ref="float-h.html#toFloatDABC"/>
+            <keyword name="toFloatDCBA" id="toFloatDCBA" ref="float-h.html#toFloatDCBA"/>
             <keyword name="toString" id="ModbusException::toString" ref="modbusover-modbusexception.html#toString"/>
             <keyword name="tx" id="ProtocolDebug::tx" ref="modbusover-protocoldebug.html#tx"/>
             <keyword name="useBigendianCRC16" id="Master::useBigendianCRC16" ref="modbusover-master.html#useBigendianCRC16"/>
             <keyword name="writeMultipleCoils" id="Master::writeMultipleCoils" ref="modbusover-master.html#writeMultipleCoils"/>
             <keyword name="writeMultipleRegisters" id="Master::writeMultipleRegisters" ref="modbusover-master.html#writeMultipleRegisters"/>
+            <keyword name="writeRawData" id="Master::writeRawData" ref="modbusover-master.html#writeRawData"/>
             <keyword name="writeSingleCoil" id="Master::writeSingleCoil" ref="modbusover-master.html#writeSingleCoil"/>
             <keyword name="writeSingleRegister" id="Master::writeSingleRegister" ref="modbusover-master.html#writeSingleRegister"/>
             <keyword name="~Master" id="Master::~Master" ref="modbusover-master.html#dtor.Master"/>
@@ -127,8 +129,6 @@
             <file>images/bullet_dn.png</file>
             <file>images/bullet_sq.png</file>
             <file>images/home.png</file>
-            <file>images/ico_note.png</file>
-            <file>images/ico_note_attention.png</file>
             <file>images/ico_out.png</file>
             <file>images/logo.png</file>
             <file>index.html</file>
