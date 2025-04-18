@@ -20,6 +20,7 @@
 #include "Private/CommonData.h"
 #include "Private/MasterSerialPort.h"
 #include "Private/MasterTCP.h"
+#include "Private/MasterUDP.h"
 
 #include <boost/dynamic_bitset.hpp>
 
@@ -385,6 +386,15 @@ MODBUSOVER_EXPORT void Master::connect<Address<AddressType::TCP>>(const Address<
                                                                   const std::chrono::milliseconds& connectTimeout)
 {
     auto io = std::make_shared<MasterTCP>(m_impl->common);
+    io->connect(address, connectTimeout);
+    m_impl->iobase = io;
+}
+
+template<>
+MODBUSOVER_EXPORT void Master::connect<Address<AddressType::UDP>>(const Address<AddressType::UDP>& address,
+                                                                  const std::chrono::milliseconds& connectTimeout)
+{
+    auto io = std::make_shared<MasterUDP>(m_impl->common);
     io->connect(address, connectTimeout);
     m_impl->iobase = io;
 }

@@ -8,7 +8,7 @@ else()
     set(MODBUSOVER_OPT SHARED)
 endif()
 
-find_package(Boost COMPONENTS system REQUIRED)
+find_package(Boost COMPONENTS system CONFIG REQUIRED)
 
 file(GLOB HEADERS "*.h")
 file(GLOB PRIVATES "Private/*.h" "Private/*.cpp")

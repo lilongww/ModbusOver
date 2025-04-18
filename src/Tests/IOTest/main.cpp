@@ -9,9 +9,10 @@ TEST(IOTest, bool)
 {
     Master master;
     // master.connect(Address<AddressType::TCP>("127.0.0.1"));
-    master.connect(Address<AddressType::SerialPort>("COM2", ModbusProtocol::ModbusRTU));
+    // master.connect(Address<AddressType::SerialPort>("COM2", ModbusProtocol::ModbusRTU));
     // master.connect(Address<AddressType::TCP>("127.0.0.1", 502, ModbusProtocol::ModbusRTU));
     // master.setProtocolDebug(std::make_shared<ProtocolDebug>());
+    master.connect(Address<AddressType::UDP>("127.0.0.1", 502, ModbusProtocol::ModbusTCP));
     master.setSlave(0x01);
     // auto ret = master.reportServerID(); // PASS
     // auto ret = master.readExceptionStatus(); // PASS
