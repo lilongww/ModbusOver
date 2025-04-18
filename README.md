@@ -20,7 +20,7 @@
 
 - [x] TCP
 - [x] Serial Port
-- [ ] UDP
+- [x] UDP
 
 ### 2.3 协议接口
 
@@ -125,5 +125,23 @@ master.connect(ModbusOver::Address<ModbusOver::AddressType::SerialPort>("COM5", 
 master.connect(ModbusOver::Address<ModbusOver::AddressType::SerialPort>("COM5", ModbusOver::ModbusProtocol::ModbusRTU);
 // 或
 master.connect(ModbusOver::Address<ModbusOver::AddressType::SerialPort>("COM5", 9600, ModbusOver::DataBits::Data8, ModbusOver::FlowControl::None, ModbusOver::Parity::Even, ModbusOver::StopBits::One, ModbusOver::ModbusProtocol::ModbusRTU));
+```
+
+#### 4.1.3 连接UDP设备
+
+```cpp
+ModbusOver::Master master;
+master.connect(ModbusOver::Address<ModbusOver::AddressType::UDP>("192.168.1.150"));
+master.setSlave(1); // 设置从机ID
+// Do something ...
+master.close();
+```
+
+默认在UDP链路中使用ModbusTCP协议进行通信，如果需要使用其他协议，则：
+
+```c++
+master.connect(ModbusOver::Address<ModbusOver::AddressType::UDP>("192.168.1.150", 5000, ModbusOver::ModbusProtocol::ModbusRTU));
+//或
+master.connect(ModbusOver::Address<ModbusOver::AddressType::UDP>("192.168.1.150", 5000, ModbusOver::ModbusProtocol::ModbusASCII));
 ```
 
