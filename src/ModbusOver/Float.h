@@ -66,7 +66,7 @@ constexpr float toFloatCDAB(const uint16_t* src)
 inline void fromFloatABCD(float f, uint16_t* dest)
 {
     uint32_t i   = std::bit_cast<uint32_t>(f);
-    uint8_t* out = reinterpret_cast<uint8_t*>(dest);
+    uint8_t* out = std::start_lifetime_as_array<uint8_t>(dest, 4);
     uint8_t a    = (i >> 24) & 0xFF;
     uint8_t b    = (i >> 16) & 0xFF;
     uint8_t c    = (i >> 8) & 0xFF;
@@ -80,7 +80,7 @@ inline void fromFloatABCD(float f, uint16_t* dest)
 inline void fromFloatDCBA(float f, uint16_t* dest)
 {
     uint32_t i   = std::bit_cast<uint32_t>(f);
-    uint8_t* out = reinterpret_cast<uint8_t*>(dest);
+    uint8_t* out = std::start_lifetime_as_array<uint8_t>(dest, 4);
     uint8_t a    = (i >> 24) & 0xFF;
     uint8_t b    = (i >> 16) & 0xFF;
     uint8_t c    = (i >> 8) & 0xFF;
@@ -94,7 +94,7 @@ inline void fromFloatDCBA(float f, uint16_t* dest)
 inline void fromFloatBADC(float f, uint16_t* dest)
 {
     uint32_t i   = std::bit_cast<uint32_t>(f);
-    uint8_t* out = reinterpret_cast<uint8_t*>(dest);
+    uint8_t* out = std::start_lifetime_as_array<uint8_t>(dest, 4);
     uint8_t a    = (i >> 24) & 0xFF;
     uint8_t b    = (i >> 16) & 0xFF;
     uint8_t c    = (i >> 8) & 0xFF;
@@ -108,7 +108,7 @@ inline void fromFloatBADC(float f, uint16_t* dest)
 inline void fromFloatCDAB(float f, uint16_t* dest)
 {
     uint32_t i   = std::bit_cast<uint32_t>(f);
-    uint8_t* out = reinterpret_cast<uint8_t*>(dest);
+    uint8_t* out = std::start_lifetime_as_array<uint8_t>(dest, 4);
     uint8_t a    = (i >> 24) & 0xFF;
     uint8_t b    = (i >> 16) & 0xFF;
     uint8_t c    = (i >> 8) & 0xFF;

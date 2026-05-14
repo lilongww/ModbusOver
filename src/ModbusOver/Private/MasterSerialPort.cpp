@@ -105,7 +105,7 @@ std::vector<uint8_t> MasterSerialPort::read()
     }
     if (m_protocol->proto() == ModbusProtocol::ModbusASCII)
     {
-        auto begin = reinterpret_cast<const uint8_t*>(m_impl->readBuffer.data().data());
+        auto begin = std::start_lifetime_as_array<const uint8_t>(m_impl->readBuffer.data().data(), m_impl->readBuffer.size());
         *ret       = std::vector<uint8_t>(begin, begin + m_impl->readBuffer.size());
         m_impl->readBuffer.consume(m_impl->readBuffer.size());
     }

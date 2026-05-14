@@ -19,6 +19,7 @@
 #pragma once
 
 #include <iterator>
+#include <memory>
 #include <type_traits>
 
 namespace ModbusOver
@@ -27,7 +28,7 @@ template<typename T>
 class ArithmeticView
 {
 public:
-    constexpr ArithmeticView(const T& value) : m_data(reinterpret_cast<const uint8_t*>(&value)) {}
+    constexpr ArithmeticView(const T& value) : m_data(std::start_lifetime_as<const uint8_t>(&value)) {}
     constexpr ~ArithmeticView() {}
     constexpr size_t size() const { return sizeof(T); }
     constexpr auto begin() const { return m_data; }

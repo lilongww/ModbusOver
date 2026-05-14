@@ -38,13 +38,13 @@ public:
         m_offset += sizeof(value);
         return *this;
     }
-    inline uint16_t msbCrc() const { return std::byteswap(*reinterpret_cast<const uint16_t*>(&m_data.at(m_data.size() - 2))); }
-    inline uint16_t lsbCrc() const { return *reinterpret_cast<const uint16_t*>(&m_data.at(m_data.size() - 2)); }
+    inline uint16_t msbCrc() const { return std::byteswap(*std::start_lifetime_as<const uint16_t>(&m_data.at(m_data.size() - 2))); }
+    inline uint16_t lsbCrc() const { return *std::start_lifetime_as<const uint16_t>(&m_data.at(m_data.size() - 2)); }
     template<typename T>
     inline void peak(T& value, std::ptrdiff_t offset = 0)
     {
         std::ranges::reverse_copy(m_data | std::views::drop(m_offset + offset) | std::views::take(sizeof(T)),
-                                  reinterpret_cast<int8_t*>(&value));
+                                  std::start_lifetime_as_array<int8_t>(&value, sizeof(T)));
     }
     inline const std::vector<uint8_t>& data() const { return m_data; };
 
