@@ -182,9 +182,9 @@ bool AbstractProtocol::onResponseWriteMultipleCoils(Buffer& buffer) const
 
 Buffer AbstractProtocol::requestWriteMultipleRegisters(uint16_t startingAddress, std::vector<uint16_t>&& values) const
 {
+    auto size = values.size();
     return toADU(
-        Codec<FunctionCode::WriteMultipleRegisters>::Request(startingAddress, static_cast<uint16_t>(values.size()), std::move(values))
-            .encode());
+        Codec<FunctionCode::WriteMultipleRegisters>::Request(startingAddress, static_cast<uint16_t>(size), std::move(values)).encode());
 }
 
 bool AbstractProtocol::onResponseWriteMultipleRegisters(Buffer& buffer) const

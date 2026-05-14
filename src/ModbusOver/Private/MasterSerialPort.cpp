@@ -129,7 +129,7 @@ void MasterSerialPort::write(std::vector<uint8_t>&& data)
         else
             break;
     }
-    m_impl->writeBuffer = data;
+    m_impl->writeBuffer = std::move(data);
     auto mutex          = std::make_shared<std::timed_mutex>();
     mutex->lock();
     auto error = std::make_shared<boost::system::error_code>();

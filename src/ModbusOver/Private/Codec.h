@@ -497,7 +497,8 @@ struct Codec<AbstractProtocol::FunctionCode::ReportServerID>
     {
     public:
         inline Response() {}
-        inline Response(std::vector<uint8_t>&& data) : Common(code), m_byteCount(static_cast<uint8_t>(data.size())), m_data(std::move(data))
+        inline Response(std::vector<uint8_t>&& data)
+            : Common(code), m_byteCount(static_cast<uint8_t>(data.size())), m_data(std::forward<std::vector<uint8_t>&&>(data))
         {
         }
         inline void serialize(Buffer& buffer) const
@@ -586,7 +587,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadWriteMultipleRegisters>
             , m_writeStartAddress(writeStartAddress)
             , m_quantityToWrite(static_cast<uint16_t>(writeData.size()))
             , m_writeByteCount(static_cast<uint8_t>(writeData.size() * 2))
-            , m_writeData(std::move(writeData))
+            , m_writeData(std::forward<std::vector<uint16_t>&&>(writeData))
         {
         }
         inline void serialize(Buffer& buffer) const
@@ -631,7 +632,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadWriteMultipleRegisters>
     public:
         inline Response() {}
         inline Response(std::vector<uint16_t>&& data)
-            : Common(code), m_byteCount(static_cast<uint8_t>(data.size())), m_data(std::move(data))
+            : Common(code), m_byteCount(static_cast<uint8_t>(data.size())), m_data(std::forward<std::vector<uint16_t>&&>(data))
         {
         }
         inline void serialize(Buffer& buffer) const
@@ -692,7 +693,7 @@ struct Codec<AbstractProtocol::FunctionCode::ReadFIFOQueue>
             : Common(code)
             , m_byteCount(static_cast<uint16_t>(data.size() * 2))
             , m_fifoCount(static_cast<uint16_t>(data.size()))
-            , m_data(std::move(data))
+            , m_data(std::forward<std::vector<uint16_t>&&>(data))
         {
         }
         inline void serialize(Buffer& buffer) const
